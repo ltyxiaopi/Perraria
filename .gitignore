@@ -1,0 +1,41 @@
+# Unity generated
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+
+# IDE
+.vs/
+.vscode/
+*.csproj
+*.sln
+*.suo
+*.user
+*.pidb
+*.booproj
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Unity meta files for folders (keep .meta for assets)
+# Never ignore .meta files — Unity needs them
+
+# Builds
+*.apk
+*.aab
+*.unitypackage
+*.app
+
+# Crashlytics
+crashlytics-build.properties
+
+# Claude Code local config
+.claude/
+
+# Unity tutorial
+Setup Guide In-Editor Tutorial/
