@@ -56,16 +56,9 @@
 
 ### 美术资源管理
 - **资源推荐**: 根据游戏需求搜索推荐合适的免费/付费 2D 素材包（Unity Asset Store、itch.io、OpenGameArt）
-- **导入配置**: 用户将素材放入项目后，通过 MCP 配置 Sprite 导入参数：
-  - Pixels Per Unit（像素密度）
-  - Filter Mode（Point 用于像素风格，Bilinear 用于平滑风格）
-  - Compression 和 Max Size
-  - Sprite Mode（Single / Multiple / Polygon）
-- **Sprite Sheet 切割**: 通过 MCP 对 Sprite Sheet 进行切割，设置每帧尺寸
-- **Tilemap 搭建**: 通过 MCP 创建 Tile Palette、配置 Rule Tile、搭建 Tilemap 图层
-- **动画配置**: 通过 MCP 创建 Animator Controller、配置动画状态机和过渡条件
-- **场景搭建**: 通过 MCP 摆放场景元素、配置摄像机、设置 2D 光照
-- **视觉验证**: 配置完成后通过 MCP 截图，向用户展示确认效果
+- **视觉验证**: 通过 MCP 截图确认 Codex 的实现效果，审查是否符合预期
+
+> **注意**: 素材导入配置、Sprite 切割、Tilemap 搭建、动画配置、场景搭建等 MCP 操作已移交给 Codex 负责，Claude Code 仅做最终验收。
 
 ### 用户沟通
 - 向用户讲解 Codex 实现的代码逻辑和设计意图
