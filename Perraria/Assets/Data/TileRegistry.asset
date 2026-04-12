@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18c2d6e6d72eb9348a80f321950dc1ce, type: 3}
+  m_Name: TileRegistry
+  m_EditorClassIdentifier: Assembly-CSharp::TileRegistry
+  _dirtTile: {fileID: 11400000, guid: 6b61d39055d41bb4a8dab70eb6040ab2, type: 2}
+  _grassTile: {fileID: 11400000, guid: 2a933e47cea1af54b8a815d4d1830924, type: 2}
+  _stoneTile: {fileID: 11400000, guid: 711be5bb1e711ae41a3a45f1e5d0d484, type: 2}
