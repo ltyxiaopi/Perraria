@@ -9,5 +9,6 @@
 暂无
 
 ## 已完成 (Done)
+- [003 - 地形生成系统 + 摄像机跟随](tasks/003-terrain-generation.md) — 通过，[交付记录](../codex-reports/003-terrain-generation.md)
 - [002 - 玩家角色场景搭建](tasks/002-player-character-setup.md) — 通过（附修复），[审查反馈](../codex-reports/002-review-feedback.md)
 - [001 - 玩家基础移动](tasks/001-player-movement.md) — PlayerController: 行走+跳跃

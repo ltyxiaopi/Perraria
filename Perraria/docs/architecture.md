@@ -32,10 +32,16 @@
 - 全局单例，其他模块通过它获取引用
 
 ### World (`World/`)
-- **WorldGenerator**: 程序化地形生成（Perlin Noise 生成地表 + 洞穴）
-- **TileManager**: Tilemap 读写接口，方块的放置/破坏/查询
-- **TileDatabase** (ScriptableObject): 方块类型定义（泥土、石头、矿石等属性）
+- **BlockType** (enum): 方块类型定义（Air, Dirt, Grass, Stone）✅ 已实现
+- **WorldData**: 纯 C# 世界数据类，2D BlockType 数组，带安全边界访问 ✅ 已实现
+- **WorldGenerator**: 程序化地形生成（Perlin Noise 地表 + 洞穴），Tilemap 批量渲染，玩家出生点 ✅ 已实现
+- **TileRegistry** (ScriptableObject): BlockType → TileBase 映射 ✅ 已实现
+- **TileManager**: Tilemap 读写接口，方块的放置/破坏/查询（待实现）
 - 依赖: 无
+
+### Core (`Core/`)
+- **CameraFollow**: LateUpdate 平滑摄像机跟随 ✅ 已实现
+- **GameManager**: 游戏状态管理（待实现）
 
 ### Player (`Player/`)
 - **PlayerController**: 移动（行走、跳跃），接收输入
@@ -84,3 +90,6 @@ World → Items (方块掉落)
 | 输入系统 | Unity Input System (New) | 项目已引入，支持多设备 |
 | UI | Unity UI (uGUI) | 成熟稳定，社区资源丰富 |
 | 通信方式 | 直接引用 + 事件 | v1.0 复杂度低，不需要事件总线 |
+| 碰撞优化 | CompositeCollider2D | 合并 Tilemap 碰撞体，避免 80K 独立碰撞体 |
+| 像素渲染 | Pixel Perfect Camera | PPU=16, 480x270 参考分辨率，消除亚像素偏移 |
+| 玩家物理 | 零摩擦 PhysicsMaterial2D | 防止玩家卡在瓦片边缘 |
