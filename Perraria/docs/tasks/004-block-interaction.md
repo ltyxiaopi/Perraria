@@ -24,8 +24,9 @@ WorldGenerator 使用偏移坐标渲染 Tilemap：
 - 不能放置在玩家当前占据的格子上（防止卡住）
 
 ### 交互范围
-- 玩家只能与一定半径内的方块交互（建议 5-6 格）
-- 超出范围的方块不响应点击，光标显示为不可交互
+- 以玩家位置为圆心，半径 **5 格**的圆形区域内的方块才可交互
+- 判定方式：目标格子中心与玩家位置的欧几里得距离 ≤ `_interactionRange`
+- 超出范围的方块不响应点击，高亮光标不显示（或显示为不可交互状态）
 
 ## 接口签名
 
@@ -64,11 +65,11 @@ public sealed class PlayerBlockInteraction : MonoBehaviour
     //   BlockType _placeBlockType = BlockType.Dirt（v1.0 固定放置类型）
 
     // 在 Update 中：
-    //   1. 鼠标位置 → Camera.main.ScreenToWorldPoint → TileManager.WorldToCell
-    //   2. 检查目标格子是否在交互范围内
-    //   3. 更新高亮光标位置
-    //   4. 左键点击 → 挖掘（SetBlock → Air）
-    //   5. 右键点击 → 放置（SetBlock → _placeBlockType）
+    //   1. 鼠标位置 → Camera.main.ScreenToWorldPoint → TileManager.WorldToCell → targetCell
+    //   2. 计算目标格子中心与玩家 transform.position 的距离
+    //   3. 距离 ≤ _interactionRange 则在范围内，更新高亮；否则隐藏高亮
+    //   4. 左键点击（范围内）→ 挖掘（SetBlock → Air）
+    //   5. 右键点击（范围内）→ 放置（SetBlock → _placeBlockType）
 }
 ```
 
@@ -106,7 +107,7 @@ WorldGenerator 需要暴露坐标偏移量，以便 TileManager 初始化：
 - [ ] 不能挖掘 Air 方块
 - [ ] 不能在非 Air 格子上放置方块
 - [ ] 不能在玩家当前站立的格子上放置方块（防止卡住）
-- [ ] 超出交互范围的方块不响应点击
+- [ ] 超出交互半径的方块不响应点击
 - [ ] 鼠标悬停时有高亮光标指示目标方块（可选但建议实现）
 - [ ] WorldData 与 Tilemap 保持同步（挖掘/放置后数据和显示一致）
 - [ ] 不引入新的控制台错误或警告
