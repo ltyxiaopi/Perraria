@@ -44,10 +44,11 @@
 - **GameManager**: 游戏状态管理（待实现）
 
 ### Player (`Player/`)
-- **PlayerController**: 移动（行走、跳跃），接收输入
-- **PlayerCombat**: 攻击敌人、挖掘/放置方块
-- **PlayerHealth**: 生命值管理、受击、死亡
-- 依赖: World（挖掘/放置方块）、Items（背包操作）
+- **PlayerController**: 移动（行走、跳跃），接收输入 ✅ 已实现
+- **PlayerBlockInteraction**: 鼠标挖掘/放置方块，范围检查，高亮光标（待实现）
+- **PlayerCombat**: 攻击敌人（待实现）
+- **PlayerHealth**: 生命值管理、受击、死亡（待实现）
+- 依赖: World（TileManager 挖掘/放置方块）、Items（背包操作）
 
 ### Items (`Items/`)
 - **ItemDatabase** (ScriptableObject): 全部物品定义（ID、名称、图标、类型、堆叠上限）

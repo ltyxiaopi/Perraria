@@ -1,6 +1,6 @@
 # Perraria - 任务看板
 ## 待实现 (TODO)
-暂无
+- [004 - 方块交互系统（挖掘+放置）](tasks/004-block-interaction.md) — TileManager + PlayerBlockInteraction
 
 ## 进行中 (In Progress)
 暂无
