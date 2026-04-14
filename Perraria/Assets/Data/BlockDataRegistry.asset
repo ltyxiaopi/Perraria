@@ -15,9 +15,13 @@ MonoBehaviour:
   _blocks:
   - Type: 0
     Hardness: 0
+    DropItem: {fileID: 0}
   - Type: 1
     Hardness: 0.5
+    DropItem: {fileID: 11400000, guid: e10ed7af3ea942189819e21ef9b34f31, type: 2}
   - Type: 2
     Hardness: 0.6
+    DropItem: {fileID: 11400000, guid: f2e748d0ab6c43a0a6e6d88661d4e0b9, type: 2}
   - Type: 3
     Hardness: 2
+    DropItem: {fileID: 11400000, guid: 6f45f56d531045d99fe690841bd72b6c, type: 2}
