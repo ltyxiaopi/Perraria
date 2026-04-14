@@ -132,6 +132,7 @@ public static class BlockDataRegistryCsvImporter
             return;
         }
 
+        Dictionary<BlockType, ItemData> existingDropItems = GetExistingDropItems(registry);
         SerializedObject serializedObject = new SerializedObject(registry);
         SerializedProperty blocks = serializedObject.FindProperty("_blocks");
         blocks.arraySize = rows.Count;
@@ -141,6 +142,8 @@ public static class BlockDataRegistryCsvImporter
             SerializedProperty entry = blocks.GetArrayElementAtIndex(i);
             entry.FindPropertyRelative("Type").enumValueIndex = (int)rows[i].Type;
             entry.FindPropertyRelative("Hardness").floatValue = rows[i].Hardness;
+            entry.FindPropertyRelative("DropItem").objectReferenceValue =
+                existingDropItems.TryGetValue(rows[i].Type, out ItemData dropItem) ? dropItem : null;
         }
 
         serializedObject.ApplyModifiedPropertiesWithoutUndo();
@@ -150,6 +153,27 @@ public static class BlockDataRegistryCsvImporter
 
         string targetPath = AssetDatabase.GetAssetPath(registry);
         Debug.Log($"Imported {rows.Count} block data rows from '{sourceLabel}' into '{targetPath}'.");
+    }
+
+    private static Dictionary<BlockType, ItemData> GetExistingDropItems(BlockDataRegistry registry)
+    {
+        Dictionary<BlockType, ItemData> dropItems = new Dictionary<BlockType, ItemData>();
+        SerializedObject serializedObject = new SerializedObject(registry);
+        SerializedProperty blocks = serializedObject.FindProperty("_blocks");
+
+        for (int i = 0; i < blocks.arraySize; i++)
+        {
+            SerializedProperty entry = blocks.GetArrayElementAtIndex(i);
+            BlockType type = (BlockType)entry.FindPropertyRelative("Type").enumValueIndex;
+            if (dropItems.ContainsKey(type))
+            {
+                continue;
+            }
+
+            dropItems[type] = entry.FindPropertyRelative("DropItem").objectReferenceValue as ItemData;
+        }
+
+        return dropItems;
     }
 
     private static BlockDataRegistry GetOrCreateDefaultRegistry()
