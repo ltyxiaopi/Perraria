@@ -1,6 +1,6 @@
 # Perraria - 任务看板
 ## 待实现 (TODO)
-暂无
+- [007 - 物品数据定义](tasks/007-item-data.md) — ItemType 枚举 + ItemData/ItemDatabase ScriptableObject + BlockDataRegistry 掉落映射
 
 ## 进行中 (In Progress)
 暂无

@@ -51,7 +51,9 @@
 - 依赖: World（TileManager 挖掘/放置方块）、Items（背包操作）
 
 ### Items (`Items/`)
-- **ItemDatabase** (ScriptableObject): 全部物品定义（ID、名称、图标、类型、堆叠上限）
+- **ItemType** (enum): 物品类型定义（Block, Tool, Weapon, Material）⏳ Task 007
+- **ItemData** (ScriptableObject): 单个物品静态定义（ID、名称、图标、类型、堆叠上限、放置方块类型）⏳ Task 007
+- **ItemDatabase** (ScriptableObject): 全局物品注册表，按 ID 查询 ⏳ Task 007
 - **Inventory**: 背包数据管理（增删查改）
 - **ItemDrop**: 场景中的掉落物实体，靠近玩家自动拾取
 - 依赖: 无（被 Player、Enemy、UI 依赖）
