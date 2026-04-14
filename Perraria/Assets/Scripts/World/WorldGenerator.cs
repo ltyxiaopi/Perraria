@@ -25,6 +25,7 @@ public sealed class WorldGenerator : MonoBehaviour
     [SerializeField] private Tilemap _tilemap;
     [SerializeField] private TileRegistry _tileRegistry;
     [SerializeField] private Transform _playerTransform;
+    [SerializeField] private TileManager _tileManager;
 
     #endregion
 
@@ -33,6 +34,8 @@ public sealed class WorldGenerator : MonoBehaviour
     private float _seedY;
 
     public WorldData WorldData => _worldData;
+    public int HalfWidth => _worldWidth / 2;
+    public int HalfHeight => _worldHeight / 2;
 
     #region Unity Lifecycle
 
@@ -57,6 +60,7 @@ public sealed class WorldGenerator : MonoBehaviour
         CarveCaves(surfaceHeights);
         RenderToTilemap();
         SpawnPlayer(surfaceHeights);
+        InitializeTileManager();
     }
 
     private int[] GenerateSurfaceHeights()
@@ -118,6 +122,23 @@ public sealed class WorldGenerator : MonoBehaviour
                     _worldData.SetBlock(x, y, BlockType.Air);
                 }
             }
+        }
+    }
+
+    #endregion
+
+    #region Runtime Initialization
+
+    private void InitializeTileManager()
+    {
+        if (_tileManager == null)
+        {
+            _tileManager = GetComponent<TileManager>();
+        }
+
+        if (_tileManager != null)
+        {
+            _tileManager.Initialize(_worldData, HalfWidth, HalfHeight);
         }
     }
 
