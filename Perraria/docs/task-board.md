@@ -1,6 +1,6 @@
 # Perraria - 任务看板
 ## 待实现 (TODO)
-- [007 - 物品数据定义](tasks/007-item-data.md) — ItemType 枚举 + ItemData/ItemDatabase ScriptableObject + BlockDataRegistry 掉落映射
+暂无
 
 ## 进行中 (In Progress)
 暂无
@@ -9,6 +9,8 @@
 暂无
 
 ## 已完成 (Done)
+- [008 - 背包系统](tasks/008-inventory-system.md) — 通过，[交付记录](../codex-reports/008-inventory-system.md)
+- [007 - 物品数据定义](tasks/007-item-data.md) — 通过，[交付记录](../codex-reports/007-item-data.md)
 - [006 - 挖掘视觉效果简化](tasks/006-mining-visual-simplify.md) — 通过（附修复：相机 size 恢复为 7）
 - [005 - 方块挖掘耗时系统](tasks/005-mining-duration.md) — 通过（附修复：MCP 补绑 _miningOverlay 引用 + 相机 size 恢复为 7），[交付记录](../codex-reports/005-mining-duration.md)
 - [004 - 方块交互系统（挖掘+放置）](tasks/004-block-interaction.md) — 通过，[交付记录](../codex-reports/004-block-interaction.md)

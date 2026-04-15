@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 using UnityEngine.Tilemaps;
 
 [DisallowMultipleComponent]
@@ -9,11 +10,11 @@ public sealed class PlayerBlockInteraction : MonoBehaviour
 
     [SerializeField] private TileManager _tileManager;
     [SerializeField] private BlockDataRegistry _blockDataRegistry;
+    [SerializeField] private Inventory _inventory;
     [SerializeField] private float _interactionRange = 5f;
     [SerializeField] private float _miningSpeed = 1f;
     [SerializeField] private Tilemap _highlightTilemap;
     [SerializeField] private TileBase _highlightTile;
-    [SerializeField] private BlockType _placeBlockType = BlockType.Dirt;
 
     private Camera _mainCamera;
     private Collider2D _playerCollider;
@@ -54,6 +55,8 @@ public sealed class PlayerBlockInteraction : MonoBehaviour
             ClearHighlight();
             return;
         }
+
+        HandleHotbarInput();
 
         Vector3Int targetCell = GetMouseTargetCell();
         bool isInRange = IsCellInInteractionRange(targetCell);
@@ -153,6 +156,7 @@ public sealed class PlayerBlockInteraction : MonoBehaviour
         {
             Vector3Int minedCell = _miningCell;
             ResetMining();
+            AddDropToInventory(minedCell);
             _tileManager.SetBlock(minedCell, BlockType.Air);
         }
     }
@@ -172,7 +176,15 @@ public sealed class PlayerBlockInteraction : MonoBehaviour
 
     private void PlaceBlock(Vector3Int cellPosition)
     {
-        if (_tileManager.GetBlock(cellPosition) != BlockType.Air)
+        if (_inventory == null || _tileManager.GetBlock(cellPosition) != BlockType.Air)
+        {
+            return;
+        }
+
+        ItemStack selected = _inventory.GetSelectedItem();
+        if (selected.IsEmpty
+            || selected.Item.Type != ItemType.Block
+            || selected.Item.PlaceBlockType == BlockType.Air)
         {
             return;
         }
@@ -182,7 +194,97 @@ public sealed class PlayerBlockInteraction : MonoBehaviour
             return;
         }
 
-        _tileManager.SetBlock(cellPosition, _placeBlockType);
+        if (!_tileManager.SetBlock(cellPosition, selected.Item.PlaceBlockType))
+        {
+            return;
+        }
+
+        _inventory.RemoveFromSlot(_inventory.SelectedHotbarIndex, 1);
+    }
+
+    private void HandleHotbarInput()
+    {
+        if (_inventory == null)
+        {
+            return;
+        }
+
+        Keyboard keyboard = Keyboard.current;
+        if (keyboard != null && TrySelectHotbarFromKeyboard(keyboard))
+        {
+            return;
+        }
+
+        Mouse mouse = Mouse.current;
+        if (mouse == null)
+        {
+            return;
+        }
+
+        float scrollY = mouse.scroll.ReadValue().y;
+        if (scrollY > 0f)
+        {
+            CycleHotbar(-1);
+        }
+        else if (scrollY < 0f)
+        {
+            CycleHotbar(1);
+        }
+    }
+
+    private bool TrySelectHotbarFromKeyboard(Keyboard keyboard)
+    {
+        return TrySelectHotbarKey(keyboard.digit1Key, 0)
+            || TrySelectHotbarKey(keyboard.digit2Key, 1)
+            || TrySelectHotbarKey(keyboard.digit3Key, 2)
+            || TrySelectHotbarKey(keyboard.digit4Key, 3)
+            || TrySelectHotbarKey(keyboard.digit5Key, 4)
+            || TrySelectHotbarKey(keyboard.digit6Key, 5)
+            || TrySelectHotbarKey(keyboard.digit7Key, 6)
+            || TrySelectHotbarKey(keyboard.digit8Key, 7)
+            || TrySelectHotbarKey(keyboard.digit9Key, 8)
+            || TrySelectHotbarKey(keyboard.digit0Key, 9);
+    }
+
+    private bool TrySelectHotbarKey(KeyControl key, int hotbarIndex)
+    {
+        if (key == null || !key.wasPressedThisFrame)
+        {
+            return false;
+        }
+
+        _inventory.SelectHotbar(hotbarIndex);
+        return true;
+    }
+
+    private void CycleHotbar(int offset)
+    {
+        int nextIndex = _inventory.SelectedHotbarIndex + offset;
+        if (nextIndex < 0)
+        {
+            nextIndex = Inventory.HotbarSlots - 1;
+        }
+        else if (nextIndex >= Inventory.HotbarSlots)
+        {
+            nextIndex = 0;
+        }
+
+        _inventory.SelectHotbar(nextIndex);
+    }
+
+    private void AddDropToInventory(Vector3Int minedCell)
+    {
+        if (_inventory == null)
+        {
+            return;
+        }
+
+        BlockType minedType = _tileManager.GetBlock(minedCell);
+        ItemData dropItem = _blockDataRegistry.GetDropItem(minedType);
+        if (dropItem != null)
+        {
+            _inventory.AddItem(dropItem, 1);
+        }
     }
 
     private bool IsPlayerOccupyingCell(Vector3Int cellPosition)

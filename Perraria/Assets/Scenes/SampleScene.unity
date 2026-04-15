@@ -535,6 +535,7 @@ GameObject:
   - component: {fileID: 540911843}
   - component: {fileID: 540911842}
   - component: {fileID: 540911844}
+  - component: {fileID: 540911845}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -745,11 +746,104 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBlockInteraction
   _tileManager: {fileID: 671152133}
   _blockDataRegistry: {fileID: 11400000, guid: 65091093e5ecc5941a75f4113ae0257b, type: 2}
+  _inventory: {fileID: 540911845}
   _interactionRange: 5
   _miningSpeed: 1
   _highlightTilemap: {fileID: 361079329}
   _highlightTile: {fileID: 11400000, guid: ab4cf1f5a783bed49aa207f6e37cbb4b, type: 2}
-  _placeBlockType: 1
+--- !u!114 &540911845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 540911836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8382ffff6621b1d4fa6aff1eb2e9e5ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Inventory
+  _slots:
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
+  - Item: {fileID: 0}
+    Count: 0
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
