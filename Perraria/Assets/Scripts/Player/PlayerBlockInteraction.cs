@@ -12,6 +12,7 @@ public sealed class PlayerBlockInteraction : MonoBehaviour
     [SerializeField] private TileManager _tileManager;
     [SerializeField] private BlockDataRegistry _blockDataRegistry;
     [SerializeField] private Inventory _inventory;
+    [SerializeField] private ItemDrop _itemDropPrefab;
     [SerializeField] private float _interactionRange = 5f;
     [SerializeField] private float _miningSpeed = 1f;
     [SerializeField] private Tilemap _highlightTilemap;
@@ -166,7 +167,7 @@ public sealed class PlayerBlockInteraction : MonoBehaviour
         {
             Vector3Int minedCell = _miningCell;
             ResetMining();
-            AddDropToInventory(minedCell);
+            SpawnItemDrop(minedCell);
             _tileManager.SetBlock(minedCell, BlockType.Air);
         }
     }
@@ -282,19 +283,23 @@ public sealed class PlayerBlockInteraction : MonoBehaviour
         _inventory.SelectHotbar(nextIndex);
     }
 
-    private void AddDropToInventory(Vector3Int minedCell)
+    private void SpawnItemDrop(Vector3Int minedCell)
     {
-        if (_inventory == null)
+        if (_itemDropPrefab == null)
         {
             return;
         }
 
         BlockType minedType = _tileManager.GetBlock(minedCell);
         ItemData dropItem = _blockDataRegistry.GetDropItem(minedType);
-        if (dropItem != null)
+        if (dropItem == null)
         {
-            _inventory.AddItem(dropItem, 1);
+            return;
         }
+
+        Vector3 spawnPosition = GetCellCenter(minedCell);
+        ItemDrop drop = Instantiate(_itemDropPrefab, spawnPosition, Quaternion.identity);
+        drop.Initialize(dropItem, 1);
     }
 
     private bool IsPlayerOccupyingCell(Vector3Int cellPosition)
