@@ -1,14 +1,16 @@
 # Perraria - 任务看板
 ## 待实现 (TODO)
-- [010 - 玩家生命值系统](tasks/010-player-health.md) — HP、无敌帧、自然回复、死亡重生
+- [011 - 掉落物实体](tasks/011-item-drop.md) — 方块挖掘生成掉落物，靠近自动拾取
 
 ## 进行中 (In Progress)
 暂无
 
 ## 审查中 (In Review)
-- [009 - 快捷栏 + 背包 UI](tasks/009-hotbar-inventory-ui.md) — 代码审查通过，待 Play 模式人工验收后合并，[交付记录](../codex-reports/009-hotbar-inventory-ui.md)，[审查反馈](../codex-reports/009-review-feedback.md)
+暂无
 
 ## 已完成 (Done)
+- [010 - 玩家生命值系统](tasks/010-player-health.md) — 通过，[交付记录](../codex-reports/010-player-health.md)
+- [009 - 快捷栏 + 背包 UI](tasks/009-hotbar-inventory-ui.md) — 通过，[交付记录](../codex-reports/009-hotbar-inventory-ui.md)
 - [008 - 背包系统](tasks/008-inventory-system.md) — 通过，[交付记录](../codex-reports/008-inventory-system.md)
 - [007 - 物品数据定义](tasks/007-item-data.md) — 通过，[交付记录](../codex-reports/007-item-data.md)
 - [006 - 挖掘视觉效果简化](tasks/006-mining-visual-simplify.md) — 通过（附修复：相机 size 恢复为 7）

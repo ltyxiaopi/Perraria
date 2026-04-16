@@ -6354,6 +6354,7 @@ MonoBehaviour:
   _tileManager: {fileID: 671152133}
   _blockDataRegistry: {fileID: 11400000, guid: 65091093e5ecc5941a75f4113ae0257b, type: 2}
   _inventory: {fileID: 540911845}
+  _itemDropPrefab: {fileID: 6584644789323818230, guid: 6c851268f0f11a34b8f16bc5821f95d9, type: 3}
   _interactionRange: 5
   _miningSpeed: 1
   _highlightTilemap: {fileID: 361079329}
