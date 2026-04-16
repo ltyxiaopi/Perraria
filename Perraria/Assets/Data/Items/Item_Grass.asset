@@ -15,7 +15,7 @@ MonoBehaviour:
   _itemId: 2
   _itemName: Grass Block
   _description: 
-  _icon: {fileID: 0}
+  _icon: {fileID: 8648822512753860137, guid: e7e5529c3c43db04d8e0c83fbe5396e7, type: 3}
   _type: 0
   _maxStackSize: 99
   _placeBlockType: 2

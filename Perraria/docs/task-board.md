@@ -1,12 +1,12 @@
 # Perraria - 任务看板
 ## 待实现 (TODO)
-暂无
+- [010 - 玩家生命值系统](tasks/010-player-health.md) — HP、无敌帧、自然回复、死亡重生
 
 ## 进行中 (In Progress)
 暂无
 
 ## 审查中 (In Review)
-暂无
+- [009 - 快捷栏 + 背包 UI](tasks/009-hotbar-inventory-ui.md) — 代码审查通过，待 Play 模式人工验收后合并，[交付记录](../codex-reports/009-hotbar-inventory-ui.md)，[审查反馈](../codex-reports/009-review-feedback.md)
 
 ## 已完成 (Done)
 - [008 - 背包系统](tasks/008-inventory-system.md) — 通过，[交付记录](../codex-reports/008-inventory-system.md)

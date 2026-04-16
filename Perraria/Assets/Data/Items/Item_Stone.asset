@@ -15,7 +15,7 @@ MonoBehaviour:
   _itemId: 3
   _itemName: Stone
   _description: 
-  _icon: {fileID: 0}
+  _icon: {fileID: -61507124638633176, guid: e7e5529c3c43db04d8e0c83fbe5396e7, type: 3}
   _type: 0
   _maxStackSize: 99
   _placeBlockType: 3
