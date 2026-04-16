@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.Tilemaps;
@@ -57,6 +58,15 @@ public sealed class PlayerBlockInteraction : MonoBehaviour
         }
 
         HandleHotbarInput();
+
+        bool isPointerOverUI = EventSystem.current != null
+            && EventSystem.current.IsPointerOverGameObject();
+        if (isPointerOverUI)
+        {
+            ResetMining();
+            ClearHighlight();
+            return;
+        }
 
         Vector3Int targetCell = GetMouseTargetCell();
         bool isInRange = IsCellInInteractionRange(targetCell);

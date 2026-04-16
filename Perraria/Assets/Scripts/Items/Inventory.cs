@@ -47,6 +47,19 @@ public sealed class Inventory : MonoBehaviour
         return GetSlot(_selectedHotbarIndex);
     }
 
+    public void SetSlot(int index, ItemStack stack)
+    {
+        EnsureSlotsInitialized();
+
+        if (!IsValidSlotIndex(index))
+        {
+            return;
+        }
+
+        _slots[index] = stack.IsEmpty ? ItemStack.Empty : stack;
+        OnSlotChanged?.Invoke(index);
+    }
+
     public int AddItem(ItemData item, int count = 1)
     {
         EnsureSlotsInitialized();
