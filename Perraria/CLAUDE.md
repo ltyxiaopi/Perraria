@@ -31,6 +31,9 @@
 - 维护 `docs/task-board.md` 跟踪任务状态
 
 ### 代码审查
+- **审查前必读**：Codex 在每次完成任务后会在 `docs/codex-reports/<任务编号>-<任务名>.md` 写交付记录，
+  审查时**先读这份记录**了解 Codex 实现要点、自测结果和需要重点确认的事项，再开始审查代码
+- 如果 Codex 没写交付记录就 push 了分支，审查不通过——要求 Codex 补写后再审
 - 审查 Codex 提交的所有 PR，审查维度：
   - 架构一致性：是否符合 `docs/architecture.md` 的模块划分和接口约定
   - 编码规范：是否遵守 `docs/coding-conventions.md`
@@ -92,8 +95,10 @@
 
 ## 工作流程
 ```
-需求 → game-design.md → architecture.md → tasks/xxx.md + GitHub Issue
-→ Codex 实现 → PR → Claude Code 审查 + MCP 验证 → 合并
+需求 → game-design.md → architecture.md → tasks/xxx.md
+→ Codex 实现 + 自测 → Codex 写 codex-reports/xxx.md → push 分支
+→ Claude Code 读交付记录 → 代码审查 + MCP 验证
+→ 审查通过 → Claude 创建 PR → 用户在 GitHub 手动 merge
 ```
 
 ## 分支与提交
@@ -109,6 +114,8 @@ docs/
 ├── architecture.md         # 系统架构
 ├── coding-conventions.md   # 编码规范
 ├── task-board.md           # 任务看板
-└── tasks/                  # 任务规格书
-    └── TEMPLATE.md
+├── tasks/                  # 任务规格书（Claude → Codex）
+│   └── TEMPLATE.md
+└── codex-reports/          # Codex 交付记录（Codex → Claude）
+    └── README.md           # 命名约定与建议结构
 ```

@@ -24,3 +24,8 @@ public class ClassName : MonoBehaviour
 
 ## 注意事项
 - 特别需要注意的约束或边界情况
+
+## 交付记录（Codex 必填）
+完成任务并自测通过后，**push 分支前**必须在 `docs/codex-reports/<任务编号>-<任务名>.md`
+写一份交付记录，参考 `docs/codex-reports/README.md` 的结构。Claude 审查时会先读这份记录，
+没写视为未完成，审查不通过。

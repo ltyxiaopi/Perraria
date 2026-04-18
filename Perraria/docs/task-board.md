@@ -1,6 +1,6 @@
 # Perraria - 任务看板
 ## 待实现 (TODO)
-- [011 - 掉落物实体](tasks/011-item-drop.md) — 方块挖掘生成掉落物，靠近自动拾取
+暂无
 
 ## 进行中 (In Progress)
 暂无
@@ -9,6 +9,8 @@
 暂无
 
 ## 已完成 (Done)
+- [012 - 敌人基础框架 + 紫色史莱姆](tasks/012-enemy-slime.md) — 通过（附修复），[交付记录](../codex-reports/012-slime-collider-followup.md)、[审查修订](../codex-reports/012-review-fixes.md)
+- [011 - 掉落物实体](tasks/011-item-drop.md) — 通过，[交付记录](../codex-reports/011-item-drop.md)
 - [010 - 玩家生命值系统](tasks/010-player-health.md) — 通过，[交付记录](../codex-reports/010-player-health.md)
 - [009 - 快捷栏 + 背包 UI](tasks/009-hotbar-inventory-ui.md) — 通过，[交付记录](../codex-reports/009-hotbar-inventory-ui.md)
 - [008 - 背包系统](tasks/008-inventory-system.md) — 通过，[交付记录](../codex-reports/008-inventory-system.md)
