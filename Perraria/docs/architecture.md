@@ -60,10 +60,15 @@
 - 依赖: 无（被 Player、Enemy、UI 依赖）
 
 ### Enemy (`Enemies/`)
-- **EnemyController**: 基础 AI（检测玩家 → 移动 → 接触伤害）
-- **EnemyHealth**: 生命值、受击、死亡掉落
-- **EnemySpawner**: 敌人生成逻辑（位置、频率、上限）
-- 依赖: Items（死亡掉落）、Player（检测距离）
+- **EnemyState** (enum): 敌人通用状态（Idle / Chasing / Dead）
+- **Enemy** (abstract MonoBehaviour): 所有敌人的抽象基类，承载共性：生命值、玩家检测、接触伤害、
+  落地检测、死亡掉落、状态机骨架。`protected abstract void UpdateBehavior()` 由子类实现具体行为。
+  `Die / SpawnDrop / UpdateGroundedState / UpdateFacing` 为 virtual，特殊敌人可覆写
+- **Slime** (Enemy 子类): 紫色史莱姆，跳跃式追击 AI
+- **EnemySpawner**: 敌人生成逻辑（位置、频率、上限）（待实现）
+- **扩展模式**: 新增敌人只需继承 `Enemy` 并实现 `UpdateBehavior()`，共性逻辑无需重复编写。
+  如飞行敌人可覆写 `UpdateGroundedState()` 返回 true；远程敌人可覆写 `UpdateBehavior()` 实现投射物攻击
+- 依赖: Items（死亡掉落）、Player（检测距离、接触伤害目标）
 
 ### UI (`UI/`)
 - **HUDManager**: 生命值条、快捷栏显示
