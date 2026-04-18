@@ -71,6 +71,20 @@ public sealed class PlayerBlockInteraction : MonoBehaviour
 
         Vector3Int targetCell = GetMouseTargetCell();
         bool isInRange = IsCellInInteractionRange(targetCell);
+
+        if (IsWeaponSelected())
+        {
+            ResetMining();
+            ClearHighlight();
+
+            if (Mouse.current != null && Mouse.current.rightButton.wasPressedThisFrame && isInRange)
+            {
+                PlaceBlock(targetCell);
+            }
+
+            return;
+        }
+
         UpdateHighlight(targetCell, isInRange);
         UpdateMining(targetCell, isInRange);
 
@@ -300,6 +314,17 @@ public sealed class PlayerBlockInteraction : MonoBehaviour
         Vector3 spawnPosition = GetCellCenter(minedCell);
         ItemDrop drop = Instantiate(_itemDropPrefab, spawnPosition, Quaternion.identity);
         drop.Initialize(dropItem, 1);
+    }
+
+    private bool IsWeaponSelected()
+    {
+        if (_inventory == null)
+        {
+            return false;
+        }
+
+        ItemStack selected = _inventory.GetSelectedItem();
+        return !selected.IsEmpty && selected.Item.Type == ItemType.Weapon;
     }
 
     private bool IsPlayerOccupyingCell(Vector3Int cellPosition)

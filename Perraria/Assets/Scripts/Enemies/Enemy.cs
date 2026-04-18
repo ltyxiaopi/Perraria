@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -30,6 +31,9 @@ public abstract class Enemy : MonoBehaviour
     protected int _currentHealth;
     protected bool _isGrounded;
     protected EnemyState _state = EnemyState.Idle;
+
+    private Coroutine _hitFlashCoroutine;
+    private Color _defaultSpriteColor = Color.white;
 
     public int CurrentHealth => _currentHealth;
     public int MaxHealth => _maxHealth;
@@ -74,6 +78,11 @@ public abstract class Enemy : MonoBehaviour
             _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         }
 
+        if (_spriteRenderer != null)
+        {
+            _defaultSpriteColor = _spriteRenderer.color;
+        }
+
         TryCachePlayerTransform();
     }
 
@@ -94,10 +103,18 @@ public abstract class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        TakeDamage(damage, Vector2.zero, 0f);
+    }
+
+    public void TakeDamage(int damage, Vector2 knockbackDir, float force)
+    {
         if (damage <= 0 || IsDead)
         {
             return;
         }
+
+        ApplyKnockback(knockbackDir, force);
+        PlayHitFlash();
 
         _currentHealth = Mathf.Max(0, _currentHealth - damage);
         OnDamaged?.Invoke(_currentHealth, _maxHealth);
@@ -136,6 +153,14 @@ public abstract class Enemy : MonoBehaviour
     {
         _isGrounded = _groundCheck != null
             && Physics2D.OverlapCircle(_groundCheck.position, _groundCheckRadius, _groundLayer);
+    }
+
+    protected virtual void OnDisable()
+    {
+        if (_spriteRenderer != null)
+        {
+            _spriteRenderer.color = _defaultSpriteColor;
+        }
     }
 
     protected virtual void UpdateDetection()
@@ -200,5 +225,48 @@ public abstract class Enemy : MonoBehaviour
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, _detectionRange);
+    }
+
+    private void ApplyKnockback(Vector2 knockbackDir, float force)
+    {
+        if (_rigidbody2D == null || force <= 0f || knockbackDir.sqrMagnitude <= 0.0001f)
+        {
+            return;
+        }
+
+        _rigidbody2D.AddForce(knockbackDir.normalized * force, ForceMode2D.Impulse);
+    }
+
+    private void PlayHitFlash()
+    {
+        if (_spriteRenderer == null)
+        {
+            return;
+        }
+
+        if (_hitFlashCoroutine != null)
+        {
+            StopCoroutine(_hitFlashCoroutine);
+            _spriteRenderer.color = _defaultSpriteColor;
+        }
+        else
+        {
+            _defaultSpriteColor = _spriteRenderer.color;
+        }
+
+        _hitFlashCoroutine = StartCoroutine(HitFlashRoutine());
+    }
+
+    private IEnumerator HitFlashRoutine()
+    {
+        _spriteRenderer.color = Color.white;
+        yield return new WaitForSeconds(0.1f);
+
+        if (_spriteRenderer != null)
+        {
+            _spriteRenderer.color = _defaultSpriteColor;
+        }
+
+        _hitFlashCoroutine = null;
     }
 }
