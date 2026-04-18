@@ -10,6 +10,11 @@ public sealed class ItemData : ScriptableObject
     [SerializeField] private ItemType _type;
     [SerializeField] private int _maxStackSize = 99;
     [SerializeField] private BlockType _placeBlockType = BlockType.Air;
+    [SerializeField] private int _weaponDamage;
+    [SerializeField] private float _weaponRange;
+    [SerializeField] private float _swingArcDegrees = 100f;
+    [SerializeField] private float _swingDuration = 0.35f;
+    [SerializeField] private float _knockbackForce;
 
     public int ItemId => _itemId;
     public string ItemName => _itemName;
@@ -18,4 +23,9 @@ public sealed class ItemData : ScriptableObject
     public ItemType Type => _type;
     public int MaxStackSize => _maxStackSize;
     public BlockType PlaceBlockType => _placeBlockType;
+    public int WeaponDamage => _weaponDamage;
+    public float WeaponRange => _weaponRange;
+    public float SwingArcDegrees => _swingArcDegrees;
+    public float SwingDuration => _swingDuration;
+    public float KnockbackForce => _knockbackForce;
 }
