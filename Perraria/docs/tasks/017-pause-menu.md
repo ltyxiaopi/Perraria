@@ -2,9 +2,12 @@
 
 ## 目标
 游戏中按 ESC 弹出暂停菜单，遮罩游戏画面，`Time.timeScale = 0` 暂停玩法。
-菜单提供：「继续游戏」「保存游戏」「返回主菜单」。
-本任务实现菜单骨架与「继续 / 返回主菜单」的接通；
-**「保存游戏」按钮先 disabled，由任务 019 启用**。
+菜单提供三个按钮：`Resume` / `Save` / `Main Menu`。
+本任务实现菜单骨架与「Resume / Main Menu」的接通；
+**`Save` 按钮先 disabled，由任务 019 启用**。
+
+> **文案约定**：所有 UI 文本一律用英文，原因同 016——
+> 项目当前只有 `LiberationSans SDF`，不含 CJK 字形，避免运行时出现 tofu。
 
 ## 接口签名
 
@@ -39,17 +42,18 @@ ESC 触发逻辑：用 `InputSystem` 的 `Keyboard.current.escapeKey.wasPressedT
 - 场景配置（**通过 MCP 操作 SampleScene**）：
   - 在 Canvas 下新增 `PauseMenu/Panel`：
     - 全屏黑色半透明遮罩 Image（`color=(0,0,0,0.6)`，覆盖整屏）
-    - 中央竖向布局：「继续游戏」「保存游戏」「返回主菜单」三个按钮（TMP 文本）
+    - 中央竖向布局：`Resume` / `Save` / `Main Menu` 三个按钮（TMP 文本，**英文**）
   - `PauseMenu` 物体挂 `PauseMenuController`，绑定面板和三个按钮
   - 默认 `Panel.SetActive(false)`，Inspector 中即设为隐藏
-  - 「保存游戏」按钮 `interactable = false`
+  - `Save` 按钮 `interactable = false`
 
 ## 验收标准
 - [ ] 游戏中按 ESC 出现暂停面板，玩家、敌人、生成器全部停止运动
 - [ ] 暂停时再按 ESC 关闭面板，游戏恢复
-- [ ] 点「继续游戏」按钮等价于按 ESC 关闭
-- [ ] 点「返回主菜单」加载 MainMenu 场景，且 `Time.timeScale` 已被恢复为 1（避免主菜单按钮无响应）
-- [ ] 「保存游戏」按钮显示但灰色不可点击
+- [ ] 点 `Resume` 按钮等价于按 ESC 关闭
+- [ ] 点 `Main Menu` 加载 MainMenu 场景，且 `Time.timeScale` 已被恢复为 1（避免主菜单按钮无响应）
+- [ ] `Save` 按钮显示但灰色不可点击
+- [ ] 三个按钮的 TMP 文本可见且无 tofu（用 `TMP_FontAsset.HasCharacter` 验证全部命中）
 - [ ] 暂停时背包 / 快捷栏的快捷键（B、1-9）应失效，避免暂停时仍能交互（参见注意事项）
 - [ ] 暂停面板覆盖在 HUD 之上（Canvas Sort Order 或 panel 在 HUD 之后渲染）
 
@@ -63,8 +67,8 @@ ESC 触发逻辑：用 `InputSystem` 的 `Keyboard.current.escapeKey.wasPressedT
   **本任务最小实现**：在 PlayerController、PlayerCombat、PlayerBlockInteraction、InventoryUI、HotbarUI 的 `Update` 顶部加 `if (Time.timeScale <= 0f) return;`，
   其它脚本不动。
 - **离开暂停回主菜单时务必 `Time.timeScale = 1`**，否则 MainMenu 场景的按钮 / 动画会卡住
-- **不实现「保存游戏」按钮的真实逻辑**——任务 019 接通；本任务只做按钮存在 + disabled 状态
-- **不做** 设置子菜单 / 音量调节 / 退出游戏（退出走「返回主菜单」即可）
+- **不实现 `Save` 按钮的真实逻辑**——任务 019 接通；本任务只做按钮存在 + disabled 状态
+- **不做** 设置子菜单 / 音量调节 / 退出游戏（退出走 `Main Menu` 即可）
 
 ## 交付记录（Codex 必填）
 完成任务并自测通过后，**push 分支前**必须在 `docs/codex-reports/017-pause-menu.md`
