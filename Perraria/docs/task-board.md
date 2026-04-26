@@ -1,6 +1,9 @@
 # Perraria - 任务看板
 ## 待实现 (TODO)
-暂无
+> **阶段：玩家生命周期** —— 让游戏「能持续玩」，是后续所有玩法的前置
+- [017 - 暂停菜单](tasks/017-pause-menu.md)
+- [018 - 存档系统数据结构与服务](tasks/018-save-system.md)
+- [019 - 存档/读档接入 UI](tasks/019-save-load-integration.md)
 
 ## 进行中 (In Progress)
 暂无
@@ -9,6 +12,10 @@
 暂无
 
 ## 已完成 (Done)
+- [016 - 主菜单场景](tasks/016-main-menu.md) — 通过（附修复：按钮文案改英文以避免 CJK tofu），[交付记录](../codex-reports/016-main-menu.md)
+- [015 - 玩家血量 UI（左上角心形）](tasks/015-player-health-ui.md) — 通过，[交付记录](../codex-reports/015-player-health-ui.md)
+- [014 - 敌人生成器（EnemySpawner）](tasks/014-enemy-spawner.md) — 通过，[交付记录](../codex-reports/014-enemy-spawner.md)
+- [013 - 玩家战斗系统（PlayerCombat + 剑武器）](tasks/013-player-combat.md) — 通过，[交付记录](../codex-reports/013-player-combat.md)
 - [012 - 敌人基础框架 + 紫色史莱姆](tasks/012-enemy-slime.md) — 通过（附修复），[交付记录](../codex-reports/012-slime-collider-followup.md)、[审查修订](../codex-reports/012-review-fixes.md)
 - [011 - 掉落物实体](tasks/011-item-drop.md) — 通过，[交付记录](../codex-reports/011-item-drop.md)
 - [010 - 玩家生命值系统](tasks/010-player-health.md) — 通过，[交付记录](../codex-reports/010-player-health.md)
