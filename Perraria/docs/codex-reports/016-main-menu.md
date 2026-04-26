@@ -21,6 +21,7 @@
 - 更新 `ProjectSettings/EditorBuildSettings.asset`：
   - `MainMenu.unity` 为 index 0
   - `SampleScene.unity` 为 index 1
+- 修订：将两个按钮文案从中文改为英文 `Start Game` / `Quit Game`，原因是项目当前仅有 `LiberationSans SDF`，不含 CJK 字形；改为英文以避免运行时出现 tofu 方块。
 
 ## 变更文件清单
 - `Assets/Scripts/UI/MainMenuController.cs`
@@ -43,6 +44,13 @@
   - `match=0.5`
   - `Title text=Perraria`
   - `Title fontSize=96`
+- 英文按钮文本与字形覆盖：
+  - `StartButton text=Start Game`
+  - `QuitButton text=Quit Game`
+  - `StartButton font=LiberationSans SDF`
+  - `QuitButton font=LiberationSans SDF`
+  - `StartButton missing=[]`
+  - `QuitButton missing=[]`
 - 点击「开始游戏」后：
   - `Active scene=SampleScene`
   - `Player=Player`
