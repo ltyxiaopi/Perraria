@@ -25,6 +25,7 @@ public sealed class PlayerController : MonoBehaviour
     private bool _jumpQueued;
 
     public bool IsGrounded { get; private set; }
+    public bool FacingRight => _spriteRenderer == null || !_spriteRenderer.flipX;
 
     #region Unity Lifecycle
 
@@ -156,6 +157,33 @@ public sealed class PlayerController : MonoBehaviour
         }
 
         _jumpQueued = true;
+    }
+
+    public void RestoreState(Vector3 position, bool facingRight)
+    {
+        transform.position = position;
+        _moveInput = 0f;
+        _jumpQueued = false;
+
+        if (_rigidbody2D == null)
+        {
+            _rigidbody2D = GetComponent<Rigidbody2D>();
+        }
+
+        if (_rigidbody2D != null)
+        {
+            _rigidbody2D.linearVelocity = Vector2.zero;
+        }
+
+        if (_spriteRenderer == null)
+        {
+            _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        }
+
+        if (_spriteRenderer != null)
+        {
+            _spriteRenderer.flipX = !facingRight;
+        }
     }
 
     private void UpdateGroundedState()

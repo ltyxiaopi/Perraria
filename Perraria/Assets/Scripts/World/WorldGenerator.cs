@@ -36,6 +36,7 @@ public sealed class WorldGenerator : MonoBehaviour
     public WorldData WorldData => _worldData;
     public int HalfWidth => _worldWidth / 2;
     public int HalfHeight => _worldHeight / 2;
+    public int Seed { get; private set; }
 
     #region Unity Lifecycle
 
@@ -50,8 +51,20 @@ public sealed class WorldGenerator : MonoBehaviour
 
     private void GenerateWorld()
     {
+        GenerateWorldWithSeed(Random.Range(int.MinValue, int.MaxValue));
+    }
+
+    public void GenerateWorldWithSeed(int seed)
+    {
+        Seed = seed;
+        Random.InitState(Seed);
         _seedX = Random.Range(0f, 10000f);
         _seedY = Random.Range(0f, 10000f);
+
+        if (_tilemap != null)
+        {
+            _tilemap.ClearAllTiles();
+        }
 
         _worldData = new WorldData(_worldWidth, _worldHeight);
 
