@@ -1,7 +1,6 @@
 # Perraria - 任务看板
 ## 待实现 (TODO)
 > **阶段：玩家生命周期** —— 让游戏「能持续玩」，是后续所有玩法的前置
-- [018 - 存档系统数据结构与服务](tasks/018-save-system.md)
 - [019 - 存档/读档接入 UI](tasks/019-save-load-integration.md)
 
 ## 进行中 (In Progress)
@@ -11,6 +10,7 @@
 暂无
 
 ## 已完成 (Done)
+- [018 - 存档系统数据结构与服务](tasks/018-save-system.md) — 通过（含独立 MCP 14 项断言往返验证），[交付记录](../codex-reports/018-save-system.md)
 - [017 - 暂停菜单](tasks/017-pause-menu.md) — 通过，[交付记录](../codex-reports/017-pause-menu.md)（follow-up：`PlayerHealth.HandleDebugInput()` 的 P/L 调试键暂未 pause-gate，后续清理 debug 入口时统一处理）
 - [016 - 主菜单场景](tasks/016-main-menu.md) — 通过（附修复：按钮文案改英文以避免 CJK tofu），[交付记录](../codex-reports/016-main-menu.md)
 - [015 - 玩家血量 UI（左上角心形）](tasks/015-player-health-ui.md) — 通过，[交付记录](../codex-reports/015-player-health-ui.md)
