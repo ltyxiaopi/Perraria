@@ -98,6 +98,11 @@ public sealed class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale <= 0f)
+        {
+            return;
+        }
+
         UpdateGroundedState();
         _moveInput = _moveAction != null ? _moveAction.ReadValue<Vector2>().x : 0f;
         UpdateFacingDirection();

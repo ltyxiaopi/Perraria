@@ -51,6 +51,11 @@ public sealed class PlayerBlockInteraction : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale <= 0f)
+        {
+            return;
+        }
+
         if (_tileManager == null || _blockDataRegistry == null || _mainCamera == null)
         {
             ResetMining();

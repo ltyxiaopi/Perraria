@@ -46,6 +46,11 @@ public sealed class InventoryUI : MonoBehaviour
 
     private void Update()
     {
+        if (Time.timeScale <= 0f)
+        {
+            return;
+        }
+
         if (Keyboard.current != null && Keyboard.current.tabKey.wasPressedThisFrame)
         {
             TogglePanel();
