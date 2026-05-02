@@ -116,7 +116,7 @@ public sealed class PlayerHealth : MonoBehaviour
         _isInvincible = false;
         _invincibilityTimer = 0f;
         _flashTimer = 0f;
-        _regenTimer = 0f;
+        _regenTimer = _currentHealth < _maxHealth ? _regenDelay : 0f;
         _regenAccumulator = 0f;
         RestoreSpriteAlpha();
         SetPlayerControlsEnabled(!_isDead);

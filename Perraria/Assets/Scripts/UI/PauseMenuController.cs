@@ -1,3 +1,5 @@
+using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -12,18 +14,28 @@ public sealed class PauseMenuController : MonoBehaviour
     [SerializeField] private Button _mainMenuButton;
     [SerializeField] private string _mainMenuSceneName = "MainMenu";
 
+    private const string SaveButtonText = "Save";
+    private const string SavedButtonText = "Saved";
+    private const float SaveFeedbackSeconds = 1f;
+
+    private TMP_Text _saveButtonLabel;
+    private Coroutine _saveFeedbackCoroutine;
+
     public bool IsPaused { get; private set; }
 
     private void Awake()
     {
+        CacheSaveButtonLabel();
         SetPanelActive(false);
-        SetSaveButtonDisabled();
+        SetSaveButtonEnabled();
     }
 
     private void OnEnable()
     {
         SubscribeButtons();
-        SetSaveButtonDisabled();
+        CacheSaveButtonLabel();
+        SetSaveButtonEnabled();
+        SetSaveButtonText(SaveButtonText);
     }
 
     private void OnDisable()
@@ -69,6 +81,9 @@ public sealed class PauseMenuController : MonoBehaviour
 
     public void OnSaveClicked()
     {
+        SaveData snapshot = GameStateSnapshot.Capture();
+        SaveSystem.Save(snapshot);
+        ShowSaveFeedback();
     }
 
     public void OnMainMenuClicked()
@@ -123,18 +138,65 @@ public sealed class PauseMenuController : MonoBehaviour
         }
     }
 
-    private void SetSaveButtonDisabled()
+    private void SetSaveButtonEnabled()
     {
         if (_saveButton != null)
         {
-            _saveButton.interactable = false;
+            _saveButton.interactable = true;
         }
     }
 
     private void RestoreTimeScale()
     {
+        StopSaveFeedback();
         Time.timeScale = 1f;
         IsPaused = false;
         SetPanelActive(false);
+    }
+
+    private void CacheSaveButtonLabel()
+    {
+        if (_saveButton != null && _saveButtonLabel == null)
+        {
+            _saveButtonLabel = _saveButton.GetComponentInChildren<TMP_Text>(true);
+        }
+    }
+
+    private void ShowSaveFeedback()
+    {
+        if (_saveFeedbackCoroutine != null)
+        {
+            StopCoroutine(_saveFeedbackCoroutine);
+        }
+
+        _saveFeedbackCoroutine = StartCoroutine(SaveFeedbackRoutine());
+    }
+
+    private IEnumerator SaveFeedbackRoutine()
+    {
+        SetSaveButtonText(SavedButtonText);
+        yield return new WaitForSecondsRealtime(SaveFeedbackSeconds);
+        SetSaveButtonText(SaveButtonText);
+        _saveFeedbackCoroutine = null;
+    }
+
+    private void StopSaveFeedback()
+    {
+        if (_saveFeedbackCoroutine != null)
+        {
+            StopCoroutine(_saveFeedbackCoroutine);
+            _saveFeedbackCoroutine = null;
+        }
+
+        SetSaveButtonText(SaveButtonText);
+    }
+
+    private void SetSaveButtonText(string text)
+    {
+        CacheSaveButtonLabel();
+        if (_saveButtonLabel != null)
+        {
+            _saveButtonLabel.text = text;
+        }
     }
 }

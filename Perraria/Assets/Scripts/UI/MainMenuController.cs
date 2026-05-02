@@ -9,12 +9,18 @@ using UnityEditor;
 public sealed class MainMenuController : MonoBehaviour
 {
     [SerializeField] private Button _startButton;
+    [SerializeField] private Button _continueButton;
     [SerializeField] private Button _quitButton;
     [SerializeField] private string _gameSceneName = "SampleScene";
 
     private void OnEnable()
     {
         SubscribeButtons();
+    }
+
+    private void Start()
+    {
+        RefreshContinueButton();
     }
 
     private void OnDisable()
@@ -24,6 +30,13 @@ public sealed class MainMenuController : MonoBehaviour
 
     public void OnStartClicked()
     {
+        GameManager.PendingLaunchMode = GameLaunchMode.NewGame;
+        SceneManager.LoadScene(_gameSceneName, LoadSceneMode.Single);
+    }
+
+    public void OnContinueClicked()
+    {
+        GameManager.PendingLaunchMode = GameLaunchMode.ContinueSave;
         SceneManager.LoadScene(_gameSceneName, LoadSceneMode.Single);
     }
 
@@ -43,6 +56,11 @@ public sealed class MainMenuController : MonoBehaviour
             _startButton.onClick.AddListener(OnStartClicked);
         }
 
+        if (_continueButton != null)
+        {
+            _continueButton.onClick.AddListener(OnContinueClicked);
+        }
+
         if (_quitButton != null)
         {
             _quitButton.onClick.AddListener(OnQuitClicked);
@@ -56,9 +74,22 @@ public sealed class MainMenuController : MonoBehaviour
             _startButton.onClick.RemoveListener(OnStartClicked);
         }
 
+        if (_continueButton != null)
+        {
+            _continueButton.onClick.RemoveListener(OnContinueClicked);
+        }
+
         if (_quitButton != null)
         {
             _quitButton.onClick.RemoveListener(OnQuitClicked);
+        }
+    }
+
+    private void RefreshContinueButton()
+    {
+        if (_continueButton != null)
+        {
+            _continueButton.gameObject.SetActive(SaveSystem.HasSave());
         }
     }
 }
