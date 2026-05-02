@@ -18,6 +18,11 @@ public sealed class EnemySpawner : MonoBehaviour
     private float _spawnTimer;
 
     public int AliveCount => _aliveEnemies.Count;
+    public float SpawnTimer
+    {
+        get => _spawnTimer;
+        set => _spawnTimer = Mathf.Max(0f, value);
+    }
 
     private void Reset()
     {

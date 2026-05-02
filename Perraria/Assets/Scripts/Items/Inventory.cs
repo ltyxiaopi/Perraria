@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -8,6 +9,7 @@ public sealed class Inventory : MonoBehaviour
     public const int HotbarSlots = 10;
 
     [SerializeField] private ItemStack[] _slots;
+    [SerializeField] private ItemDatabase _itemDatabase;
 
     private int _selectedHotbarIndex;
 
@@ -116,6 +118,43 @@ public sealed class Inventory : MonoBehaviour
         OnSelectedHotbarChanged?.Invoke(_selectedHotbarIndex);
     }
 
+    public InventorySaveData CreateSnapshot()
+    {
+        EnsureSlotsInitialized();
+
+        var slots = new List<InventorySlotSaveData>(TotalSlots);
+        for (int i = 0; i < _slots.Length; i++)
+        {
+            ItemStack stack = _slots[i];
+            slots.Add(new InventorySlotSaveData
+            {
+                ItemId = stack.IsEmpty ? string.Empty : stack.Item.ItemId.ToString(),
+                Count = stack.IsEmpty ? 0 : stack.Count
+            });
+        }
+
+        return new InventorySaveData
+        {
+            Slots = slots,
+            SelectedHotbarIndex = _selectedHotbarIndex
+        };
+    }
+
+    public void RestoreFromSnapshot(InventorySaveData data)
+    {
+        EnsureSlotsInitialized();
+        ClearSlotsWithoutEvents();
+
+        ItemDatabase itemDatabase = ResolveItemDatabase();
+        if (data?.Slots != null)
+        {
+            RestoreSlots(data.Slots, itemDatabase);
+        }
+
+        NotifyAllSlotsChanged();
+        SelectHotbar(data != null ? data.SelectedHotbarIndex : 0);
+    }
+
     private int MergeIntoExistingStacks(ItemData item, int count)
     {
         int remaining = count;
@@ -166,6 +205,66 @@ public sealed class Inventory : MonoBehaviour
         _slots[index] = new ItemStack(item, currentCount + addCount);
         OnSlotChanged?.Invoke(index);
         return count - addCount;
+    }
+
+    private void RestoreSlots(IReadOnlyList<InventorySlotSaveData> slots, ItemDatabase itemDatabase)
+    {
+        int slotCount = Mathf.Min(slots.Count, TotalSlots);
+        for (int i = 0; i < slotCount; i++)
+        {
+            InventorySlotSaveData slot = slots[i];
+            if (slot == null || string.IsNullOrEmpty(slot.ItemId) || slot.Count <= 0)
+            {
+                continue;
+            }
+
+            if (!int.TryParse(slot.ItemId, out int itemId))
+            {
+                Debug.LogWarning($"Invalid saved item id '{slot.ItemId}' in inventory slot {i}.");
+                continue;
+            }
+
+            ItemData item = itemDatabase != null ? itemDatabase.GetItemById(itemId) : null;
+            if (item == null)
+            {
+                Debug.LogWarning($"Saved item id '{slot.ItemId}' was not found in ItemDatabase.");
+                continue;
+            }
+
+            _slots[i] = new ItemStack(item, slot.Count);
+        }
+    }
+
+    private void ClearSlotsWithoutEvents()
+    {
+        for (int i = 0; i < _slots.Length; i++)
+        {
+            _slots[i] = ItemStack.Empty;
+        }
+    }
+
+    private void NotifyAllSlotsChanged()
+    {
+        for (int i = 0; i < _slots.Length; i++)
+        {
+            OnSlotChanged?.Invoke(i);
+        }
+    }
+
+    private ItemDatabase ResolveItemDatabase()
+    {
+        if (_itemDatabase != null)
+        {
+            return _itemDatabase;
+        }
+
+        ItemDatabase[] loadedDatabases = Resources.FindObjectsOfTypeAll<ItemDatabase>();
+        if (loadedDatabases.Length > 0)
+        {
+            _itemDatabase = loadedDatabases[0];
+        }
+
+        return _itemDatabase;
     }
 
     private void EnsureSlotsInitialized()

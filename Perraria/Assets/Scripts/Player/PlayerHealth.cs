@@ -108,6 +108,21 @@ public sealed class PlayerHealth : MonoBehaviour
         OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
     }
 
+    public void RestoreState(int currentHealth, int maxHealth)
+    {
+        _maxHealth = Mathf.Max(1, maxHealth);
+        _currentHealth = Mathf.Clamp(currentHealth, 0, _maxHealth);
+        _isDead = _currentHealth <= 0;
+        _isInvincible = false;
+        _invincibilityTimer = 0f;
+        _flashTimer = 0f;
+        _regenTimer = 0f;
+        _regenAccumulator = 0f;
+        RestoreSpriteAlpha();
+        SetPlayerControlsEnabled(!_isDead);
+        OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
+    }
+
     private void HandleDebugInput()
     {
         if (Keyboard.current == null)

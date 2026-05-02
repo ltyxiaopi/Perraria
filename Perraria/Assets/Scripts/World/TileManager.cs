@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -10,12 +11,14 @@ public sealed class TileManager : MonoBehaviour
     private WorldData _worldData;
     private int _halfWidth;
     private int _halfHeight;
+    private readonly HashSet<Vector2Int> _playerEdits = new();
 
     public void Initialize(WorldData worldData, int halfWidth, int halfHeight)
     {
         _worldData = worldData;
         _halfWidth = halfWidth;
         _halfHeight = halfHeight;
+        ClearChangeTracking();
     }
 
     public BlockType GetBlock(Vector3Int tilemapPos)
@@ -44,7 +47,50 @@ public sealed class TileManager : MonoBehaviour
 
         _worldData.SetBlock(worldDataPos.x, worldDataPos.y, type);
         _tilemap.SetTile(tilemapPos, _tileRegistry.GetTile(type));
+        _playerEdits.Add(worldDataPos);
         return true;
+    }
+
+    public IEnumerable<WorldTileChange> EnumerateChanges()
+    {
+        if (_worldData == null)
+        {
+            yield break;
+        }
+
+        foreach (Vector2Int position in _playerEdits)
+        {
+            if (!_worldData.InBounds(position.x, position.y))
+            {
+                continue;
+            }
+
+            yield return new WorldTileChange
+            {
+                X = position.x,
+                Y = position.y,
+                BlockType = (int)_worldData.GetBlock(position.x, position.y)
+            };
+        }
+    }
+
+    public void ApplyTileChanges(IEnumerable<WorldTileChange> changes)
+    {
+        if (changes == null)
+        {
+            return;
+        }
+
+        foreach (WorldTileChange change in changes)
+        {
+            Vector3Int tilemapPosition = ToTilemapPosition(new Vector2Int(change.X, change.Y));
+            SetBlock(tilemapPosition, (BlockType)change.BlockType);
+        }
+    }
+
+    public void ClearChangeTracking()
+    {
+        _playerEdits.Clear();
     }
 
     public Vector3Int WorldToCell(Vector3 worldPosition)
@@ -77,5 +123,10 @@ public sealed class TileManager : MonoBehaviour
     private Vector2Int ToWorldDataPosition(Vector3Int tilemapPos)
     {
         return new Vector2Int(tilemapPos.x + _halfWidth, tilemapPos.y + _halfHeight);
+    }
+
+    private Vector3Int ToTilemapPosition(Vector2Int worldDataPos)
+    {
+        return new Vector3Int(worldDataPos.x - _halfWidth, worldDataPos.y - _halfHeight, 0);
     }
 }

@@ -6039,6 +6039,7 @@ MonoBehaviour:
     Count: 0
   - Item: {fileID: 0}
     Count: 0
+  _itemDatabase: {fileID: 11400000, guid: 85f765edb8564309b855f0cb718d7f56, type: 2}
 --- !u!114 &540911846
 MonoBehaviour:
   m_ObjectHideFlags: 0
