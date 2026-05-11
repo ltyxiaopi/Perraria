@@ -1,6 +1,22 @@
 # Perraria - 任务看板
 ## 待实现 (TODO)
-> **阶段：玩家生命周期** ✅ 已完结（016 → 017 → 018 → 019）。下一阶段待规划。
+> **阶段：装备扩展 + 敌人丰富 + 环境系统**（020 → 024）规范已就绪。
+> **阶段：建造系统**（025 → 027）骨架已起草，**实施前需重新审视并补全**。
+
+### 装备扩展（近期 - 完整版规范）
+- [021 - 远程武器系统](tasks/021-ranged-weapons.md) — 弓 / 法杖 / 投掷斧 + 通用 Projectile 组件
+
+### 敌人丰富（近期 - 完整版规范）
+- [022 - 僵尸敌人](tasks/022-enemy-zombie.md) — 地面行走 AI，预留 AllowedTimes 字段给 024
+- [023 - Boss 敌人 + 召唤系统](tasks/023-boss-and-summon.md) — EyeOfNight 多阶段 Boss + Item_SuspiciousEye 召唤物
+
+### 环境系统（近期 - 完整版规范）
+- [024 - 昼夜循环系统](tasks/024-day-night-cycle.md) — 5 时段 + 全局光照渐变 + 背景切换 + 僵尸夜间 spawn 接入
+
+### 建造系统（远期 - **骨架版**，实施前 Claude 必须补全）
+- [025 - 合成系统](tasks/025-crafting-system.md) ⚠️ 骨架版 — Recipe SO + 工作台；前置依赖：木材 / 铁锭物品来源
+- [026 - 家具放置系统](tasks/026-furniture-placement.md) ⚠️ 骨架版 — Furniture 基类 + 多格占用 + 拆除机制
+- [027 - 房屋构建判定](tasks/027-house-validation.md) ⚠️ 骨架版 — Flood Fill 围合检测 + UI 反馈
 
 ## 进行中 (In Progress)
 暂无
@@ -9,6 +25,7 @@
 暂无
 
 ## 已完成 (Done)
+- [020 - 近战武器扩展 + 木镐工具](tasks/020-melee-weapons-and-pickaxe.md) — 通过（附修复：木镐源图从 80×55 缩为 12×14 像素），[交付记录](../codex-reports/020-melee-weapons-and-pickaxe.md)
 - [019 - 存档/读档接入 UI](tasks/019-save-load-integration.md) — 通过（含独立 MCP 验证 Flow 4 完整还原 + Flow 6 损坏存档容错），[交付记录](../codex-reports/019-save-load-integration.md)
 - [018 - 存档系统数据结构与服务](tasks/018-save-system.md) — 通过（含独立 MCP 14 项断言往返验证），[交付记录](../codex-reports/018-save-system.md)
 - [017 - 暂停菜单](tasks/017-pause-menu.md) — 通过，[交付记录](../codex-reports/017-pause-menu.md)（follow-up：`PlayerHealth.HandleDebugInput()` 的 P/L 调试键暂未 pause-gate，后续清理 debug 入口时统一处理）
