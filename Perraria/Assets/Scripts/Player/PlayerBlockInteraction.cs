@@ -158,7 +158,8 @@ public sealed class PlayerBlockInteraction : MonoBehaviour
         ResetMining();
 
         float hardness = _blockDataRegistry.GetHardness(blockType);
-        if (hardness <= 0f || _miningSpeed <= 0f)
+        float miningSpeed = GetCurrentMiningSpeed();
+        if (hardness <= 0f || miningSpeed <= 0f)
         {
             return;
         }
@@ -166,7 +167,7 @@ public sealed class PlayerBlockInteraction : MonoBehaviour
         _isMining = true;
         _miningCell = cellPosition;
         _miningProgress = 0f;
-        _miningDuration = hardness / _miningSpeed;
+        _miningDuration = hardness / miningSpeed;
         ClearHighlight();
     }
 
@@ -330,6 +331,23 @@ public sealed class PlayerBlockInteraction : MonoBehaviour
 
         ItemStack selected = _inventory.GetSelectedItem();
         return !selected.IsEmpty && selected.Item.Type == ItemType.Weapon;
+    }
+
+    private float GetCurrentMiningSpeed()
+    {
+        if (_inventory == null)
+        {
+            return _miningSpeed;
+        }
+
+        ItemStack selected = _inventory.GetSelectedItem();
+        if (selected.IsEmpty || selected.Item.Type != ItemType.Tool)
+        {
+            return _miningSpeed;
+        }
+
+        float multiplier = selected.Item.MiningSpeedMultiplier;
+        return multiplier > 0f ? _miningSpeed * multiplier : _miningSpeed;
     }
 
     private bool IsPlayerOccupyingCell(Vector3Int cellPosition)

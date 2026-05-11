@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Linq;
 using UnityEngine;
 
@@ -32,8 +32,8 @@ public static class GameStateSnapshot
 
     private static WorldSaveData CaptureWorld()
     {
-        WorldGenerator generator = UnityEngine.Object.FindFirstObjectByType<WorldGenerator>();
-        TileManager tileManager = UnityEngine.Object.FindFirstObjectByType<TileManager>();
+        WorldGenerator generator = UnityEngine.Object.FindAnyObjectByType<WorldGenerator>();
+        TileManager tileManager = UnityEngine.Object.FindAnyObjectByType<TileManager>();
 
         return new WorldSaveData
         {
@@ -44,8 +44,8 @@ public static class GameStateSnapshot
 
     private static PlayerSaveData CapturePlayer()
     {
-        PlayerController controller = UnityEngine.Object.FindFirstObjectByType<PlayerController>();
-        PlayerHealth health = UnityEngine.Object.FindFirstObjectByType<PlayerHealth>();
+        PlayerController controller = UnityEngine.Object.FindAnyObjectByType<PlayerController>();
+        PlayerHealth health = UnityEngine.Object.FindAnyObjectByType<PlayerHealth>();
         Transform playerTransform = controller != null
             ? controller.transform
             : health != null ? health.transform : null;
@@ -61,13 +61,13 @@ public static class GameStateSnapshot
 
     private static InventorySaveData CaptureInventory()
     {
-        Inventory inventory = UnityEngine.Object.FindFirstObjectByType<Inventory>();
+        Inventory inventory = UnityEngine.Object.FindAnyObjectByType<Inventory>();
         return inventory != null ? inventory.CreateSnapshot() : null;
     }
 
     private static SpawnerSaveData CaptureSpawner()
     {
-        EnemySpawner spawner = UnityEngine.Object.FindFirstObjectByType<EnemySpawner>();
+        EnemySpawner spawner = UnityEngine.Object.FindAnyObjectByType<EnemySpawner>();
         return new SpawnerSaveData
         {
             SpawnTimer = spawner != null ? spawner.SpawnTimer : 0f
@@ -81,13 +81,13 @@ public static class GameStateSnapshot
             return;
         }
 
-        WorldGenerator generator = UnityEngine.Object.FindFirstObjectByType<WorldGenerator>();
-        TileManager tileManager = UnityEngine.Object.FindFirstObjectByType<TileManager>();
+        WorldGenerator generator = UnityEngine.Object.FindAnyObjectByType<WorldGenerator>();
+        TileManager tileManager = UnityEngine.Object.FindAnyObjectByType<TileManager>();
 
         if (generator != null)
         {
             generator.GenerateWorldWithSeed(data.Seed);
-            tileManager = UnityEngine.Object.FindFirstObjectByType<TileManager>();
+            tileManager = UnityEngine.Object.FindAnyObjectByType<TileManager>();
         }
 
         if (tileManager == null)
@@ -106,8 +106,8 @@ public static class GameStateSnapshot
             return;
         }
 
-        PlayerController controller = UnityEngine.Object.FindFirstObjectByType<PlayerController>();
-        PlayerHealth health = UnityEngine.Object.FindFirstObjectByType<PlayerHealth>();
+        PlayerController controller = UnityEngine.Object.FindAnyObjectByType<PlayerController>();
+        PlayerHealth health = UnityEngine.Object.FindAnyObjectByType<PlayerHealth>();
 
         if (controller != null)
         {
@@ -122,7 +122,7 @@ public static class GameStateSnapshot
 
     private static void ApplyInventory(InventorySaveData data)
     {
-        Inventory inventory = UnityEngine.Object.FindFirstObjectByType<Inventory>();
+        Inventory inventory = UnityEngine.Object.FindAnyObjectByType<Inventory>();
         if (inventory != null)
         {
             inventory.RestoreFromSnapshot(data);
@@ -131,7 +131,7 @@ public static class GameStateSnapshot
 
     private static void ApplySpawner(SpawnerSaveData data)
     {
-        EnemySpawner spawner = UnityEngine.Object.FindFirstObjectByType<EnemySpawner>();
+        EnemySpawner spawner = UnityEngine.Object.FindAnyObjectByType<EnemySpawner>();
         if (spawner != null && data != null)
         {
             spawner.SpawnTimer = data.SpawnTimer;
