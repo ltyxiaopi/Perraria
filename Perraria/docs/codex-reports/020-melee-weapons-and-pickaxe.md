@@ -45,7 +45,7 @@
 - Knight sword baseline:
   `id=5 type=Weapon damage=10 duration=0.35`
 - Import checks:
-  `tool_pickaxe_wood.png texture=80x55 spriteRect=(0,0,80,55) pivot=(40,0) ppu=16 filter=Point compression=Uncompressed mode=Single`
+  `tool_pickaxe_wood.png texture=12x14 spriteRect=(0,0,12,14) pivot=(6,0) ppu=16 filter=Point compression=Uncompressed mode=Single worldSize=0.75x0.875`
   `weapon_cleaver.png texture=8x19 spriteRect=(0,0,8,19) pivot=(4,0) ppu=16 filter=Point compression=Uncompressed mode=Single`
   `weapon_waraxe.png texture=12x23 spriteRect=(0,0,12,23) pivot=(6,0) ppu=16 filter=Point compression=Uncompressed mode=Single`
 - Mining duration measured from runtime item data and block hardness:
@@ -57,7 +57,7 @@
   Knife: damage `5`, range `0.9`, arc `70`, duration `0.20`, knockback `2`.
 
 ## MCP Screenshots
-- Screenshot 1: `Unity_SceneView_CaptureMultiAngleSceneView`, focus Player, state `tool_pickaxe_wood`, 1024x1024 PNG, size 26066 bytes. Shows wood pickaxe held in `WeaponPivot/Weapon`.
+- Screenshot 1: `Unity_SceneView_CaptureMultiAngleSceneView`, focus Player, state `tool_pickaxe_wood` after resize, 1024x1024 PNG, size 25354 bytes. Shows full Player + Pickaxe; pickaxe world size is `0.75x0.875`, below the measured player height `1.3125`.
 - Screenshot 2: `Unity_SceneView_CaptureMultiAngleSceneView`, focus Player, state `weapon_knight_sword` with pivot z `315`, 1024x1024 PNG, size 30112 bytes. Shows knight sword swing pose.
 - Screenshot 3: `Unity_SceneView_CaptureMultiAngleSceneView`, focus Player, state `weapon_waraxe`, 1024x1024 PNG, size 25351 bytes. Shows weapon switch visual with a different held weapon.
 
@@ -261,5 +261,6 @@ File size: `3930` bytes. Selected hotbar index: `0`. Slot 0: ItemId `6` x1 (`Ite
 - Confirm the task table intentionally results in 20 new weapon assets plus existing `Item_KnightSword` = 21 total melee weapons; `Item_ThrowingAxe` was not created.
 
 ## Known Notes
+- Review follow-up: `Assets/Art/Sprites/Tools/tool_pickaxe_wood.png` was replaced with a small 12x14 pixel source and reimported. Final spriteRect matches texture size `(0,0,12,14)`, PPU is 16, and world width is `0.75`, below the requested `< 1.5`.
 - Unity Console still contains Unity account/network errors: `UnityConnectWebRequestException: Token Exchange failed` and `Account API did not become accessible within 30 seconds`. These were observed before this task and are unrelated to project compile/runtime code.
 - One attempted `Unity_Camera_Capture` with a stale camera instance ID logged an MCP tool error before switching to `Unity_SceneView_CaptureMultiAngleSceneView`. The final compile check completed successfully with empty compilation logs.
