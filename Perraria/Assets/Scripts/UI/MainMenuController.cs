@@ -30,7 +30,10 @@ public sealed class MainMenuController : MonoBehaviour
 
     public void OnStartClicked()
     {
-        GameManager.PendingLaunchMode = GameLaunchMode.NewGame;
+        SaveSystem.Delete();
+        SaveData initial = SaveData.CreateNewGameDefault();
+        SaveSystem.Save(initial);
+        GameManager.QueueNewGameFromInitialSave();
         SceneManager.LoadScene(_gameSceneName, LoadSceneMode.Single);
     }
 

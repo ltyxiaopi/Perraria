@@ -341,6 +341,18 @@ public sealed class PlayerCombat : MonoBehaviour
             return;
         }
 
+        if (TryGetSelectedTool(out ItemData toolItem))
+        {
+            if (_weaponPivot != null)
+            {
+                _weaponPivot.localRotation = Quaternion.identity;
+            }
+
+            _weaponRenderer.sprite = toolItem.Icon;
+            _weaponRenderer.enabled = true;
+            return;
+        }
+
         _weaponRenderer.sprite = null;
         _weaponRenderer.enabled = false;
     }
@@ -382,6 +394,24 @@ public sealed class PlayerCombat : MonoBehaviour
         }
 
         weaponItem = selected.Item;
+        return true;
+    }
+
+    private bool TryGetSelectedTool(out ItemData toolItem)
+    {
+        toolItem = null;
+        if (_inventory == null)
+        {
+            return false;
+        }
+
+        ItemStack selected = _inventory.GetSelectedItem();
+        if (selected.IsEmpty || selected.Item.Type != ItemType.Tool)
+        {
+            return false;
+        }
+
+        toolItem = selected.Item;
         return true;
     }
 }

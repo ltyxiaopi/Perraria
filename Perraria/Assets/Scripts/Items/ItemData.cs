@@ -15,6 +15,7 @@ public sealed class ItemData : ScriptableObject
     [SerializeField] private float _swingArcDegrees = 100f;
     [SerializeField] private float _swingDuration = 0.35f;
     [SerializeField] private float _knockbackForce;
+    [SerializeField] private float _miningSpeedMultiplier = 1f;
 
     public int ItemId => _itemId;
     public string ItemName => _itemName;
@@ -28,4 +29,5 @@ public sealed class ItemData : ScriptableObject
     public float SwingArcDegrees => _swingArcDegrees;
     public float SwingDuration => _swingDuration;
     public float KnockbackForce => _knockbackForce;
+    public float MiningSpeedMultiplier => _miningSpeedMultiplier;
 }
