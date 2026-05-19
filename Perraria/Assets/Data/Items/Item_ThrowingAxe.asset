@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1ab7b78d58149d0ab9bd27552b1b7e1, type: 3}
+  m_Name: Item_ThrowingAxe
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  _itemId: 32
+  _itemName: Throwing Axe
+  _description: A throwable axe that can be picked back up after lodging in terrain.
+  _icon: {fileID: 21300000, guid: 46ef37b0e436cc046a1b4631b9742386, type: 3}
+  _type: 2
+  _maxStackSize: 99
+  _placeBlockType: 0
+  _weaponDamage: 14
+  _weaponRange: 0
+  _swingArcDegrees: 100
+  _swingDuration: 0.35
+  _knockbackForce: 4
+  _miningSpeedMultiplier: 1
+  _weaponSubType: 3
+  _projectilePrefab: {fileID: 12849139009794061, guid: d8549088932933448a39a55e61f3612f, type: 3}
+  _ammoItem: {fileID: 0}
+  _projectileSpeed: 11
+  _projectileLifetime: 5
+  _projectileGravity: 1
+  _attackCooldown: 0.7

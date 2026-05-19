@@ -4013,7 +4013,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 388305640}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5729,7 +5729,7 @@ GameObject:
   - component: {fileID: 540911845}
   - component: {fileID: 540911846}
   - component: {fileID: 540911848}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -6079,6 +6079,9 @@ MonoBehaviour:
   _enemyLayer:
     serializedVersion: 2
     m_Bits: 512
+  _terrainLayer:
+    serializedVersion: 2
+    m_Bits: 256
   _attackSpeedMultiplier: 1
   _damageMultiplier: 1
   _pivotOffsetX: 0.2
@@ -6947,7 +6950,7 @@ GameObject:
   m_Component:
   - component: {fileID: 619170653}
   - component: {fileID: 619170652}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16537,7 +16540,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1545826899}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: WeaponPivot
   m_TagString: Untagged
   m_Icon: {fileID: 0}

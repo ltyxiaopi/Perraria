@@ -98,6 +98,36 @@ public sealed class Inventory : MonoBehaviour
         return true;
     }
 
+    public bool RemoveItem(ItemData item, int count)
+    {
+        EnsureSlotsInitialized();
+
+        if (item == null || count <= 0)
+        {
+            return false;
+        }
+
+        int remaining = count;
+        for (int i = 0; i < _slots.Length && remaining > 0; i++)
+        {
+            ItemStack stack = _slots[i];
+            if (stack.IsEmpty || stack.Item.ItemId != item.ItemId)
+            {
+                continue;
+            }
+
+            int take = Mathf.Min(stack.Count, remaining);
+            if (!RemoveFromSlot(i, take))
+            {
+                continue;
+            }
+
+            remaining -= take;
+        }
+
+        return remaining == 0;
+    }
+
     public void SwapSlots(int indexA, int indexB)
     {
         EnsureSlotsInitialized();

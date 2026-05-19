@@ -22,6 +22,7 @@ public sealed class PlayerCombat : MonoBehaviour
 
     [Header("Combat")]
     [SerializeField] private LayerMask _enemyLayer;
+    [SerializeField] private LayerMask _terrainLayer;
     [SerializeField] private float _attackSpeedMultiplier = 1f;
     [SerializeField] private float _damageMultiplier = 1f;
 
@@ -35,6 +36,7 @@ public sealed class PlayerCombat : MonoBehaviour
     private SpriteRenderer _playerSpriteRenderer;
     private Coroutine _swingCoroutine;
     private bool _isPointerOverUi;
+    private float _attackCooldownTimer;
 
     public bool IsSwinging => _swingCoroutine != null;
 
@@ -45,6 +47,7 @@ public sealed class PlayerCombat : MonoBehaviour
         _playerSpriteRenderer = GetComponent<SpriteRenderer>();
         _mainCamera = Camera.main;
         _enemyLayer = LayerMask.GetMask("Enemy");
+        _terrainLayer = LayerMask.GetMask("Ground");
 
         if (_weaponPivot == null)
         {
@@ -72,6 +75,16 @@ public sealed class PlayerCombat : MonoBehaviour
         if (_mainCamera == null)
         {
             _mainCamera = Camera.main;
+        }
+
+        if (_enemyLayer.value == 0)
+        {
+            _enemyLayer = LayerMask.GetMask("Enemy");
+        }
+
+        if (_terrainLayer.value == 0)
+        {
+            _terrainLayer = LayerMask.GetMask("Ground");
         }
 
         CacheInputAction();
@@ -141,13 +154,18 @@ public sealed class PlayerCombat : MonoBehaviour
         }
 
         _isPointerOverUi = EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
+        if (_attackCooldownTimer > 0f)
+        {
+            _attackCooldownTimer -= Time.deltaTime;
+        }
+
         UpdatePivotPosition();
         RefreshWeaponSorting();
     }
 
     public void OnAttack(InputAction.CallbackContext ctx)
     {
-        if (!ctx.performed || IsSwinging || _isPointerOverUi)
+        if (!ctx.performed || IsSwinging || _attackCooldownTimer > 0f || _isPointerOverUi)
         {
             return;
         }
@@ -162,6 +180,25 @@ public sealed class PlayerCombat : MonoBehaviour
             return;
         }
 
+        switch (weaponItem.WeaponSubType)
+        {
+            case WeaponSubType.Melee:
+                StartSwing(weaponItem);
+                break;
+            case WeaponSubType.BowLike:
+                TryFireBow(weaponItem);
+                break;
+            case WeaponSubType.Staff:
+                TryFireStaff(weaponItem);
+                break;
+            case WeaponSubType.Throwable:
+                TryThrow(weaponItem);
+                break;
+        }
+    }
+
+    private void StartSwing(ItemData weaponItem)
+    {
         _swingCoroutine = StartCoroutine(SwingRoutine(weaponItem));
     }
 
@@ -278,6 +315,85 @@ public sealed class PlayerCombat : MonoBehaviour
         Vector3 worldPosition = _mainCamera.ScreenToWorldPoint(mousePosition);
         Vector2 direction = worldPosition - transform.position;
         return direction.sqrMagnitude > 0.0001f ? direction.normalized : GetFacingDirection();
+    }
+
+    private bool TryFireBow(ItemData weaponItem)
+    {
+        if (!IsProjectilePrefabConfigured(weaponItem) || weaponItem.AmmoItem == null || _inventory == null)
+        {
+            return false;
+        }
+
+        if (!_inventory.RemoveItem(weaponItem.AmmoItem, 1))
+        {
+            return false;
+        }
+
+        return FireProjectile(weaponItem, null);
+    }
+
+    private bool TryFireStaff(ItemData weaponItem)
+    {
+        return FireProjectile(weaponItem, null);
+    }
+
+    private bool TryThrow(ItemData weaponItem)
+    {
+        if (!IsProjectilePrefabConfigured(weaponItem) || _inventory == null)
+        {
+            return false;
+        }
+
+        int selectedSlot = _inventory.SelectedHotbarIndex;
+        if (!_inventory.RemoveFromSlot(selectedSlot, 1))
+        {
+            return false;
+        }
+
+        return FireProjectile(weaponItem, weaponItem);
+    }
+
+    private bool FireProjectile(ItemData weaponItem, ItemData pickupItemOnStick)
+    {
+        if (weaponItem.ProjectilePrefab == null)
+        {
+            return false;
+        }
+
+        Vector2 aimDirection = GetAimDirection();
+        Vector3 spawnPosition = _weaponPivot != null
+            ? _weaponPivot.position + (Vector3)(aimDirection * 0.35f)
+            : transform.position + (Vector3)(aimDirection * 0.35f);
+        GameObject projectileObject = Instantiate(weaponItem.ProjectilePrefab, spawnPosition, Quaternion.identity);
+        Projectile projectile = projectileObject.GetComponent<Projectile>();
+        if (projectile == null)
+        {
+            Destroy(projectileObject);
+            return false;
+        }
+
+        ProjectileLaunchParams launchParams = new()
+        {
+            Damage = Mathf.RoundToInt(weaponItem.WeaponDamage * Mathf.Max(0f, _damageMultiplier)),
+            Knockback = weaponItem.KnockbackForce,
+            Lifetime = weaponItem.ProjectileLifetime,
+            UseGravity = weaponItem.ProjectileGravity,
+            Owner = Projectile.Owner.Player,
+            TargetLayer = _enemyLayer,
+            TerrainLayer = _terrainLayer,
+            StickOnTerrain = pickupItemOnStick != null,
+            PickupItemOnStick = pickupItemOnStick
+        };
+
+        projectile.Launch(aimDirection, weaponItem.ProjectileSpeed, launchParams);
+        _attackCooldownTimer = Mathf.Max(0f, weaponItem.AttackCooldown);
+        return true;
+    }
+
+    private bool IsProjectilePrefabConfigured(ItemData weaponItem)
+    {
+        return weaponItem.ProjectilePrefab != null
+            && weaponItem.ProjectilePrefab.GetComponent<Projectile>() != null;
     }
 
     private Vector2 GetFacingDirection()
