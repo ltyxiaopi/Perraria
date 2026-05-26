@@ -24,3 +24,7 @@ MonoBehaviour:
   SpawnTable:
   - Prefab: {fileID: 5036111923503304241, guid: 4bc81284c08415849a86a1506afb436b, type: 3}
     Weight: 1
+    AllowedTimes: 31
+  - Prefab: {fileID: 6394598751550957067, guid: 2e0070742f19a4f4db74562a46a095b2, type: 3}
+    Weight: 1
+    AllowedTimes: 24
