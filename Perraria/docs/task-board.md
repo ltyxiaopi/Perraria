@@ -4,7 +4,6 @@
 > **阶段：建造系统**（025 → 027）骨架已起草，**实施前需重新审视并补全**。
 
 ### 敌人丰富（近期 - 完整版规范）
-- [022 - 僵尸敌人](tasks/022-enemy-zombie.md) — 地面行走 AI，预留 AllowedTimes 字段给 024
 - [023 - Boss 敌人 + 召唤系统](tasks/023-boss-and-summon.md) — EyeOfNight 多阶段 Boss + Item_SuspiciousEye 召唤物
 
 ### 环境系统（近期 - 完整版规范）
@@ -22,6 +21,7 @@
 暂无
 
 ## 已完成 (Done)
+- [022 - 僵尸敌人](tasks/022-enemy-zombie.md) — 通过（附修复：Idle 漂移归零 + 删除死代码 `_stuckTimer`），[交付记录](../codex-reports/022-enemy-zombie.md)
 - [021 - 远程武器系统](tasks/021-ranged-weapons.md) — 通过（弓/法杖/投掷斧 + 通用 Projectile 组件，新增 Player/Projectile Layer 及碰撞矩阵），[交付记录](../codex-reports/021-ranged-weapons.md)
 - [020 - 近战武器扩展 + 木镐工具](tasks/020-melee-weapons-and-pickaxe.md) — 通过（附修复：木镐源图从 80×55 缩为 12×14 像素），[交付记录](../codex-reports/020-melee-weapons-and-pickaxe.md)
 - [019 - 存档/读档接入 UI](tasks/019-save-load-integration.md) — 通过（含独立 MCP 验证 Flow 4 完整还原 + Flow 6 损坏存档容错），[交付记录](../codex-reports/019-save-load-integration.md)

@@ -158,11 +158,70 @@ public enum TimeOfDayMask : byte { ... }
 - `Assets/Data/Enemies/EnemySpawnerConfig.asset` — 表里追加 Zombie entry，Slime/Zombie 各自填好 AllowedTimes（虽然 022 阶段不读）
 - `Assets/Data/ItemDatabase.asset` — 注册 Item_RottenFlesh
 
-### 美术资源（用户提供）
-僵尸贴图 **暂时使用占位**：用紫色 Slime 的 sprite 临时复用，scale 0.45 + 改 SpriteRenderer.color 为暗绿色 (0.4, 0.7, 0.3)，作为视觉占位。
-**真实僵尸贴图由用户后续找资源放进 `Assets/Art/Sprites/Enemies/zombie_*.png`**，找到后开个独立小任务（022.1）替换。Codex 不要尝试自己画。
+### 美术资源（已就位 — ThePixelGame 16x16 Platformer Zombie）
 
-> Codex 实现完成后**主动提醒用户找贴图** —— 不要自己生成 / AI 画。
+#### 现状
+用户已将素材下载到 `Assets/Art/Zombie/`，原始文件名带空格 + 括号 + Left/Right 双向：
+```
+16x16 Platformer Zombie Attack Left.png        5120x1024  (5 frames × 1024×1024)
+16x16 Platformer Zombie Attack Right.png       5120x1024
+16x16 Platformer Zombie Death Left.png         2048x512   (4 frames × 512×512)
+16x16 Platformer Zombie Death Right.png        2048x512
+16x16 Platformer Zombie Encounter Left.png     2560x512   (5 frames × 512×512)
+16x16 Platformer Zombie Encounter Right.png    2560x512
+16x16 Platformer Zombie Hurt Left.png          1536x512   (3 frames × 512×512)
+16x16 Platformer Zombie Hurt Right.png         1536x512
+16x16 Platformer Zombie Idle Left.png          2048x512   (4 frames × 512×512)
+16x16 Platformer Zombie Idle Right.png         2048x512
+16x16 Platformer Zombie Move Left.png          2048x512   (4 frames × 512×512)
+16x16 Platformer Zombie Move Right.png         2048x512
+```
+
+> **风格说明**：素材原生 16×16 像素设计，导出时按 32× 缩放（每帧画布 512×512，Attack 1024×1024 是为了容纳挥砍特效的水平扩展）。块状像素 + 黑描边，跟现有 Slime 风格统一。
+
+#### Codex 需要做的资源处理（**实现 022 时一并完成**）
+
+1. **重命名文件夹**：`Assets/Art/Zombie/` → `Assets/Art/Zombies/`（复数，跟 `Art/Slimes/` 对齐）
+
+2. **删除 6 个 Left 版本**：基类 `Enemy.UpdateFacing` 已用 `SpriteRenderer.flipX` 翻转，Left 完全冗余
+
+3. **重命名保留的 6 个 Right 版本**为 snake_case：
+   | 旧文件名 | 新文件名 | 帧数 / 每帧尺寸 |
+   |---|---|---|
+   | `16x16 Platformer Zombie Idle Right.png` | `zombie_idle.png` | 4 × 512×512 |
+   | `16x16 Platformer Zombie Move Right.png` | `zombie_move.png` | 4 × 512×512 |
+   | `16x16 Platformer Zombie Attack Right.png` | `zombie_attack.png` | 5 × 1024×1024 |
+   | `16x16 Platformer Zombie Hurt Right.png` | `zombie_hurt.png` | 3 × 512×512 |
+   | `16x16 Platformer Zombie Death Right.png` | `zombie_death.png` | 4 × 512×512 |
+   | `16x16 Platformer Zombie Encounter Right.png` | `zombie_encounter.png` | 5 × 512×512 |
+
+4. **Sprite 导入设置**（每个 PNG 用相同设置 — 通过 MCP 改 .meta 或 TextureImporter）：
+   - Texture Type: Sprite (2D and UI)
+   - Sprite Mode: **Multiple**
+   - Pixels Per Unit: **由 Codex 在 Unity 里调，命中下文"在世界中尺寸"目标即可**（参考起点：PPU=256，对应 1 帧 = 2 单位）
+   - Filter Mode: **Point (no filter)** — 像素艺术必须
+   - Compression: **None**
+   - Generate Mip Maps: 关闭
+   - 切片：Sprite Editor → Slice → Grid By Cell Size
+     - Idle/Move/Hurt/Death/Encounter：Cell Size 512×512
+     - Attack：Cell Size 1024×1024
+     - Pivot: Center
+   - 切片完成后逐帧执行 **Trim**（去掉透明 padding），避免每帧 sprite 包含大量空白导致碰撞 / 视觉中心错位
+
+5. **prefab 静态 sprite**：用 `zombie_idle_0`（slicing 后第一帧）作为 `SpriteRenderer.sprite`，**本任务不上 Animator**（留给 028）
+
+#### 在世界中尺寸目标
+
+| 单位 | Slime | **Zombie 目标** | Player |
+|---|---|---|---|
+| 高度 | ~1.35 单位 | **~1.5 单位** | ~1.8 单位 |
+| 宽度 | ~1.5 单位 | **~0.7 单位** | ~0.6 单位 |
+
+Codex 在 Unity 里通过 PPU + prefab transform.scale 命中这个体型，截图验收。spec 早期写的 `scale 0.45` 是占位估算值，**以实际命中目标体型为准**。
+
+#### 其余 5 套动画（attack / hurt / death / move / encounter）
+
+本任务**只导入 + 切片**，prefab 不引用。留给 028（Animator 系统）统一接入 Slime + Zombie + Player 的动画状态机。
 
 ## 验收标准
 
@@ -191,9 +250,9 @@ public enum TimeOfDayMask : byte { ... }
 
 ## 注意事项
 
-### 僵尸贴图占位说明
-本任务**不要求美术资源** —— 占位 sprite 即可。用户会后续提供真实贴图，到时候 022.1 替换。
-Codex 在交付记录里**明确写明"等待用户提供 zombie 贴图"**。
+### 美术资源已就位
+ThePixelGame 16×16 Platformer Zombie 套件已下载到 `Assets/Art/Zombie/`（详见上方"美术资源"段）。
+**不再需要占位 sprite**，也不再产生 022.1 替换任务。Codex 实现 022 时一并完成文件夹重命名 / 文件清理 / 切片导入 / prefab 配置。
 
 ### TimeOfDayMask 枚举位置
 放在 `Enemies/` 目录还是 `World/Time/`（024 用）？— **放在 `Enemies/`**，因为 022 先用。
@@ -208,7 +267,8 @@ Codex 在交付记录里**明确写明"等待用户提供 zombie 贴图"**。
 
 ### 不做的事
 - **不做夜间限定生成** —— 留给 024，本任务只加字段
-- **不做僵尸抓取 / 啃咬动画** —— 占位 sprite 阶段不做
+- **不做 Animator 状态机** —— 留给 028 统一给所有敌人 + 玩家上动画；022 prefab 仅用 `zombie_idle_0` 静态帧
+- **不做僵尸抓取 / 啃咬动画** —— 同上，留给 028
 - **不做不同变种**（沼泽僵尸 / 雪地僵尸） —— 等生态群落系统
 - **不做僵尸群集行为** —— 单体 AI 即可
 - **不做僵尸破坏方块**（Terraria 派生玩法）
@@ -218,6 +278,12 @@ Codex 在交付记录里**明确写明"等待用户提供 zombie 贴图"**。
 写一份交付记录。
 
 **交付记录额外要求**：
-1. **MCP 截图**：僵尸追击 / 跨台阶 / 击杀掉落
+1. **MCP 截图**：僵尸追击 / 跨台阶 / 击杀掉落（用真实僵尸贴图，非占位）—— 只能截场景 / 相机视图，不能截 Editor 面板
 2. **数值实测**：骑士剑普通攻击击杀僵尸需要的次数
+3. **资源处理记录**（纯文字 + 必要时用 `Unity_RunCommand` 把数值打到 Console 截日志）：
+   - 已重命名的 6 个文件（旧名 → 新名）
+   - 已删除的 6 个 Left 文件
+   - 最终 PPU 值（每个 PNG 的 `TextureImporter.spritePixelsToUnits`）
+   - prefab `transform.localScale`、`SpriteRenderer.sprite` 引用名
+   - 实测在世界中体型（宽 × 高，单位 = Unity units）—— 用 `Unity_RunCommand` 取 `BoxCollider2D.size * transform.localScale` 打 Log
 3. **占位说明**：明确写"zombie sprite 待用户提供，当前为占位"
