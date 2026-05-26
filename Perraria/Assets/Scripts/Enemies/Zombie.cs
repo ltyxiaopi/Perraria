@@ -6,14 +6,12 @@ public sealed class Zombie : Enemy
     [SerializeField] private float _walkSpeed = 2.5f;
     [SerializeField] private float _stepUpVerticalImpulse = 4f;
     [SerializeField] private float _obstacleProbeDistance = 0.5f;
-    [SerializeField] private float _stuckRecoverDelay = 1f;
-
-    private float _stuckTimer;
 
     protected override void UpdateBehavior()
     {
         if (_state != EnemyState.Chasing || _playerTransform == null)
         {
+            _rigidbody2D.linearVelocity = new Vector2(0f, _rigidbody2D.linearVelocity.y);
             return;
         }
 
@@ -24,12 +22,10 @@ public sealed class Zombie : Enemy
 
         if (blockedFeet && blockedHead)
         {
-            _stuckTimer = Mathf.Min(_stuckTimer + Time.deltaTime, _stuckRecoverDelay);
             _rigidbody2D.linearVelocity = new Vector2(0f, _rigidbody2D.linearVelocity.y);
             return;
         }
 
-        _stuckTimer = 0f;
         _rigidbody2D.linearVelocity = new Vector2(direction * _walkSpeed, _rigidbody2D.linearVelocity.y);
 
         if (blockedFeet && !blockedHead && _isGrounded)

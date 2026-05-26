@@ -167,7 +167,6 @@ MonoBehaviour:
   _walkSpeed: 2.5
   _stepUpVerticalImpulse: 4
   _obstacleProbeDistance: 0.5
-  _stuckRecoverDelay: 1
 --- !u!212 &2251460404655733081
 SpriteRenderer:
   serializedVersion: 2
