@@ -58,7 +58,16 @@
 - 记录关键技术决策的原因（ADR 风格）
 
 ### 美术资源管理
-- **资源推荐**: 根据游戏需求搜索推荐合适的免费/付费 2D 素材包（Unity Asset Store、itch.io、OpenGameArt）
+- **前置评估（每个新任务开工前必做）**: 派任务给 Codex 前，先判断该任务是否需要新美术素材
+  （新怪物/Boss、新武器、新方块、新 UI 等）。如果需要：
+  1. 先用 WebSearch 在 itch.io / OpenGameArt / CraftPix / Unity Asset Store 找 3-5 个候选
+  2. 列对比表（价格 / 尺寸 / 动画 / 授权 / 风格匹配度）给用户挑选
+  3. 用户下载后**放到 `Assets/Art/...` 对应目录**，并告知 Claude
+  4. Claude 用 MCP 看图确认素材实际效果，再据此**更新任务规格书**（删掉占位描述、补切片信息）
+  5. 然后才把任务派给 Codex
+- **不允许"先用占位、之后再换"的做法**（除非用户明确同意）。占位会导致 Codex 实现时
+  绑定到占位资源的尺寸 / 动画帧数，后续替换素材会引发返工。
+- **资源推荐**: 推荐合适的免费/付费 2D 素材包（Unity Asset Store、itch.io、OpenGameArt、CraftPix）
 - **视觉验证**: 通过 MCP 截图确认 Codex 的实现效果，审查是否符合预期
 
 > **注意**: 素材导入配置、Sprite 切割、Tilemap 搭建、动画配置、场景搭建等 MCP 操作已移交给 Codex 负责，Claude Code 仅做最终验收。
@@ -95,7 +104,8 @@
 
 ## 工作流程
 ```
-需求 → game-design.md → architecture.md → tasks/xxx.md
+需求 → game-design.md → architecture.md → tasks/xxx.md 起草
+→ [若需新美术] Claude 搜推荐 → 用户挑选下载 → 落位 Assets/Art/ → Claude 更新任务规格
 → Codex 实现 + 自测 → Codex 写 codex-reports/xxx.md → push 分支
 → Claude Code 读交付记录 → 代码审查 + MCP 验证
 → 审查通过 → Claude 创建 PR → 用户在 GitHub 手动 merge
