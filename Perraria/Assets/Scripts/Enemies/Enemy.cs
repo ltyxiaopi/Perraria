@@ -127,15 +127,25 @@ public abstract class Enemy : MonoBehaviour
 
     protected virtual void Die()
     {
-        if (IsDead)
+        if (!TryEnterDeadState())
         {
             return;
         }
 
-        _state = EnemyState.Dead;
-        OnDied?.Invoke();
         SpawnDrop();
         Destroy(gameObject);
+    }
+
+    protected bool TryEnterDeadState()
+    {
+        if (IsDead)
+        {
+            return false;
+        }
+
+        _state = EnemyState.Dead;
+        OnDied?.Invoke();
+        return true;
     }
 
     protected virtual void SpawnDrop()

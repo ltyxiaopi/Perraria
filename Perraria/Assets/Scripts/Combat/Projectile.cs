@@ -16,6 +16,7 @@ public sealed class Projectile : MonoBehaviour
     [SerializeField] private float _spinDegreesPerSecond = 720f;
 
     private Rigidbody2D _rigidbody2D;
+    private Collider2D _collider2D;
     private int _damage;
     private float _knockbackForce;
     private LayerMask _hitTargetLayer;
@@ -26,10 +27,12 @@ public sealed class Projectile : MonoBehaviour
     private bool _stickOnTerrain;
     private ItemData _pickupItemOnStick;
     private bool _hasLaunched;
+    private readonly Collider2D[] _overlapResults = new Collider2D[4];
 
     private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
+        _collider2D = GetComponent<Collider2D>();
     }
 
     private void Update()
@@ -43,6 +46,11 @@ public sealed class Projectile : MonoBehaviour
         if (_lifetimeRemaining <= 0f)
         {
             Destroy(gameObject);
+            return;
+        }
+
+        if (TryHitOverlappingTarget())
+        {
             return;
         }
 
@@ -107,6 +115,37 @@ public sealed class Projectile : MonoBehaviour
         {
             HitTerrain();
         }
+    }
+
+    private bool TryHitOverlappingTarget()
+    {
+        if (_collider2D == null || _hitTargetLayer.value == 0)
+        {
+            return false;
+        }
+
+        ContactFilter2D filter = new()
+        {
+            useLayerMask = true,
+            layerMask = _hitTargetLayer,
+            useTriggers = true
+        };
+
+        int hitCount = _collider2D.Overlap(filter, _overlapResults);
+        for (int i = 0; i < hitCount; i++)
+        {
+            Collider2D hit = _overlapResults[i];
+            if (hit == null || hit == _collider2D)
+            {
+                continue;
+            }
+
+            HitTarget(hit);
+            Destroy(gameObject);
+            return true;
+        }
+
+        return false;
     }
 
     private void HitTarget(Collider2D hitCollider)

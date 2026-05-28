@@ -23,6 +23,9 @@ public sealed class ItemData : ScriptableObject
     [SerializeField] private float _projectileLifetime = 5f;
     [SerializeField] private bool _projectileGravity = true;
     [SerializeField] private float _attackCooldown = 0.5f;
+    [SerializeField] private GameObject _summonPrefab;
+    [SerializeField] private bool _consumeOnUse = true;
+    [SerializeField] private float _useCooldown = 1f;
 
     public int ItemId => _itemId;
     public string ItemName => _itemName;
@@ -44,4 +47,7 @@ public sealed class ItemData : ScriptableObject
     public float ProjectileLifetime => _projectileLifetime;
     public bool ProjectileGravity => _projectileGravity;
     public float AttackCooldown => _attackCooldown;
+    public GameObject SummonPrefab => _summonPrefab;
+    public bool ConsumeOnUse => _consumeOnUse;
+    public float UseCooldown => _useCooldown;
 }
