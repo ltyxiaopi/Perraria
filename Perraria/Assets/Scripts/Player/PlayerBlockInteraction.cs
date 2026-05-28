@@ -77,7 +77,7 @@ public sealed class PlayerBlockInteraction : MonoBehaviour
         Vector3Int targetCell = GetMouseTargetCell();
         bool isInRange = IsCellInInteractionRange(targetCell);
 
-        if (IsWeaponSelected())
+        if (IsActionItemSelected())
         {
             ResetMining();
             ClearHighlight();
@@ -322,7 +322,7 @@ public sealed class PlayerBlockInteraction : MonoBehaviour
         drop.Initialize(dropItem, 1);
     }
 
-    private bool IsWeaponSelected()
+    private bool IsActionItemSelected()
     {
         if (_inventory == null)
         {
@@ -330,7 +330,8 @@ public sealed class PlayerBlockInteraction : MonoBehaviour
         }
 
         ItemStack selected = _inventory.GetSelectedItem();
-        return !selected.IsEmpty && selected.Item.Type == ItemType.Weapon;
+        return !selected.IsEmpty
+            && (selected.Item.Type == ItemType.Weapon || selected.Item.Type == ItemType.Consumable);
     }
 
     private float GetCurrentMiningSpeed()

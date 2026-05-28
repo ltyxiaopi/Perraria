@@ -15,6 +15,7 @@ public sealed class SaveData
     private const string ItemDatabaseResourcePath = "ItemDatabase";
     private const string InitialPickaxeAssetName = "Item_Pickaxe_Wood";
     private const string InitialSwordAssetName = "Item_KnightSword";
+    private const string InitialSuspiciousEyeAssetName = "Item_SuspiciousEye";
 
     public static SaveData CreateNewGameDefault()
     {
@@ -57,6 +58,7 @@ public sealed class SaveData
 
         ItemData pickaxe = FindItemByAssetName(itemDatabase, InitialPickaxeAssetName);
         ItemData sword = FindItemByAssetName(itemDatabase, InitialSwordAssetName);
+        ItemData suspiciousEye = FindItemByAssetName(itemDatabase, InitialSuspiciousEyeAssetName);
 
         var slots = new List<InventorySlotSaveData>(global::Inventory.TotalSlots);
         for (int i = 0; i < global::Inventory.TotalSlots; i++)
@@ -70,6 +72,7 @@ public sealed class SaveData
 
         SetSlot(slots, 0, pickaxe, 1);
         SetSlot(slots, 1, sword, 1);
+        SetSlot(slots, 2, suspiciousEye, 1);
         return slots;
     }
 

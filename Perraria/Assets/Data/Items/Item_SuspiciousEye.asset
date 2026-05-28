@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1ab7b78d58149d0ab9bd27552b1b7e1, type: 3}
+  m_Name: Item_SuspiciousEye
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  _itemId: 35
+  _itemName: Suspicious Eye
+  _description: Summons the Eye of Corruption.
+  _icon: {fileID: -7566875526771127415, guid: fc9827336bb9984439f54613ef34e5da, type: 3}
+  _type: 4
+  _maxStackSize: 20
+  _placeBlockType: 0
+  _weaponDamage: 0
+  _weaponRange: 0
+  _swingArcDegrees: 100
+  _swingDuration: 0.35
+  _knockbackForce: 0
+  _miningSpeedMultiplier: 1
+  _weaponSubType: 0
+  _projectilePrefab: {fileID: 0}
+  _ammoItem: {fileID: 0}
+  _projectileSpeed: 0
+  _projectileLifetime: 0
+  _projectileGravity: 1
+  _attackCooldown: 0
+  _summonPrefab: {fileID: 5780910895405905590, guid: 8a43e70b14d87b14d86e26d512796db5, type: 3}
+  _consumeOnUse: 1
+  _useCooldown: 1

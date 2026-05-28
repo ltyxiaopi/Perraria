@@ -170,11 +170,30 @@ public sealed class PlayerCombat : MonoBehaviour
             return;
         }
 
-        if (!TryGetSelectedWeapon(out ItemData weaponItem))
+        if (_inventory == null)
         {
             return;
         }
 
+        ItemStack selected = _inventory.GetSelectedItem();
+        if (selected.IsEmpty)
+        {
+            return;
+        }
+
+        switch (selected.Item.Type)
+        {
+            case ItemType.Weapon:
+                HandleWeaponUse(selected.Item);
+                break;
+            case ItemType.Consumable:
+                TryUseConsumable(selected.Item);
+                break;
+        }
+    }
+
+    private void HandleWeaponUse(ItemData weaponItem)
+    {
         if (_weaponPivot == null || _weaponRenderer == null || _mainCamera == null)
         {
             return;
@@ -351,6 +370,31 @@ public sealed class PlayerCombat : MonoBehaviour
         }
 
         return FireProjectile(weaponItem, weaponItem);
+    }
+
+    private bool TryUseConsumable(ItemData consumableItem)
+    {
+        if (_inventory == null
+            || consumableItem == null
+            || consumableItem.SummonPrefab == null
+            || consumableItem.SummonPrefab.GetComponent<BossSpawner>() == null)
+        {
+            return false;
+        }
+
+        int selectedSlot = _inventory.SelectedHotbarIndex;
+        if (consumableItem.ConsumeOnUse && !_inventory.RemoveFromSlot(selectedSlot, 1))
+        {
+            return false;
+        }
+
+        GameObject spawnerObject = Instantiate(consumableItem.SummonPrefab, transform.position, Quaternion.identity);
+        BossSpawner bossSpawner = spawnerObject.GetComponent<BossSpawner>();
+        bossSpawner.Spawn(transform.position);
+
+        _attackCooldownTimer = Mathf.Max(0f, consumableItem.UseCooldown);
+        RefreshWeaponRenderer();
+        return true;
     }
 
     private bool FireProjectile(ItemData weaponItem, ItemData pickupItemOnStick)

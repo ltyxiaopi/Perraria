@@ -62,6 +62,126 @@ TextureImporter:
   - first:
       213: 1922085328340373582
     second: Eye Monster Sprite Sheet_19
+  - first:
+      213: -7566875526771127415
+    second: EyeOfCorruption_00
+  - first:
+      213: -1192560367609718413
+    second: EyeOfCorruption_01
+  - first:
+      213: -9012372372892080462
+    second: EyeOfCorruption_02
+  - first:
+      213: -7729195734425340004
+    second: EyeOfCorruption_03
+  - first:
+      213: -2233062508729350051
+    second: EyeOfCorruption_04
+  - first:
+      213: -5203328060203142398
+    second: EyeOfCorruption_05
+  - first:
+      213: -2180796337137173686
+    second: EyeOfCorruption_06
+  - first:
+      213: 3278820308744343800
+    second: EyeOfCorruption_07
+  - first:
+      213: 171873880200328310
+    second: EyeOfCorruption_08
+  - first:
+      213: -8127791913222826706
+    second: EyeOfCorruption_09
+  - first:
+      213: -7821838943215540994
+    second: EyeOfCorruption_10
+  - first:
+      213: 1790326341949556969
+    second: EyeOfCorruption_11
+  - first:
+      213: 637444411744328452
+    second: EyeOfCorruption_12
+  - first:
+      213: -1721004797422073430
+    second: EyeOfCorruption_13
+  - first:
+      213: 8436699592727411613
+    second: EyeOfCorruption_14
+  - first:
+      213: 321957676470663222
+    second: EyeOfCorruption_15
+  - first:
+      213: 3857207049889322407
+    second: EyeOfCorruption_16
+  - first:
+      213: 8583899627080893661
+    second: EyeOfCorruption_17
+  - first:
+      213: -3385507518118847705
+    second: EyeOfCorruption_18
+  - first:
+      213: -6701791802946613039
+    second: EyeOfCorruption_19
+  - first:
+      213: -4666379034124206557
+    second: EyeOfCorruption_20
+  - first:
+      213: -8566965190824488321
+    second: EyeOfCorruption_21
+  - first:
+      213: 1119381551885563050
+    second: EyeOfCorruption_22
+  - first:
+      213: 8839093865584721804
+    second: EyeOfCorruption_23
+  - first:
+      213: -8198010709653386024
+    second: EyeOfCorruption_24
+  - first:
+      213: -1921692281255796572
+    second: EyeOfCorruption_25
+  - first:
+      213: 2042137790740391592
+    second: EyeOfCorruption_26
+  - first:
+      213: 2268102979859137433
+    second: EyeOfCorruption_27
+  - first:
+      213: -8265829717400514086
+    second: EyeOfCorruption_28
+  - first:
+      213: 5055372274860580924
+    second: EyeOfCorruption_29
+  - first:
+      213: -8540799331156249677
+    second: EyeOfCorruption_30
+  - first:
+      213: -8181943374716047714
+    second: EyeOfCorruption_31
+  - first:
+      213: 6410786138897415527
+    second: EyeOfCorruption_32
+  - first:
+      213: -3447559415029695786
+    second: EyeOfCorruption_33
+  - first:
+      213: -9141566059629715236
+    second: EyeOfCorruption_34
+  - first:
+      213: 3142868131377097205
+    second: EyeOfCorruption_35
+  - first:
+      213: -6510683083133418179
+    second: EyeOfCorruption_36
+  - first:
+      213: 1671887809349945556
+    second: EyeOfCorruption_37
+  - first:
+      213: 3823579174195936927
+    second: EyeOfCorruption_38
+  - first:
+      213: 7237659300145126334
+    second: EyeOfCorruption_39
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -94,7 +214,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -108,7 +228,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -132,7 +252,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -170,453 +290,893 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Eye Monster Sprite Sheet_0
+      name: EyeOfCorruption_00
       rect:
         serializedVersion: 2
-        x: 10
-        y: 138
-        width: 14
-        height: 13
+        x: 0
+        y: 128
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ef92d9d261981a9d0800000000000000
-      internalID: -2764777967881213442
+      spriteID: 98bc537acce0df690800000000000000
+      internalID: -7566875526771127415
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Eye Monster Sprite Sheet_1
+      name: EyeOfCorruption_01
       rect:
         serializedVersion: 2
-        x: 42
-        y: 137
-        width: 14
-        height: 13
+        x: 32
+        y: 128
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0aab887a08a1bf030800000000000000
-      internalID: 3529443872843807392
+      spriteID: 379d9630aac237fe0800000000000000
+      internalID: -1192560367609718413
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Eye Monster Sprite Sheet_2
+      name: EyeOfCorruption_02
       rect:
         serializedVersion: 2
-        x: 74
-        y: 136
-        width: 14
-        height: 13
+        x: 64
+        y: 128
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 46938d26b75e77220800000000000000
-      internalID: 2483706037620193636
+      spriteID: 2b62932931f9de280800000000000000
+      internalID: -9012372372892080462
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Eye Monster Sprite Sheet_3
+      name: EyeOfCorruption_03
       rect:
         serializedVersion: 2
-        x: 106
-        y: 137
-        width: 14
-        height: 13
+        x: 96
+        y: 128
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a848620174682fc90800000000000000
-      internalID: -7137494819657055094
+      spriteID: c97fc1a3e616cb490800000000000000
+      internalID: -7729195734425340004
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Eye Monster Sprite Sheet_4
+      name: EyeOfCorruption_04
       rect:
         serializedVersion: 2
-        x: 138
-        y: 138
-        width: 14
-        height: 13
+        x: 128
+        y: 128
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 64e20de1d3bc76410800000000000000
-      internalID: 1470367266730159686
+      spriteID: d58c1f5ca719201e0800000000000000
+      internalID: -2233062508729350051
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Eye Monster Sprite Sheet_5
+      name: EyeOfCorruption_05
       rect:
         serializedVersion: 2
-        x: 170
-        y: 139
-        width: 14
-        height: 13
+        x: 160
+        y: 128
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ab2f484337c9a22f0800000000000000
-      internalID: -996812348892843334
+      spriteID: 203f4c992b01ac7b0800000000000000
+      internalID: -5203328060203142398
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Eye Monster Sprite Sheet_6
+      name: EyeOfCorruption_06
       rect:
         serializedVersion: 2
-        x: 202
-        y: 140
-        width: 14
-        height: 13
+        x: 192
+        y: 128
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 00694b712fb527160800000000000000
-      internalID: 7021775864361948672
+      spriteID: a4b377529414cb1e0800000000000000
+      internalID: -2180796337137173686
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Eye Monster Sprite Sheet_7
+      name: EyeOfCorruption_07
       rect:
         serializedVersion: 2
-        x: 234
-        y: 139
-        width: 14
-        height: 13
+        x: 224
+        y: 128
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 68c43d593704b1800800000000000000
-      internalID: 584131441853680774
+      spriteID: 8f01b09e2b5b08d20800000000000000
+      internalID: 3278820308744343800
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Eye Monster Sprite Sheet_8
+      name: EyeOfCorruption_08
       rect:
         serializedVersion: 2
-        x: 9
-        y: 103
-        width: 14
-        height: 13
+        x: 0
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f0c0586c204f318b0800000000000000
-      internalID: -5182530453415588849
+      spriteID: 6743287226e926200800000000000000
+      internalID: 171873880200328310
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Eye Monster Sprite Sheet_9
+      name: EyeOfCorruption_09
       rect:
         serializedVersion: 2
-        x: 42
-        y: 105
-        width: 14
-        height: 13
+        x: 32
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 66c90d49155c44140800000000000000
-      internalID: 4703100865061362790
+      spriteID: e259f0c5158443f80800000000000000
+      internalID: -8127791913222826706
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Eye Monster Sprite Sheet_10
+      name: EyeOfCorruption_10
       rect:
         serializedVersion: 2
-        x: 74
-        y: 104
-        width: 14
-        height: 13
+        x: 64
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 997e48d6dbab8fe10800000000000000
-      internalID: 2231738938111092633
+      spriteID: ef4225b4cee337390800000000000000
+      internalID: -7821838943215540994
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Eye Monster Sprite Sheet_11
+      name: EyeOfCorruption_11
       rect:
         serializedVersion: 2
-        x: 106
-        y: 105
-        width: 14
-        height: 13
+        x: 96
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4e8cd3d0c80ae3f10800000000000000
-      internalID: 2251413387109845220
+      spriteID: 9e88deb825488d810800000000000000
+      internalID: 1790326341949556969
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Eye Monster Sprite Sheet_12
+      name: EyeOfCorruption_12
       rect:
         serializedVersion: 2
-        x: 10
-        y: 74
-        width: 14
-        height: 13
+        x: 128
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cd4fbd7c8bf6a29d0800000000000000
-      internalID: -2798301379039595300
+      spriteID: 40b141ea058a8d800800000000000000
+      internalID: 637444411744328452
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Eye Monster Sprite Sheet_13
+      name: EyeOfCorruption_13
       rect:
         serializedVersion: 2
-        x: 14
-        y: 5
-        width: 142
-        height: 84
+        x: 160
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: de23e35864fd68830800000000000000
-      internalID: 4073188406979343085
+      spriteID: aa90ae84143cd18e0800000000000000
+      internalID: -1721004797422073430
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Eye Monster Sprite Sheet_14
+      name: EyeOfCorruption_14
       rect:
         serializedVersion: 2
-        x: 42
-        y: 75
-        width: 14
-        height: 13
+        x: 192
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c0de26fbb4c610670800000000000000
-      internalID: 8503196644041485580
+      spriteID: d9b333d749d251570800000000000000
+      internalID: 8436699592727411613
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Eye Monster Sprite Sheet_15
+      name: EyeOfCorruption_15
       rect:
         serializedVersion: 2
-        x: 74
-        y: 76
-        width: 14
-        height: 13
+        x: 224
+        y: 96
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5c23e3bda83f64c40800000000000000
-      internalID: 5496348172961592005
+      spriteID: 6387eba0dc2d77400800000000000000
+      internalID: 321957676470663222
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Eye Monster Sprite Sheet_16
+      name: EyeOfCorruption_16
       rect:
         serializedVersion: 2
-        x: 138
-        y: 74
-        width: 14
-        height: 15
+        x: 0
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b27ea4a86ebaf06e0800000000000000
-      internalID: -1869086313684474069
+      spriteID: 7a519c1206d878530800000000000000
+      internalID: 3857207049889322407
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Eye Monster Sprite Sheet_17
+      name: EyeOfCorruption_17
       rect:
         serializedVersion: 2
-        x: 170
-        y: 70
-        width: 14
-        height: 19
+        x: 32
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: eee8c6ea1c728fdd0800000000000000
-      internalID: -2452166284294713618
+      spriteID: dd4c3cb3b33202770800000000000000
+      internalID: 8583899627080893661
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Eye Monster Sprite Sheet_18
+      name: EyeOfCorruption_18
       rect:
         serializedVersion: 2
-        x: 202
-        y: 75
-        width: 14
-        height: 13
+        x: 64
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7aea4788199fb42e0800000000000000
-      internalID: -2140342794429616473
+      spriteID: 72b9c1679d24401d0800000000000000
+      internalID: -3385507518118847705
       vertices: []
-      indices: 
+      indices:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Eye Monster Sprite Sheet_19
+      name: EyeOfCorruption_19
       rect:
         serializedVersion: 2
-        x: 234
-        y: 74
-        width: 14
-        height: 13
+        x: 96
+        y: 64
+        width: 32
+        height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
+      customData:
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e40d7b72c6e9caa10800000000000000
-      internalID: 1922085328340373582
+      spriteID: 1d01eb2ecd37ef2a0800000000000000
+      internalID: -6701791802946613039
       vertices: []
-      indices: 
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EyeOfCorruption_20
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32e32b3fdf0bd3fb0800000000000000
+      internalID: -4666379034124206557
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EyeOfCorruption_21
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f7215c57c860c1980800000000000000
+      internalID: -8566965190824488321
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EyeOfCorruption_22
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aa4b3483797d88f00800000000000000
+      internalID: 1119381551885563050
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EyeOfCorruption_23
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c8ff28a0a05caaa70800000000000000
+      internalID: 8839093865584721804
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EyeOfCorruption_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8dc034ac1b0da3e80800000000000000
+      internalID: -8198010709653386024
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EyeOfCorruption_25
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4a063204d07c455e0800000000000000
+      internalID: -1921692281255796572
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EyeOfCorruption_26
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a66b7f3081275c10800000000000000
+      internalID: 2042137790740391592
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EyeOfCorruption_27
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 993428ca4abe97f10800000000000000
+      internalID: 2268102979859137433
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EyeOfCorruption_28
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ad199709aafd94d80800000000000000
+      internalID: -8265829717400514086
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EyeOfCorruption_29
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c306c6aac4a482640800000000000000
+      internalID: 5055372274860580924
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EyeOfCorruption_30
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b3b988624cf87980800000000000000
+      internalID: -8540799331156249677
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EyeOfCorruption_31
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9e60b9b9d5e37e80800000000000000
+      internalID: -8181943374716047714
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EyeOfCorruption_32
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76d7afb0700b7f850800000000000000
+      internalID: 6410786138897415527
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EyeOfCorruption_33
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6daf91d5afec720d0800000000000000
+      internalID: -3447559415029695786
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EyeOfCorruption_34
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd0e0055a12a22180800000000000000
+      internalID: -9141566059629715236
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EyeOfCorruption_35
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5f9a0a2f9e5bd9b20800000000000000
+      internalID: 3142868131377097205
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EyeOfCorruption_36
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3500b02b3865a5a0800000000000000
+      internalID: -6510683083133418179
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EyeOfCorruption_37
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d80c94ca1db33710800000000000000
+      internalID: 1671887809349945556
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EyeOfCorruption_38
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9eb7803005101530800000000000000
+      internalID: 3823579174195936927
+      vertices: []
+      indices:
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EyeOfCorruption_39
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData:
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebbd37669c4517460800000000000000
+      internalID: 7237659300145126334
+      vertices: []
+      indices:
       edges: []
       weights: []
     outline: []
-    customData: 
+    customData:
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID:
     internalID: 0
     vertices: []
-    indices: 
+    indices:
     edges: []
     weights: []
     secondaryTextures: []
@@ -643,8 +1203,48 @@ TextureImporter:
       Eye Monster Sprite Sheet_7: 584131441853680774
       Eye Monster Sprite Sheet_8: -5182530453415588849
       Eye Monster Sprite Sheet_9: 4703100865061362790
-  mipmapLimitGroupName: 
+      EyeOfCorruption_00: -7566875526771127415
+      EyeOfCorruption_01: -1192560367609718413
+      EyeOfCorruption_02: -9012372372892080462
+      EyeOfCorruption_03: -7729195734425340004
+      EyeOfCorruption_04: -2233062508729350051
+      EyeOfCorruption_05: -5203328060203142398
+      EyeOfCorruption_06: -2180796337137173686
+      EyeOfCorruption_07: 3278820308744343800
+      EyeOfCorruption_08: 171873880200328310
+      EyeOfCorruption_09: -8127791913222826706
+      EyeOfCorruption_10: -7821838943215540994
+      EyeOfCorruption_11: 1790326341949556969
+      EyeOfCorruption_12: 637444411744328452
+      EyeOfCorruption_13: -1721004797422073430
+      EyeOfCorruption_14: 8436699592727411613
+      EyeOfCorruption_15: 321957676470663222
+      EyeOfCorruption_16: 3857207049889322407
+      EyeOfCorruption_17: 8583899627080893661
+      EyeOfCorruption_18: -3385507518118847705
+      EyeOfCorruption_19: -6701791802946613039
+      EyeOfCorruption_20: -4666379034124206557
+      EyeOfCorruption_21: -8566965190824488321
+      EyeOfCorruption_22: 1119381551885563050
+      EyeOfCorruption_23: 8839093865584721804
+      EyeOfCorruption_24: -8198010709653386024
+      EyeOfCorruption_25: -1921692281255796572
+      EyeOfCorruption_26: 2042137790740391592
+      EyeOfCorruption_27: 2268102979859137433
+      EyeOfCorruption_28: -8265829717400514086
+      EyeOfCorruption_29: 5055372274860580924
+      EyeOfCorruption_30: -8540799331156249677
+      EyeOfCorruption_31: -8181943374716047714
+      EyeOfCorruption_32: 6410786138897415527
+      EyeOfCorruption_33: -3447559415029695786
+      EyeOfCorruption_34: -9141566059629715236
+      EyeOfCorruption_35: 3142868131377097205
+      EyeOfCorruption_36: -6510683083133418179
+      EyeOfCorruption_37: 1671887809349945556
+      EyeOfCorruption_38: 3823579174195936927
+      EyeOfCorruption_39: 7237659300145126334
+  mipmapLimitGroupName:
   pSDRemoveMatte: 0
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  userData:
+  assetBundleName:
+  assetBundleVariant:
