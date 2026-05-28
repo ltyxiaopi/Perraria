@@ -46,6 +46,13 @@ These were captured from controlled Unity MCP Play Mode validation states.
 - Knight sword combat duration: MCP harness used `PlayerCombat.EvaluateHits` with `Item_KnightSword` stats; `40` hits at `10` damage, `0.35s` swing duration, `14.00s` to HP 0, and drop count `3` after death.
 - Console check: no compile errors or runtime errors; only unrelated Unity AI Toolkit account-access warnings were present.
 
+## Review Fix
+
+- Fixed the review blocker where the Boss rendered smaller than the player. The boss sprite sheet sub-sprites were alpha-trimmed while preserving `Sprite Mode=Multiple`, `PPU=32`, point filtering, and uncompressed import settings.
+- Trim verification: frame `0` is now `12x11`, frame `8` is `12x11`, and frame `24` is `3x5`. Existing sprite internal IDs were preserved and the Boss animation arrays still reference the intended frames.
+- `EyeOfCorruption.prefab` keeps root `Transform.scale=(2,2,1)` and the existing `CircleCollider2D.radius=0.45`. The `SpriteRenderer` now lives on a `Visual` child with `localScale=(2.909,2.909,1)`, making the Phase 1 idle sprite render at `2.00` world units tall without changing the hit box.
+- Replaced `023-boss-and-summon-images/02-phase1-idle.png` after the fix. Runtime MCP summon capture logged `Phase1Hover`, sprite `EyeOfCorruption_00`, Boss visual height `2.00`, and player renderer height `1.30`.
+
 ## Implementation Notes
 
 - `EyeOfCorruption` inherits `Enemy` but keeps its own internal `BossPhase` enum, so the shared `EnemyState` enum was not expanded.
