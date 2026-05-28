@@ -3,9 +3,6 @@
 > **阶段：装备扩展 + 敌人丰富 + 环境系统**（020 → 024）规范已就绪。
 > **阶段：建造系统**（025 → 027）骨架已起草，**实施前需重新审视并补全**。
 
-### 敌人丰富（近期 - 完整版规范）
-- [023 - Boss 敌人 + 召唤系统](tasks/023-boss-and-summon.md) — EyeOfCorruption 多阶段 Boss（Elthen Flying Eye 素材已落位）+ Item_SuspiciousEye 召唤物 + Item_CorruptShard 掉落
-
 ### 环境系统（近期 - 完整版规范）
 - [024 - 昼夜循环系统](tasks/024-day-night-cycle.md) — 5 时段 + 全局光照渐变 + 背景切换 + 僵尸夜间 spawn 接入
 
@@ -21,6 +18,7 @@
 暂无
 
 ## 已完成 (Done)
+- [023 - Boss 敌人 + 召唤系统](tasks/023-boss-and-summon.md) — 通过（PR #18；附修复：sprite 透明边距 trim + Visual 子物体补偿；规格漏洞补丁：PlayerBlockInteraction 让 Consumable 也阻挡挖矿），[交付记录](../codex-reports/023-boss-and-summon.md)
 - [022 - 僵尸敌人](tasks/022-enemy-zombie.md) — 通过（附修复：Idle 漂移归零 + 删除死代码 `_stuckTimer`），[交付记录](../codex-reports/022-enemy-zombie.md)
 - [021 - 远程武器系统](tasks/021-ranged-weapons.md) — 通过（弓/法杖/投掷斧 + 通用 Projectile 组件，新增 Player/Projectile Layer 及碰撞矩阵），[交付记录](../codex-reports/021-ranged-weapons.md)
 - [020 - 近战武器扩展 + 木镐工具](tasks/020-melee-weapons-and-pickaxe.md) — 通过（附修复：木镐源图从 80×55 缩为 12×14 像素），[交付记录](../codex-reports/020-melee-weapons-and-pickaxe.md)
