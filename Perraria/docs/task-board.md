@@ -4,7 +4,7 @@
 > **阶段：建造系统**（025 → 027）骨架已起草，**实施前需重新审视并补全**。
 
 ### 敌人丰富（近期 - 完整版规范）
-- [023 - Boss 敌人 + 召唤系统](tasks/023-boss-and-summon.md) — EyeOfNight 多阶段 Boss + Item_SuspiciousEye 召唤物
+- [023 - Boss 敌人 + 召唤系统](tasks/023-boss-and-summon.md) — EyeOfCorruption 多阶段 Boss（Elthen Flying Eye 素材已落位）+ Item_SuspiciousEye 召唤物 + Item_CorruptShard 掉落
 
 ### 环境系统（近期 - 完整版规范）
 - [024 - 昼夜循环系统](tasks/024-day-night-cycle.md) — 5 时段 + 全局光照渐变 + 背景切换 + 僵尸夜间 spawn 接入
