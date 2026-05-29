@@ -11,6 +11,7 @@ public sealed class SaveData
     public InventorySaveData Inventory;
     public WorldSaveData World;
     public SpawnerSaveData Spawner;
+    public TimeSaveData Time;
 
     private const string ItemDatabaseResourcePath = "ItemDatabase";
     private const string InitialPickaxeAssetName = "Item_Pickaxe_Wood";
@@ -47,6 +48,10 @@ public sealed class SaveData
             Spawner = new SpawnerSaveData
             {
                 SpawnTimer = 3f
+            },
+            Time = new TimeSaveData
+            {
+                GameMinutes = WorldClock.DefaultStartMinutes
             }
         };
     }

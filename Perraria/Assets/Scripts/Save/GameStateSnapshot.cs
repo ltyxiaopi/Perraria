@@ -13,7 +13,8 @@ public static class GameStateSnapshot
             World = CaptureWorld(),
             Player = CapturePlayer(),
             Inventory = CaptureInventory(),
-            Spawner = CaptureSpawner()
+            Spawner = CaptureSpawner(),
+            Time = CaptureTime()
         };
     }
 
@@ -28,6 +29,7 @@ public static class GameStateSnapshot
         ApplyPlayer(data.Player);
         ApplyInventory(data.Inventory);
         ApplySpawner(data.Spawner);
+        ApplyTime(data.Time);
     }
 
     private static WorldSaveData CaptureWorld()
@@ -71,6 +73,16 @@ public static class GameStateSnapshot
         return new SpawnerSaveData
         {
             SpawnTimer = spawner != null ? spawner.SpawnTimer : 0f
+        };
+    }
+
+    private static TimeSaveData CaptureTime()
+    {
+        return new TimeSaveData
+        {
+            GameMinutes = WorldClock.Instance != null
+                ? WorldClock.Instance.CurrentGameMinutes
+                : WorldClock.DefaultStartMinutes
         };
     }
 
@@ -138,5 +150,17 @@ public static class GameStateSnapshot
         {
             spawner.SpawnTimer = data.SpawnTimer;
         }
+    }
+
+    private static void ApplyTime(TimeSaveData data)
+    {
+        if (WorldClock.Instance == null)
+        {
+            return;
+        }
+
+        WorldClock.Instance.SetTime(data != null
+            ? data.GameMinutes
+            : WorldClock.DefaultStartMinutes);
     }
 }

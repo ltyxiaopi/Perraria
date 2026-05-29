@@ -187,10 +187,11 @@ public sealed class EnemySpawner : MonoBehaviour
 
         float totalWeight = 0f;
         List<EnemySpawnEntry> spawnTable = _config.SpawnTable;
+        TimeOfDayMask currentTimeMask = GetCurrentTimeMask();
         for (int i = 0; i < spawnTable.Count; i++)
         {
             EnemySpawnEntry entry = spawnTable[i];
-            if (!IsValidEntry(entry))
+            if (!IsValidEntry(entry, currentTimeMask))
             {
                 continue;
             }
@@ -209,7 +210,7 @@ public sealed class EnemySpawner : MonoBehaviour
         for (int i = 0; i < spawnTable.Count; i++)
         {
             EnemySpawnEntry entry = spawnTable[i];
-            if (!IsValidEntry(entry))
+            if (!IsValidEntry(entry, currentTimeMask))
             {
                 continue;
             }
@@ -227,12 +228,34 @@ public sealed class EnemySpawner : MonoBehaviour
         return false;
     }
 
-    private bool IsValidEntry(EnemySpawnEntry entry)
+    private bool IsValidEntry(EnemySpawnEntry entry, TimeOfDayMask currentTimeMask)
     {
         return entry != null
             && entry.Prefab != null
             && entry.Weight > 0f
+            && (entry.AllowedTimes & currentTimeMask) != 0
             && entry.Prefab.GetComponent<Enemy>() != null;
+    }
+
+    private static TimeOfDayMask GetCurrentTimeMask()
+    {
+        TimeOfDay currentTime = WorldClock.Instance != null
+            ? WorldClock.Instance.CurrentTime
+            : TimeOfDay.Noon;
+        return MaskFromTimeOfDay(currentTime);
+    }
+
+    private static TimeOfDayMask MaskFromTimeOfDay(TimeOfDay timeOfDay)
+    {
+        return timeOfDay switch
+        {
+            TimeOfDay.Morning => TimeOfDayMask.Morning,
+            TimeOfDay.Noon => TimeOfDayMask.Noon,
+            TimeOfDay.Afternoon => TimeOfDayMask.Afternoon,
+            TimeOfDay.Evening => TimeOfDayMask.Evening,
+            TimeOfDay.DeepNight => TimeOfDayMask.DeepNight,
+            _ => TimeOfDayMask.None
+        };
     }
 
     private bool IsInCameraView(Vector3 worldPosition)

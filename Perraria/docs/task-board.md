@@ -1,10 +1,7 @@
 # Perraria - 任务看板
 ## 待实现 (TODO)
-> **下一个**：025 - 昼夜循环系统（环境系统，规范已就绪）。
+> **下一个**：026 - 建造系统（合成系统起步）。
 > **阶段：建造系统**（026 → 028）骨架已起草，**实施前需重新审视并补全**。
-
-### 环境系统（近期 - 完整版规范）
-- [025 - 昼夜循环系统](tasks/025-day-night-cycle.md) — 5 时段 + 全局光照渐变 + 背景切换 + 僵尸夜间 spawn 接入
 
 ### 建造系统（远期 - **骨架版**，实施前 Claude 必须补全）
 - [026 - 合成系统](tasks/026-crafting-system.md) ⚠️ 骨架版 — Recipe SO + 工作台；前置依赖：木材 / 铁锭物品来源
@@ -15,7 +12,7 @@
 暂无
 
 ## 审查中 (In Review)
-暂无
+- [025 - 昼夜循环系统](tasks/025-day-night-cycle.md) — 待审查（feature/025-day-night-cycle；代码渐变天空 + 三层视差云 + 夜空星月 + 僵尸夜刷 + 存档），[交付记录](../codex-reports/025-day-night-cycle.md)
 
 ## 已完成 (Done)
 - [024 - Boss HFSM 重构](tasks/024-boss-hfsm-refactor.md) — 通过（PR #20；EyeOfCorruption 从 enum+switch 重构为 UnityHFSM 层级状态机，行为 1:1 等价；审查确认 DripAcid 期间 `_phaseTimer` 持续累加、`!IsDead` 守卫防止死亡瞬间误发射酸液），[交付记录](../codex-reports/024-boss-hfsm-refactor.md)
