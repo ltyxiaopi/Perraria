@@ -12,9 +12,10 @@
 暂无
 
 ## 审查中 (In Review)
-- [025 - 昼夜循环系统](tasks/025-day-night-cycle.md) — 待审查（feature/025-day-night-cycle；代码渐变天空 + 三层视差云 + 夜空星月 + 僵尸夜刷 + 存档），[交付记录](../codex-reports/025-day-night-cycle.md)
+暂无
 
 ## 已完成 (Done)
+- [025 - 昼夜循环系统](tasks/025-day-night-cycle.md) — 通过（PR #22；时间循环 + Light2D 渐变 + 代码渐变天空 + 三层视差云 + 夜空星月 + 僵尸夜刷 + 存档；PR #23 追加调试快捷键：按住 T 快进、按 N 跳时段），[交付记录](../codex-reports/025-day-night-cycle.md)
 - [024 - Boss HFSM 重构](tasks/024-boss-hfsm-refactor.md) — 通过（PR #20；EyeOfCorruption 从 enum+switch 重构为 UnityHFSM 层级状态机，行为 1:1 等价；审查确认 DripAcid 期间 `_phaseTimer` 持续累加、`!IsDead` 守卫防止死亡瞬间误发射酸液），[交付记录](../codex-reports/024-boss-hfsm-refactor.md)
 - [023 - Boss 敌人 + 召唤系统](tasks/023-boss-and-summon.md) — 通过（PR #18；附修复：sprite 透明边距 trim + Visual 子物体补偿；规格漏洞补丁：PlayerBlockInteraction 让 Consumable 也阻挡挖矿），[交付记录](../codex-reports/023-boss-and-summon.md)
 - [022 - 僵尸敌人](tasks/022-enemy-zombie.md) — 通过（附修复：Idle 漂移归零 + 删除死代码 `_stuckTimer`），[交付记录](../codex-reports/022-enemy-zombie.md)
