@@ -1,4 +1,4 @@
-# 任务 024 - 昼夜循环系统
+# 任务 025 - 昼夜循环系统
 
 ## 目标
 1. 引入游戏内时间：5 个时段（Morning / Noon / Afternoon / Evening / DeepNight）循环。
@@ -285,7 +285,7 @@ DeepNight 跨日要小心：22:00 → 02:00 → 06:00。建议把 5 个预设展
 - **不做强制睡觉跳过夜晚** —— 床合成出来后再做
 
 ## 交付记录（Codex 必填）
-完成任务并自测通过后，**push 分支前**必须在 `docs/codex-reports/024-day-night-cycle.md`
+完成任务并自测通过后，**push 分支前**必须在 `docs/codex-reports/025-day-night-cycle.md`
 写一份交付记录。
 
 **交付记录额外要求**：

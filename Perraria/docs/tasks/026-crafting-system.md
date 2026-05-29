@@ -1,4 +1,4 @@
-# 任务 025 - 合成系统（工作台 + 配方）【骨架版】
+# 任务 026 - 合成系统（工作台 + 配方）【骨架版】
 
 > ⚠️ **实施前必须补全**
 > 本规范是**远期骨架版**，仅记录目标 / 依赖 / 验收骨架。**真正轮到 025 实施前，必须重新检查并补全**：
@@ -95,7 +95,7 @@ public sealed class Recipe : ScriptableObject
   - 合成失败 / 损坏机制
 
 ## 交付记录（Codex 必填）
-完成任务并自测通过后，**push 分支前**必须在 `docs/codex-reports/025-crafting-system.md`
+完成任务并自测通过后，**push 分支前**必须在 `docs/codex-reports/026-crafting-system.md`
 写一份交付记录。
 
 ---

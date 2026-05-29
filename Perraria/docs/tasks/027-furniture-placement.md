@@ -1,4 +1,4 @@
-# 任务 026 - 家具放置系统【骨架版】
+# 任务 027 - 家具放置系统【骨架版】
 
 > ⚠️ **实施前必须补全**
 > 本规范是**远期骨架版**，仅记录目标 / 依赖 / 验收骨架。**真正轮到 026 实施前，必须重新检查并补全**：
@@ -99,7 +99,7 @@ public sealed class FurnitureSaveData
 - 任务 008 Inventory（消耗物品）
 - 任务 020 ItemData（新增字段）
 - 任务 023 ItemType（已加 Consumable，本任务加 Furniture）
-- 任务 025 合成系统（家具大多通过合成获得）
+- 任务 026 合成系统（家具大多通过合成获得）
 - 任务 018 SaveData（新增 Furnitures 字段）
 
 ## 文件清单（候选）
@@ -134,7 +134,7 @@ public sealed class FurnitureSaveData
   - 家具堆叠（一格放多个家具）
 
 ## 交付记录（Codex 必填）
-完成任务并自测通过后，**push 分支前**必须在 `docs/codex-reports/026-furniture-placement.md`
+完成任务并自测通过后，**push 分支前**必须在 `docs/codex-reports/027-furniture-placement.md`
 写一份交付记录。
 
 ---
