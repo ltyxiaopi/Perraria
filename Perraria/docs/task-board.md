@@ -1,13 +1,9 @@
 # Perraria - 任务看板
 ## 待实现 (TODO)
-> **下一个**：024 - Boss HFSM 重构（优先级提前，先消化 Boss 代码结构再继续推内容）
-> **阶段：环境系统**（025）规范已就绪。
+> **下一个**：025 - 昼夜循环系统（环境系统，规范已就绪）。
 > **阶段：建造系统**（026 → 028）骨架已起草，**实施前需重新审视并补全**。
 
-### 技术债 / 重构（**先做**）
-- [024 - Boss HFSM 重构](tasks/024-boss-hfsm-refactor.md) — 引入 UnityHFSM 库 + 重写 EyeOfCorruption 状态机，行为等价；为后续 Boss #2/#3 打基础
-
-### 环境系统
+### 环境系统（近期 - 完整版规范）
 - [025 - 昼夜循环系统](tasks/025-day-night-cycle.md) — 5 时段 + 全局光照渐变 + 背景切换 + 僵尸夜间 spawn 接入
 
 ### 建造系统（远期 - **骨架版**，实施前 Claude 必须补全）
@@ -22,6 +18,7 @@
 暂无
 
 ## 已完成 (Done)
+- [024 - Boss HFSM 重构](tasks/024-boss-hfsm-refactor.md) — 通过（PR #20；EyeOfCorruption 从 enum+switch 重构为 UnityHFSM 层级状态机，行为 1:1 等价；审查确认 DripAcid 期间 `_phaseTimer` 持续累加、`!IsDead` 守卫防止死亡瞬间误发射酸液），[交付记录](../codex-reports/024-boss-hfsm-refactor.md)
 - [023 - Boss 敌人 + 召唤系统](tasks/023-boss-and-summon.md) — 通过（PR #18；附修复：sprite 透明边距 trim + Visual 子物体补偿；规格漏洞补丁：PlayerBlockInteraction 让 Consumable 也阻挡挖矿），[交付记录](../codex-reports/023-boss-and-summon.md)
 - [022 - 僵尸敌人](tasks/022-enemy-zombie.md) — 通过（附修复：Idle 漂移归零 + 删除死代码 `_stuckTimer`），[交付记录](../codex-reports/022-enemy-zombie.md)
 - [021 - 远程武器系统](tasks/021-ranged-weapons.md) — 通过（弓/法杖/投掷斧 + 通用 Projectile 组件，新增 Player/Projectile Layer 及碰撞矩阵），[交付记录](../codex-reports/021-ranged-weapons.md)
