@@ -1,4 +1,4 @@
-# 任务 027 - 房屋构建判定【骨架版】
+# 任务 028 - 房屋构建判定【骨架版】
 
 > ⚠️ **实施前必须补全**
 > 本规范是**远期骨架版**，仅记录目标 / 依赖 / 验收骨架。**真正轮到 027 实施前，必须重新检查并补全**：
@@ -81,7 +81,7 @@ public static class RoomValidator
 
 ## 依赖（候选）
 - 任务 003 WorldGenerator / TileManager（用 GetBlock 做 Flood Fill）
-- 任务 026 Furniture / FurnitureRegistry（查询家具清单）
+- 任务 027 Furniture / FurnitureRegistry（查询家具清单）
 - 任务 015 PlayerHealthUI（右上角 UI 锚点参考）
 
 ## 文件清单（候选）
@@ -113,7 +113,7 @@ public static class RoomValidator
   - 房间属性 buff（如休息回血）—— 留给后续生命系统扩展
 
 ## 交付记录（Codex 必填）
-完成任务并自测通过后，**push 分支前**必须在 `docs/codex-reports/027-house-validation.md`
+完成任务并自测通过后，**push 分支前**必须在 `docs/codex-reports/028-house-validation.md`
 写一份交付记录。
 
 ---

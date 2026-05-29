@@ -1,15 +1,19 @@
 # Perraria - 任务看板
 ## 待实现 (TODO)
-> **阶段：装备扩展 + 敌人丰富 + 环境系统**（020 → 024）规范已就绪。
-> **阶段：建造系统**（025 → 027）骨架已起草，**实施前需重新审视并补全**。
+> **下一个**：024 - Boss HFSM 重构（优先级提前，先消化 Boss 代码结构再继续推内容）
+> **阶段：环境系统**（025）规范已就绪。
+> **阶段：建造系统**（026 → 028）骨架已起草，**实施前需重新审视并补全**。
 
-### 环境系统（近期 - 完整版规范）
-- [024 - 昼夜循环系统](tasks/024-day-night-cycle.md) — 5 时段 + 全局光照渐变 + 背景切换 + 僵尸夜间 spawn 接入
+### 技术债 / 重构（**先做**）
+- [024 - Boss HFSM 重构](tasks/024-boss-hfsm-refactor.md) — 引入 UnityHFSM 库 + 重写 EyeOfCorruption 状态机，行为等价；为后续 Boss #2/#3 打基础
+
+### 环境系统
+- [025 - 昼夜循环系统](tasks/025-day-night-cycle.md) — 5 时段 + 全局光照渐变 + 背景切换 + 僵尸夜间 spawn 接入
 
 ### 建造系统（远期 - **骨架版**，实施前 Claude 必须补全）
-- [025 - 合成系统](tasks/025-crafting-system.md) ⚠️ 骨架版 — Recipe SO + 工作台；前置依赖：木材 / 铁锭物品来源
-- [026 - 家具放置系统](tasks/026-furniture-placement.md) ⚠️ 骨架版 — Furniture 基类 + 多格占用 + 拆除机制
-- [027 - 房屋构建判定](tasks/027-house-validation.md) ⚠️ 骨架版 — Flood Fill 围合检测 + UI 反馈
+- [026 - 合成系统](tasks/026-crafting-system.md) ⚠️ 骨架版 — Recipe SO + 工作台；前置依赖：木材 / 铁锭物品来源
+- [027 - 家具放置系统](tasks/027-furniture-placement.md) ⚠️ 骨架版 — Furniture 基类 + 多格占用 + 拆除机制
+- [028 - 房屋构建判定](tasks/028-house-validation.md) ⚠️ 骨架版 — Flood Fill 围合检测 + UI 反馈
 
 ## 进行中 (In Progress)
 暂无
