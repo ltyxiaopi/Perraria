@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [DisallowMultipleComponent]
 public sealed class WorldClock : MonoBehaviour
@@ -12,6 +13,11 @@ public sealed class WorldClock : MonoBehaviour
 
     [SerializeField] private float _gameMinutesPerSecond = 1f;
     [SerializeField] private float _startGameMinutes = DefaultStartMinutes;
+
+    [Header("Debug Time Controls")]
+    [SerializeField] private Key _fastForwardKey = Key.T;
+    [SerializeField] private float _fastForwardMultiplier = 60f;
+    [SerializeField] private Key _nextPhaseKey = Key.N;
 
     public float CurrentGameMinutes { get; private set; }
     public TimeOfDay CurrentTime { get; private set; }
@@ -31,7 +37,20 @@ public sealed class WorldClock : MonoBehaviour
             return;
         }
 
-        SetTime(CurrentGameMinutes + _gameMinutesPerSecond * Time.deltaTime);
+        Keyboard keyboard = Keyboard.current;
+        if (keyboard != null && keyboard[_nextPhaseKey].wasPressedThisFrame)
+        {
+            SetTime(GetNextPhaseStartMinutes(CurrentGameMinutes));
+            return;
+        }
+
+        float rate = _gameMinutesPerSecond;
+        if (keyboard != null && keyboard[_fastForwardKey].isPressed)
+        {
+            rate *= _fastForwardMultiplier;
+        }
+
+        SetTime(CurrentGameMinutes + rate * Time.deltaTime);
     }
 
     private void OnDestroy()
@@ -78,6 +97,18 @@ public sealed class WorldClock : MonoBehaviour
         }
 
         return TimeOfDay.DeepNight;
+    }
+
+    private static float GetNextPhaseStartMinutes(float minutes)
+    {
+        return GetTimeOfDay(minutes) switch
+        {
+            TimeOfDay.Morning => 600f,
+            TimeOfDay.Noon => 840f,
+            TimeOfDay.Afternoon => 1080f,
+            TimeOfDay.Evening => 1320f,
+            _ => 360f
+        };
     }
 
     public static float NormalizeMinutes(float minutes)
