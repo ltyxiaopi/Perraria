@@ -198,7 +198,7 @@ public sealed class WorldGenerator : MonoBehaviour
         int halfHeight = _worldHeight / 2;
 
         float worldX = spawnX - halfWidth + 0.5f;
-        float worldY = surfaceY - halfHeight + 1.5f;
+        float worldY = surfaceY - halfHeight + 3.5f;
 
         _playerTransform.position = new Vector3(worldX, worldY, 0f);
     }
