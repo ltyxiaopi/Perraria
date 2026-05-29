@@ -16,6 +16,10 @@ public sealed class SaveData
     private const string InitialPickaxeAssetName = "Item_Pickaxe_Wood";
     private const string InitialSwordAssetName = "Item_KnightSword";
     private const string InitialSuspiciousEyeAssetName = "Item_SuspiciousEye";
+    private const string InitialBowAssetName = "Item_Bow";
+    private const string InitialMagicStaffAssetName = "Item_GreenMagicStaff";
+    private const string InitialArrowAssetName = "Item_Arrow";
+    private const int InitialArrowCount = 99;
 
     public static SaveData CreateNewGameDefault()
     {
@@ -25,7 +29,7 @@ public sealed class SaveData
             SavedAtIso = DateTime.UtcNow.ToString("O"),
             Player = new PlayerSaveData
             {
-                Position = Vector3.zero,
+                Position = new Vector3(float.NaN, float.NaN, 0f),
                 CurrentHealth = 100,
                 MaxHealth = 100,
                 FacingRight = true
@@ -59,6 +63,9 @@ public sealed class SaveData
         ItemData pickaxe = FindItemByAssetName(itemDatabase, InitialPickaxeAssetName);
         ItemData sword = FindItemByAssetName(itemDatabase, InitialSwordAssetName);
         ItemData suspiciousEye = FindItemByAssetName(itemDatabase, InitialSuspiciousEyeAssetName);
+        ItemData bow = FindItemByAssetName(itemDatabase, InitialBowAssetName);
+        ItemData magicStaff = FindItemByAssetName(itemDatabase, InitialMagicStaffAssetName);
+        ItemData arrow = FindItemByAssetName(itemDatabase, InitialArrowAssetName);
 
         var slots = new List<InventorySlotSaveData>(global::Inventory.TotalSlots);
         for (int i = 0; i < global::Inventory.TotalSlots; i++)
@@ -73,6 +80,9 @@ public sealed class SaveData
         SetSlot(slots, 0, pickaxe, 1);
         SetSlot(slots, 1, sword, 1);
         SetSlot(slots, 2, suspiciousEye, 1);
+        SetSlot(slots, 3, bow, 1);
+        SetSlot(slots, 4, magicStaff, 1);
+        SetSlot(slots, 5, arrow, InitialArrowCount);
         return slots;
     }
 

@@ -111,7 +111,9 @@ public static class GameStateSnapshot
 
         if (controller != null)
         {
-            controller.RestoreState(data.Position, data.FacingRight);
+            bool useWorldSpawn = float.IsNaN(data.Position.x) || float.IsNaN(data.Position.y);
+            Vector3 position = useWorldSpawn ? controller.transform.position : data.Position;
+            controller.RestoreState(position, data.FacingRight);
         }
 
         if (health != null)
