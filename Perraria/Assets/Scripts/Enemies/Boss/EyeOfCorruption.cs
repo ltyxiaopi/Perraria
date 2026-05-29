@@ -1,16 +1,18 @@
 using System.Collections;
 using UnityEngine;
+using UnityHFSM;
 
 public sealed class EyeOfCorruption : Enemy
 {
-    private enum BossPhase
-    {
-        Phase1Hover,
-        Phase1Charge,
-        Phase2Hover,
-        Phase2Charge,
-        Defeated
-    }
+    private const string AliveState = "Alive";
+    private const string DefeatedState = "Defeated";
+    private const string Phase1State = "Phase1";
+    private const string Phase2State = "Phase2";
+    private const string HoverState = "Hover";
+    private const string ChargeState = "Charge";
+    private const string DripAcidState = "DripAcid";
+    private const string Phase2HoverPath = "/Alive/Phase2/Hover";
+    private const string Phase2DripAcidPath = "/Alive/Phase2/DripAcid";
 
     [Header("Boss")]
     [SerializeField] private float _hoverHeight = 5f;
@@ -39,17 +41,16 @@ public sealed class EyeOfCorruption : Enemy
     [SerializeField] private float _detectFps = 8f;
     [SerializeField] private float _dripAcidFps = 10f;
 
-    private BossPhase _phase = BossPhase.Phase1Hover;
+    private StateMachine _fsm;
     private Vector2 _chargeDirection;
     private float _phaseTimer;
+    private float _chargeTimer;
     private float _projectileTimer;
-    private float _animationTimer;
-    private float _dripAnimationTimer;
-    private bool _isPlayingDripAcid;
-    private bool _firedProjectileThisHover;
+    private float _dripTimer;
+    private bool _firedThisHover;
     private Coroutine _defeatCoroutine;
 
-    public string DebugPhaseName => _phase.ToString();
+    public string DebugPhaseName => _fsm?.GetActiveHierarchyPath() ?? "<uninit>";
 
     protected override void Reset()
     {
@@ -81,18 +82,12 @@ public sealed class EyeOfCorruption : Enemy
         {
             _terrainLayer = LayerMask.GetMask("Ground");
         }
+
+        BuildStateMachine();
     }
 
     protected override void UpdateBehavior()
     {
-        if (_phase == BossPhase.Defeated)
-        {
-            Halt();
-            return;
-        }
-
-        _animationTimer += Time.deltaTime;
-
         if (_playerTransform == null || _state != EnemyState.Chasing)
         {
             Halt();
@@ -100,28 +95,7 @@ public sealed class EyeOfCorruption : Enemy
             return;
         }
 
-        TryEnterPhase2();
-
-        _phaseTimer += Time.deltaTime;
-
-        switch (_phase)
-        {
-            case BossPhase.Phase1Hover:
-                UpdateHover(_phase1HoverDuration, BossPhase.Phase1Charge);
-                PlayLoop(_idleFrames, _idleFps);
-                break;
-            case BossPhase.Phase1Charge:
-                UpdateCharge(BossPhase.Phase1Hover);
-                PlayLoop(_detectFrames, _detectFps);
-                break;
-            case BossPhase.Phase2Hover:
-                UpdatePhase2Hover();
-                break;
-            case BossPhase.Phase2Charge:
-                UpdateCharge(BossPhase.Phase2Hover);
-                PlayLoop(_detectFrames, _detectFps);
-                break;
-        }
+        _fsm.OnLogic();
     }
 
     protected override void UpdateGroundedState()
@@ -136,65 +110,79 @@ public sealed class EyeOfCorruption : Enemy
             return;
         }
 
-        _phase = BossPhase.Defeated;
-        Halt();
-        DisableColliders();
-        _defeatCoroutine = StartCoroutine(DefeatRoutine());
+        _fsm.RequestStateChange(DefeatedState, forceInstantly: true);
     }
 
-    private void TryEnterPhase2()
+    private void BuildStateMachine()
     {
-        if (_phase != BossPhase.Phase1Hover && _phase != BossPhase.Phase1Charge)
-        {
-            return;
-        }
+        _fsm = new StateMachine();
+        HybridStateMachine alive = new HybridStateMachine();
+        HybridStateMachine phase1 = new HybridStateMachine();
+        HybridStateMachine phase2 = new HybridStateMachine();
 
-        if (_currentHealth > Mathf.FloorToInt(_maxHealth * 0.5f))
-        {
-            return;
-        }
+        ConfigurePhase1(phase1);
+        ConfigurePhase2(phase2);
+        ConfigureAlive(alive, phase1, phase2);
 
-        _phase = BossPhase.Phase2Hover;
-        _phaseTimer = 0f;
-        _projectileTimer = 0f;
-        _animationTimer = 0f;
-        _isPlayingDripAcid = false;
-        _firedProjectileThisHover = false;
-        Halt();
-        Debug.Log($"EyeOfCorruption phase switch: HP {_currentHealth}/{_maxHealth}, entering Phase2Hover.", this);
+        _fsm.AddState(AliveState, alive);
+        _fsm.AddState(DefeatedState, new State(onEnter: state => EnterDefeated()));
+        _fsm.SetStartState(AliveState);
+        _fsm.Init();
     }
 
-    private void UpdateHover(float hoverDuration, BossPhase nextPhase)
+    private void ConfigurePhase1(HybridStateMachine phase1)
     {
-        MoveTowardHoverPoint();
-
-        if (_phaseTimer < hoverDuration)
-        {
-            return;
-        }
-
-        BeginCharge(nextPhase);
+        phase1.AddState(HoverState, new State(
+            onEnter: state => _phaseTimer = 0f,
+            onLogic: state =>
+            {
+                MoveTowardHoverPoint();
+                _phaseTimer += Time.deltaTime;
+                PlayLoop(_idleFrames, _idleFps, _phaseTimer);
+            }));
+        phase1.AddState(ChargeState, new State(
+            onEnter: state => EnterCharge(),
+            onLogic: state => UpdateCharge(_phase1ChargeSpeed),
+            onExit: state => Halt()));
+        phase1.AddTransition(HoverState, ChargeState, state => _phaseTimer >= _phase1HoverDuration);
+        phase1.AddTransition(ChargeState, HoverState, state => _chargeTimer >= _chargeDuration);
+        phase1.SetStartState(HoverState);
     }
 
-    private void UpdatePhase2Hover()
+    private void ConfigurePhase2(HybridStateMachine phase2)
     {
-        MoveTowardHoverPoint();
-        _projectileTimer += Time.deltaTime;
+        phase2.AddState(HoverState, new State(onLogic: state =>
+        {
+            MoveTowardHoverPoint();
+            _phaseTimer += Time.deltaTime;
+            _projectileTimer += Time.deltaTime;
+            PlayLoop(_detectFrames, _detectFps, _phaseTimer);
+        }));
+        phase2.AddState(DripAcidState, new State(
+            onEnter: state => EnterDripAcid(),
+            onLogic: state => UpdateDripAcid(),
+            onExit: state => ExitDripAcid()));
+        phase2.AddState(ChargeState, new State(
+            onEnter: state => EnterCharge(),
+            onLogic: state => UpdateCharge(_phase2ChargeSpeed),
+            onExit: state => ExitPhase2Charge()));
+        phase2.AddTransition(HoverState, DripAcidState, state => CanStartDripAcid());
+        phase2.AddTransition(DripAcidState, HoverState, state => _dripTimer >= GetDripDuration());
+        phase2.AddTransition(HoverState, ChargeState, state => _phaseTimer >= _phase2HoverDuration);
+        phase2.AddTransition(ChargeState, HoverState, state => _chargeTimer >= _chargeDuration);
+        phase2.SetStartState(HoverState);
+    }
 
-        if (_isPlayingDripAcid)
-        {
-            UpdateDripAcidAnimation();
-        }
-        else
-        {
-            PlayLoop(_detectFrames, _detectFps);
-            TryBeginDripAcid();
-        }
-
-        if (_phaseTimer >= _phase2HoverDuration && !_isPlayingDripAcid)
-        {
-            BeginCharge(BossPhase.Phase2Charge);
-        }
+    private void ConfigureAlive(HybridStateMachine alive, HybridStateMachine phase1, HybridStateMachine phase2)
+    {
+        alive.AddState(Phase1State, phase1);
+        alive.AddState(Phase2State, phase2);
+        alive.AddTransition(
+            Phase1State,
+            Phase2State,
+            state => _currentHealth <= Mathf.FloorToInt(_maxHealth * 0.5f),
+            onTransition: state => EnterPhase2());
+        alive.SetStartState(Phase1State);
     }
 
     private void MoveTowardHoverPoint()
@@ -206,67 +194,88 @@ public sealed class EyeOfCorruption : Enemy
         _rigidbody2D.linearVelocity = velocity;
     }
 
-    private void BeginCharge(BossPhase chargePhase)
+    private void EnterCharge()
     {
         Vector2 toPlayer = _playerTransform.position - transform.position;
         _chargeDirection = toPlayer.sqrMagnitude > 0.0001f ? toPlayer.normalized : Vector2.down;
-        _phase = chargePhase;
-        _phaseTimer = 0f;
-        _animationTimer = 0f;
-        _isPlayingDripAcid = false;
+        _chargeTimer = 0f;
     }
 
-    private void UpdateCharge(BossPhase hoverPhase)
+    private void UpdateCharge(float speed)
     {
-        float speed = _phase == BossPhase.Phase2Charge ? _phase2ChargeSpeed : _phase1ChargeSpeed;
         _rigidbody2D.linearVelocity = _chargeDirection * speed;
+        _chargeTimer += Time.deltaTime;
+        PlayLoop(_detectFrames, _detectFps, _chargeTimer);
+    }
 
-        if (_phaseTimer < _chargeDuration)
-        {
-            return;
-        }
-
-        _phase = hoverPhase;
-        _phaseTimer = 0f;
+    private void EnterPhase2()
+    {
+        _firedThisHover = false;
         _projectileTimer = 0f;
-        _animationTimer = 0f;
-        _firedProjectileThisHover = false;
+        _phaseTimer = 0f;
+        Halt();
+        Debug.Log($"EyeOfCorruption phase switch: HP {_currentHealth}/{_maxHealth}", this);
+    }
+
+    private void EnterDripAcid()
+    {
+        _projectileTimer = 0f;
+        _dripTimer = 0f;
+    }
+
+    private void UpdateDripAcid()
+    {
+        _phaseTimer += Time.deltaTime;
+        _dripTimer += Time.deltaTime;
+        PlayLoop(_dripAcidFrames, _dripAcidFps, _dripTimer);
+    }
+
+    private void ExitDripAcid()
+    {
+        if (!IsDead && _dripTimer >= GetDripDuration())
+        {
+            FireAcidProjectile();
+            _firedThisHover = true;
+        }
+    }
+
+    private void ExitPhase2Charge()
+    {
+        _firedThisHover = false;
+        _projectileTimer = 0f;
+        _phaseTimer = 0f;
         Halt();
     }
 
-    private void TryBeginDripAcid()
+    private void EnterDefeated()
     {
-        if (_firedProjectileThisHover || _dripAcidFrames == null || _dripAcidFrames.Length == 0)
+        Halt();
+        DisableColliders();
+        if (_defeatCoroutine == null)
         {
-            return;
+            _defeatCoroutine = StartCoroutine(DefeatRoutine());
         }
-
-        float dripDuration = _dripAcidFrames.Length / Mathf.Max(0.01f, _dripAcidFps);
-        float prefireStartTime = Mathf.Max(0f, _phase2ProjectileInterval - dripDuration);
-        if (_projectileTimer < prefireStartTime)
-        {
-            return;
-        }
-
-        _projectileTimer = 0f;
-        _dripAnimationTimer = 0f;
-        _isPlayingDripAcid = true;
     }
 
-    private void UpdateDripAcidAnimation()
+    private bool CanStartDripAcid()
     {
-        _dripAnimationTimer += Time.deltaTime;
-        PlayLoop(_dripAcidFrames, _dripAcidFps, _dripAnimationTimer);
-
-        float duration = _dripAcidFrames.Length / Mathf.Max(0.01f, _dripAcidFps);
-        if (_dripAnimationTimer < duration)
+        if (_firedThisHover || _dripAcidFrames == null || _dripAcidFrames.Length == 0)
         {
-            return;
+            return false;
         }
 
-        FireAcidProjectile();
-        _isPlayingDripAcid = false;
-        _firedProjectileThisHover = true;
+        float prefireStartTime = Mathf.Max(0f, _phase2ProjectileInterval - GetDripDuration());
+        return _projectileTimer >= prefireStartTime;
+    }
+
+    private float GetDripDuration()
+    {
+        if (_dripAcidFrames == null || _dripAcidFrames.Length == 0)
+        {
+            return 0f;
+        }
+
+        return _dripAcidFrames.Length / Mathf.Max(0.01f, _dripAcidFps);
     }
 
     private void FireAcidProjectile()
@@ -308,14 +317,10 @@ public sealed class EyeOfCorruption : Enemy
 
     private void PlayHoverAnimation()
     {
-        Sprite[] frames = _phase == BossPhase.Phase2Hover ? _detectFrames : _idleFrames;
-        float fps = _phase == BossPhase.Phase2Hover ? _detectFps : _idleFps;
-        PlayLoop(frames, fps);
-    }
-
-    private void PlayLoop(Sprite[] frames, float framesPerSecond)
-    {
-        PlayLoop(frames, framesPerSecond, _animationTimer);
+        bool phase2HoverFlow = DebugPhaseName == Phase2HoverPath || DebugPhaseName == Phase2DripAcidPath;
+        Sprite[] frames = phase2HoverFlow ? _detectFrames : _idleFrames;
+        float fps = phase2HoverFlow ? _detectFps : _idleFps;
+        PlayLoop(frames, fps, Time.time);
     }
 
     private void PlayLoop(Sprite[] frames, float framesPerSecond, float time)
