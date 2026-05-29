@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.inspiaaa.unityhfsm": {
+      "version": "file:com.inspiaaa.unityhfsm",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.unity.2d.animation": {
       "version": "14.0.3",
       "depth": 0,
