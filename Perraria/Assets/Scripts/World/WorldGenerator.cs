@@ -21,6 +21,12 @@ public sealed class WorldGenerator : MonoBehaviour
     [SerializeField] private float _caveThreshold = 0.42f;
     [SerializeField] private int _caveSurfaceGuard = 3;
 
+    [Header("Trees")]
+    [SerializeField] private float _treeSpawnChance = 0.08f;
+    [SerializeField] private int _minTreeSpacing = 4;
+    [SerializeField] private int _trunkHeightMin = 4;
+    [SerializeField] private int _trunkHeightMax = 7;
+
     [Header("References")]
     [SerializeField] private Tilemap _tilemap;
     [SerializeField] private TileRegistry _tileRegistry;
@@ -71,6 +77,7 @@ public sealed class WorldGenerator : MonoBehaviour
         int[] surfaceHeights = GenerateSurfaceHeights();
         FillTerrain(surfaceHeights);
         CarveCaves(surfaceHeights);
+        PlantTrees(surfaceHeights);
         RenderToTilemap();
         SpawnPlayer(surfaceHeights);
         InitializeTileManager();
@@ -136,6 +143,96 @@ public sealed class WorldGenerator : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void PlantTrees(int[] surfaceHeights)
+    {
+        int lastTreeX = -_minTreeSpacing;
+
+        for (int x = 0; x < _worldWidth; x++)
+        {
+            if (x - lastTreeX < _minTreeSpacing)
+            {
+                continue;
+            }
+
+            if (Random.value >= _treeSpawnChance)
+            {
+                continue;
+            }
+
+            int trunkHeight = Random.Range(_trunkHeightMin, _trunkHeightMax + 1);
+            if (!CanPlantTree(x, surfaceHeights[x], trunkHeight))
+            {
+                continue;
+            }
+
+            PlantTree(x, surfaceHeights[x], trunkHeight);
+            lastTreeX = x;
+        }
+    }
+
+    private bool CanPlantTree(int x, int surfaceY, int trunkHeight)
+    {
+        if (_worldData.GetBlock(x, surfaceY) != BlockType.Grass)
+        {
+            return false;
+        }
+
+        int topY = surfaceY + trunkHeight;
+        if (x <= 0 || x >= _worldWidth - 1 || surfaceY + 1 >= _worldHeight || topY + 1 >= _worldHeight)
+        {
+            return false;
+        }
+
+        for (int y = surfaceY + 1; y <= topY; y++)
+        {
+            if (_worldData.GetBlock(x, y) != BlockType.Air)
+            {
+                return false;
+            }
+        }
+
+        for (int leafY = topY - 2; leafY <= topY; leafY++)
+        {
+            for (int leafX = x - 1; leafX <= x + 1; leafX++)
+            {
+                if (leafX == x && leafY <= topY)
+                {
+                    continue;
+                }
+
+                if (_worldData.GetBlock(leafX, leafY) != BlockType.Air)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return _worldData.GetBlock(x, topY + 1) == BlockType.Air;
+    }
+
+    private void PlantTree(int x, int surfaceY, int trunkHeight)
+    {
+        int topY = surfaceY + trunkHeight;
+
+        for (int y = surfaceY + 1; y <= topY; y++)
+        {
+            _worldData.SetBlock(x, y, BlockType.Wood);
+        }
+
+        for (int leafY = topY - 2; leafY <= topY; leafY++)
+        {
+            for (int leafX = x - 1; leafX <= x + 1; leafX++)
+            {
+                if (_worldData.GetBlock(leafX, leafY) == BlockType.Air)
+                {
+                    _worldData.SetBlock(leafX, leafY, BlockType.Leaves);
+                }
+            }
+        }
+
+        _worldData.SetBlock(x, topY + 1, BlockType.Leaves);
     }
 
     #endregion

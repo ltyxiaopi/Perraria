@@ -133,6 +133,7 @@ public static class BlockDataRegistryCsvImporter
         }
 
         Dictionary<BlockType, ItemData> existingDropItems = GetExistingDropItems(registry);
+        Dictionary<BlockType, float> existingDropChances = GetExistingDropChances(registry);
         SerializedObject serializedObject = new SerializedObject(registry);
         SerializedProperty blocks = serializedObject.FindProperty("_blocks");
         blocks.arraySize = rows.Count;
@@ -144,6 +145,8 @@ public static class BlockDataRegistryCsvImporter
             entry.FindPropertyRelative("Hardness").floatValue = rows[i].Hardness;
             entry.FindPropertyRelative("DropItem").objectReferenceValue =
                 existingDropItems.TryGetValue(rows[i].Type, out ItemData dropItem) ? dropItem : null;
+            entry.FindPropertyRelative("DropChance").floatValue =
+                existingDropChances.TryGetValue(rows[i].Type, out float dropChance) ? dropChance : rows[i].DropChance;
         }
 
         serializedObject.ApplyModifiedPropertiesWithoutUndo();
@@ -174,6 +177,27 @@ public static class BlockDataRegistryCsvImporter
         }
 
         return dropItems;
+    }
+
+    private static Dictionary<BlockType, float> GetExistingDropChances(BlockDataRegistry registry)
+    {
+        Dictionary<BlockType, float> dropChances = new Dictionary<BlockType, float>();
+        SerializedObject serializedObject = new SerializedObject(registry);
+        SerializedProperty blocks = serializedObject.FindProperty("_blocks");
+
+        for (int i = 0; i < blocks.arraySize; i++)
+        {
+            SerializedProperty entry = blocks.GetArrayElementAtIndex(i);
+            BlockType type = (BlockType)entry.FindPropertyRelative("Type").enumValueIndex;
+            if (dropChances.ContainsKey(type))
+            {
+                continue;
+            }
+
+            dropChances[type] = entry.FindPropertyRelative("DropChance").floatValue;
+        }
+
+        return dropChances;
     }
 
     private static BlockDataRegistry GetOrCreateDefaultRegistry()
