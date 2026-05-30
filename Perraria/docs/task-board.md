@@ -1,10 +1,13 @@
 # Perraria - 任务看板
 ## 待实现 (TODO)
-> **下一个**：026 - 建造系统（合成系统起步）。
-> **阶段：建造系统**（026 → 028）骨架已起草，**实施前需重新审视并补全**。
+> **下一个**：029 - 砍树系统（合成系统的木材来源前置，规格已补全可派单）。
+> **阶段顺序**：029（采集前置）→ 026 → 027 → 028（建造系统）。
+
+### 采集前置（规格已补全）
+- [029 - 砍树系统](tasks/029-tree-chopping.md) ✅ 完整版 — 方块式树（Wood/Leaves 方块）+ 砍树掉 Item_Wood + 树叶小概率掉 Item_Sapling + 种子化刷树；素材已就位（OpenGameArt 16x16 Block Texture Set, oak）
 
 ### 建造系统（远期 - **骨架版**，实施前 Claude 必须补全）
-- [026 - 合成系统](tasks/026-crafting-system.md) ⚠️ 骨架版 — Recipe SO + 工作台；前置依赖：木材 / 铁锭物品来源
+- [026 - 合成系统](tasks/026-crafting-system.md) ⚠️ 骨架版 — Recipe SO + 工作台；木材来源由 029 提供（决策：UI 沿用背包风格 / 先单工作台 / 铁锭暂不做）
 - [027 - 家具放置系统](tasks/027-furniture-placement.md) ⚠️ 骨架版 — Furniture 基类 + 多格占用 + 拆除机制
 - [028 - 房屋构建判定](tasks/028-house-validation.md) ⚠️ 骨架版 — Flood Fill 围合检测 + UI 反馈
 

@@ -15,3 +15,5 @@ MonoBehaviour:
   _dirtTile: {fileID: 11400000, guid: 6b61d39055d41bb4a8dab70eb6040ab2, type: 2}
   _grassTile: {fileID: 11400000, guid: 2a933e47cea1af54b8a815d4d1830924, type: 2}
   _stoneTile: {fileID: 11400000, guid: 711be5bb1e711ae41a3a45f1e5d0d484, type: 2}
+  _woodTile: {fileID: 11400000, guid: e14817a182d810542bc50a424f781dff, type: 2}
+  _leavesTile: {fileID: 11400000, guid: 1431edb98975a0d45b5c44ba682dc568, type: 2}

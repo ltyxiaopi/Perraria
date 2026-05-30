@@ -317,6 +317,12 @@ public sealed class PlayerBlockInteraction : MonoBehaviour
             return;
         }
 
+        float dropChance = _blockDataRegistry.GetDropChance(minedType);
+        if (dropChance < 1f && Random.value > dropChance)
+        {
+            return;
+        }
+
         Vector3 spawnPosition = GetCellCenter(minedCell);
         ItemDrop drop = Instantiate(_itemDropPrefab, spawnPosition, Quaternion.identity);
         drop.Initialize(dropItem, 1);
