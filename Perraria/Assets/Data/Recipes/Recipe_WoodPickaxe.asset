@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0e0303408bc19044be3a2d16b1f91f7, type: 3}
+  m_Name: Recipe_WoodPickaxe
+  m_EditorClassIdentifier: Assembly-CSharp::Recipe
+  _inputs:
+  - Item: {fileID: 11400000, guid: 2c8b99103efd7034295c36392e466d7b, type: 2}
+    Count: 8
+  _output: {fileID: 11400000, guid: 65d50a46deab6de42b7006554e4b0fe5, type: 2}
+  _outputCount: 1
+  _requiredStations:
+  - {fileID: 11400000, guid: 09ee87bfe5e10104082ed73786c8ec43, type: 2}

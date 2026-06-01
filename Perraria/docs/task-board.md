@@ -1,15 +1,14 @@
 # Perraria - 任务看板
 ## 待实现 (TODO)
-> **下一个**：026 - 合成系统（木材来源 029 已就绪；实施前 Claude 按已记录决策把骨架补成完整版）。
+> **下一个**：027（026 已派 Codex 实现中）。
 > **阶段顺序**：026 → 027 → 028（建造系统）。
 
-### 建造系统（远期 - **骨架版**，实施前 Claude 必须补全）
-- [026 - 合成系统](tasks/026-crafting-system.md) ⚠️ 骨架版 — Recipe SO + 工作台；木材来源由 029 提供（决策：UI 沿用背包风格 / 先单工作台 / 铁锭暂不做）
+### 建造系统（远期）
 - [027 - 家具放置系统](tasks/027-furniture-placement.md) ⚠️ 骨架版 — Furniture 基类 + 多格占用 + 拆除机制
 - [028 - 房屋构建判定](tasks/028-house-validation.md) ⚠️ 骨架版 — Flood Fill 围合检测 + UI 反馈
 
 ## 进行中 (In Progress)
-暂无
+- [026 - 合成系统](tasks/026-crafting-system.md) 🚧 已派 Codex 实现中 — 工作台做成新方块 `BlockType.Workbench`（复用方块放置，不碰027）；合成集成进背包面板；4 个配方全只耗木材（工作台手工合成→木剑/木箭/木镐需工作台）。**素材已落位+切片信息已写死**：木剑 = `swordsprites.png` 左下格(x0,y16,16²)→`weapon_wood_sword.png`（Vollrat CC-BY，斜画45°，靠新增 `ItemData._iconAngleOffset=45` 校正）；工作台 = `roguelikeSheet` 抽屉桌(col23,row5/x391,y85)→`workbench.png`（Kenney CC0）。规格含 §7 角度补偿接口、木剑数值、credits 登记。
 
 ## 审查中 (In Review)
 暂无

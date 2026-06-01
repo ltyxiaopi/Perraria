@@ -37,3 +37,7 @@ MonoBehaviour:
     Hardness: 0.15
     DropItem: {fileID: 11400000, guid: f3ae7ebd65c655c4692cc77b818684bc, type: 2}
     DropChance: 0.1
+  - Type: 6
+    Hardness: 0.4
+    DropItem: {fileID: 11400000, guid: 09ee87bfe5e10104082ed73786c8ec43, type: 2}
+    DropChance: 1

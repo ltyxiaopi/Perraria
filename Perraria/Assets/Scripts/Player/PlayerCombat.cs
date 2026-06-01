@@ -236,8 +236,12 @@ public sealed class PlayerCombat : MonoBehaviour
         bool facingLeft = _playerSpriteRenderer != null && _playerSpriteRenderer.flipX;
         float startAngleOffset = facingLeft ? -halfArc : halfArc;
         float endAngleOffset = facingLeft ? halfArc : -halfArc;
-        Quaternion startRotation = Quaternion.AngleAxis(aimAngle + startAngleOffset + WeaponFacingOffsetDegrees, Vector3.forward);
-        Quaternion endRotation = Quaternion.AngleAxis(aimAngle + endAngleOffset + WeaponFacingOffsetDegrees, Vector3.forward);
+        Quaternion startRotation = Quaternion.AngleAxis(
+            aimAngle + startAngleOffset + WeaponFacingOffsetDegrees + weaponItem.IconAngleOffset,
+            Vector3.forward);
+        Quaternion endRotation = Quaternion.AngleAxis(
+            aimAngle + endAngleOffset + WeaponFacingOffsetDegrees + weaponItem.IconAngleOffset,
+            Vector3.forward);
 
         _weaponPivot.localRotation = startRotation;
 
@@ -496,6 +500,13 @@ public sealed class PlayerCombat : MonoBehaviour
 
         if (TryGetSelectedWeapon(out ItemData weaponItem))
         {
+            if (_weaponPivot != null)
+            {
+                _weaponPivot.localRotation = Quaternion.AngleAxis(
+                    weaponItem.IconAngleOffset,
+                    Vector3.forward);
+            }
+
             _weaponRenderer.sprite = weaponItem.Icon;
             _weaponRenderer.enabled = true;
             return;

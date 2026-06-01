@@ -13,7 +13,12 @@ public sealed class InventoryUI : MonoBehaviour
     [SerializeField] private Image _cursorIcon;
     [SerializeField] private TMP_Text _cursorCountText;
     [SerializeField] private HotbarUI _hotbarUI;
+    [SerializeField] private Recipe[] _recipes;
+    [SerializeField] private RecipeSlotUI[] _recipeSlots;
+    [SerializeField] private WorkbenchProximity _workbenchProximity;
+    [SerializeField] private TMP_Text _craftingFeedbackText;
 
+    private readonly CraftingService _craftingService = new();
     private ItemStack _cursorStack;
     private bool _isOpen;
 
@@ -32,7 +37,9 @@ public sealed class InventoryUI : MonoBehaviour
         SubscribeInventoryEvents();
         SubscribeSlotClicks(_slots);
         SubscribeSlotClicks(GetHotbarSlots());
+        SubscribeRecipeClicks();
         RefreshAllSlots();
+        RefreshRecipes();
         UpdateCursorVisuals();
     }
 
@@ -41,6 +48,7 @@ public sealed class InventoryUI : MonoBehaviour
         UnsubscribeInventoryEvents();
         UnsubscribeSlotClicks(_slots);
         UnsubscribeSlotClicks(GetHotbarSlots());
+        UnsubscribeRecipeClicks();
         ClosePanel();
     }
 
@@ -59,6 +67,7 @@ public sealed class InventoryUI : MonoBehaviour
         if (_isOpen)
         {
             UpdateCursorPosition();
+            RefreshRecipes();
         }
 
         UpdateCursorVisuals();
@@ -106,6 +115,8 @@ public sealed class InventoryUI : MonoBehaviour
         _isOpen = true;
         SetPanelActive(true);
         RefreshAllSlots();
+        ClearCraftingFeedback();
+        RefreshRecipes();
         UpdateCursorVisuals();
     }
 
@@ -114,6 +125,7 @@ public sealed class InventoryUI : MonoBehaviour
         ReturnCursorToInventory();
         _isOpen = false;
         SetPanelActive(false);
+        ClearCraftingFeedback();
         UpdateCursorVisuals();
     }
 
@@ -138,6 +150,38 @@ public sealed class InventoryUI : MonoBehaviour
         if (_inventory != null)
         {
             _inventory.OnSlotChanged -= HandleSlotChanged;
+        }
+    }
+
+    private void SubscribeRecipeClicks()
+    {
+        if (_recipeSlots == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < _recipeSlots.Length; i++)
+        {
+            if (_recipeSlots[i] != null)
+            {
+                _recipeSlots[i].OnClicked += HandleRecipeClicked;
+            }
+        }
+    }
+
+    private void UnsubscribeRecipeClicks()
+    {
+        if (_recipeSlots == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < _recipeSlots.Length; i++)
+        {
+            if (_recipeSlots[i] != null)
+            {
+                _recipeSlots[i].OnClicked -= HandleRecipeClicked;
+            }
         }
     }
 
@@ -184,6 +228,36 @@ public sealed class InventoryUI : MonoBehaviour
         {
             _slots[index]?.UpdateDisplay(_inventory.GetSlot(index));
         }
+
+        RefreshRecipes();
+    }
+
+    private void HandleRecipeClicked(Recipe recipe)
+    {
+        if (!_isOpen || recipe == null || _inventory == null)
+        {
+            return;
+        }
+
+        bool stationAvailable = IsStationAvailable(recipe);
+        bool canCraft = _craftingService.CanCraft(recipe, _inventory, stationAvailable);
+        if (!canCraft)
+        {
+            SetCraftingFeedback("Missing materials or station");
+            RefreshRecipes();
+            return;
+        }
+
+        if (!_craftingService.TryCraft(recipe, _inventory, stationAvailable))
+        {
+            SetCraftingFeedback("Inventory full");
+            RefreshRecipes();
+            return;
+        }
+
+        ClearCraftingFeedback();
+        RefreshAllSlots();
+        RefreshRecipes();
     }
 
     private void HandleSlotClicked(int slotIndex)
@@ -288,6 +362,61 @@ public sealed class InventoryUI : MonoBehaviour
         {
             _slots[i]?.UpdateDisplay(_inventory.GetSlot(i));
         }
+    }
+
+    private void RefreshRecipes()
+    {
+        if (_recipeSlots == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < _recipeSlots.Length; i++)
+        {
+            Recipe recipe = _recipes != null && i < _recipes.Length ? _recipes[i] : null;
+            bool hasIngredients = _craftingService.HasIngredients(recipe, _inventory);
+            bool stationAvailable = IsStationAvailable(recipe);
+            _recipeSlots[i]?.UpdateDisplay(recipe, _inventory, hasIngredients, stationAvailable);
+        }
+    }
+
+    private bool IsStationAvailable(Recipe recipe)
+    {
+        if (recipe == null || !recipe.RequiresStation)
+        {
+            return true;
+        }
+
+        if (_workbenchProximity == null || recipe.RequiredStations == null)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < recipe.RequiredStations.Count; i++)
+        {
+            if (_workbenchProximity.IsNearStation(recipe.RequiredStations[i]))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private void SetCraftingFeedback(string message)
+    {
+        if (_craftingFeedbackText == null)
+        {
+            return;
+        }
+
+        _craftingFeedbackText.gameObject.SetActive(!string.IsNullOrEmpty(message));
+        _craftingFeedbackText.text = message;
+    }
+
+    private void ClearCraftingFeedback()
+    {
+        SetCraftingFeedback(string.Empty);
     }
 
     private void UpdateCursorPosition()
