@@ -75,6 +75,30 @@ public sealed class Inventory : MonoBehaviour
         return remaining > 0 ? FillEmptySlots(item, remaining) : 0;
     }
 
+    public int CountItem(ItemData item)
+    {
+        EnsureSlotsInitialized();
+
+        if (item == null)
+        {
+            return 0;
+        }
+
+        int count = 0;
+        for (int i = 0; i < _slots.Length; i++)
+        {
+            ItemStack stack = _slots[i];
+            if (stack.IsEmpty || stack.Item.ItemId != item.ItemId)
+            {
+                continue;
+            }
+
+            count += stack.Count;
+        }
+
+        return count;
+    }
+
     public bool RemoveFromSlot(int slotIndex, int count = 1)
     {
         EnsureSlotsInitialized();

@@ -16,6 +16,7 @@ public sealed class ItemData : ScriptableObject
     [SerializeField] private float _swingDuration = 0.35f;
     [SerializeField] private float _knockbackForce;
     [SerializeField] private float _miningSpeedMultiplier = 1f;
+    [SerializeField] private float _iconAngleOffset;
     [SerializeField] private WeaponSubType _weaponSubType = WeaponSubType.Melee;
     [SerializeField] private GameObject _projectilePrefab;
     [SerializeField] private ItemData _ammoItem;
@@ -40,6 +41,7 @@ public sealed class ItemData : ScriptableObject
     public float SwingDuration => _swingDuration;
     public float KnockbackForce => _knockbackForce;
     public float MiningSpeedMultiplier => _miningSpeedMultiplier;
+    public float IconAngleOffset => _iconAngleOffset;
     public WeaponSubType WeaponSubType => _weaponSubType;
     public GameObject ProjectilePrefab => _projectilePrefab;
     public ItemData AmmoItem => _ammoItem;
