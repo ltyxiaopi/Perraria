@@ -6,5 +6,6 @@ public enum BlockType : byte
     Stone = 3,
     Wood = 4,
     Leaves = 5,
-    Workbench = 6
+    Workbench = 6,
+    WorkbenchRight = 7
 }

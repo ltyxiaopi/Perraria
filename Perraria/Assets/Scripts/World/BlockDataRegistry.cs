@@ -61,8 +61,7 @@ public sealed class BlockDataRegistry : ScriptableObject
         {
             if (_blocks[i].Type == type)
             {
-                float chance = _blocks[i].DropChance;
-                return chance <= 0f ? 1f : Mathf.Clamp01(chance);
+                return Mathf.Clamp01(_blocks[i].DropChance);
             }
         }
 

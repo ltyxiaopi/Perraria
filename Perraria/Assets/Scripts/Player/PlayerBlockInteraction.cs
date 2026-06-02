@@ -17,6 +17,7 @@ public sealed class PlayerBlockInteraction : MonoBehaviour
     [SerializeField] private float _miningSpeed = 1f;
     [SerializeField] private Tilemap _highlightTilemap;
     [SerializeField] private TileBase _highlightTile;
+    [SerializeField] private WorkbenchUI _workbenchUI;
 
     private Camera _mainCamera;
     private Collider2D _playerCollider;
@@ -84,6 +85,11 @@ public sealed class PlayerBlockInteraction : MonoBehaviour
 
             if (Mouse.current != null && Mouse.current.rightButton.wasPressedThisFrame && isInRange)
             {
+                if (TryOpenWorkbenchUI(targetCell))
+                {
+                    return;
+                }
+
                 PlaceBlock(targetCell);
             }
 
@@ -95,6 +101,11 @@ public sealed class PlayerBlockInteraction : MonoBehaviour
 
         if (Mouse.current != null && Mouse.current.rightButton.wasPressedThisFrame && isInRange)
         {
+            if (TryOpenWorkbenchUI(targetCell))
+            {
+                return;
+            }
+
             PlaceBlock(targetCell);
         }
     }
@@ -185,9 +196,51 @@ public sealed class PlayerBlockInteraction : MonoBehaviour
 
         if (_miningProgress >= 1f)
         {
-            Vector3Int minedCell = _miningCell;
-            ResetMining();
-            SpawnItemDrop(minedCell);
+            CompleteMining();
+        }
+    }
+
+    private void CompleteMining()
+    {
+        Vector3Int minedCell = _miningCell;
+        BlockType minedType = _tileManager.GetBlock(minedCell);
+        ResetMining();
+
+        if (IsWorkbenchBlock(minedType))
+        {
+            MineWorkbench(minedCell, minedType);
+            return;
+        }
+
+        SpawnItemDrop(minedCell, minedType);
+        _tileManager.SetBlock(minedCell, BlockType.Air);
+    }
+
+    private void MineWorkbench(Vector3Int minedCell, BlockType minedType)
+    {
+        Vector3Int anchorCell = minedType == BlockType.WorkbenchRight
+            ? minedCell + Vector3Int.left
+            : minedCell;
+        Vector3Int rightCell = anchorCell + Vector3Int.right;
+        bool hasAnchor = _tileManager.GetBlock(anchorCell) == BlockType.Workbench;
+        bool hasRight = _tileManager.GetBlock(rightCell) == BlockType.WorkbenchRight;
+
+        if (hasAnchor)
+        {
+            SpawnItemDrop(anchorCell, BlockType.Workbench);
+        }
+
+        if (hasRight)
+        {
+            _tileManager.SetBlock(rightCell, BlockType.Air);
+        }
+
+        if (hasAnchor)
+        {
+            _tileManager.SetBlock(anchorCell, BlockType.Air);
+        }
+        else if (minedType == BlockType.WorkbenchRight)
+        {
             _tileManager.SetBlock(minedCell, BlockType.Air);
         }
     }
@@ -207,7 +260,7 @@ public sealed class PlayerBlockInteraction : MonoBehaviour
 
     private void PlaceBlock(Vector3Int cellPosition)
     {
-        if (_inventory == null || _tileManager.GetBlock(cellPosition) != BlockType.Air)
+        if (_inventory == null)
         {
             return;
         }
@@ -220,7 +273,13 @@ public sealed class PlayerBlockInteraction : MonoBehaviour
             return;
         }
 
-        if (IsPlayerOccupyingCell(cellPosition))
+        if (selected.Item.PlaceBlockType == BlockType.Workbench)
+        {
+            PlaceWorkbench(cellPosition);
+            return;
+        }
+
+        if (!CanPlaceBlockAt(cellPosition))
         {
             return;
         }
@@ -231,6 +290,59 @@ public sealed class PlayerBlockInteraction : MonoBehaviour
         }
 
         _inventory.RemoveFromSlot(_inventory.SelectedHotbarIndex, 1);
+    }
+
+    private void PlaceWorkbench(Vector3Int anchorCell)
+    {
+        Vector3Int rightCell = anchorCell + Vector3Int.right;
+        if (!CanPlaceBlockAt(anchorCell) || !CanPlaceBlockAt(rightCell))
+        {
+            return;
+        }
+
+        if (!_tileManager.SetBlock(anchorCell, BlockType.Workbench))
+        {
+            return;
+        }
+
+        if (!_tileManager.SetBlock(rightCell, BlockType.WorkbenchRight))
+        {
+            _tileManager.SetBlock(anchorCell, BlockType.Air);
+            return;
+        }
+
+        _inventory.RemoveFromSlot(_inventory.SelectedHotbarIndex, 1);
+    }
+
+    private bool CanPlaceBlockAt(Vector3Int cellPosition)
+    {
+        if (!_tileManager.IsInBounds(cellPosition)
+            || _tileManager.GetBlock(cellPosition) != BlockType.Air)
+        {
+            return false;
+        }
+
+        if (IsPlayerOccupyingCell(cellPosition))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    private bool TryOpenWorkbenchUI(Vector3Int targetCell)
+    {
+        if (!IsWorkbenchBlock(_tileManager.GetBlock(targetCell)))
+        {
+            return false;
+        }
+
+        if (_workbenchUI != null)
+        {
+            _workbenchUI.Open();
+        }
+
+        return true;
     }
 
     private void HandleHotbarInput()
@@ -303,14 +415,13 @@ public sealed class PlayerBlockInteraction : MonoBehaviour
         _inventory.SelectHotbar(nextIndex);
     }
 
-    private void SpawnItemDrop(Vector3Int minedCell)
+    private void SpawnItemDrop(Vector3Int minedCell, BlockType minedType)
     {
         if (_itemDropPrefab == null)
         {
             return;
         }
 
-        BlockType minedType = _tileManager.GetBlock(minedCell);
         ItemData dropItem = _blockDataRegistry.GetDropItem(minedType);
         if (dropItem == null)
         {
@@ -326,6 +437,11 @@ public sealed class PlayerBlockInteraction : MonoBehaviour
         Vector3 spawnPosition = GetCellCenter(minedCell);
         ItemDrop drop = Instantiate(_itemDropPrefab, spawnPosition, Quaternion.identity);
         drop.Initialize(dropItem, 1);
+    }
+
+    private bool IsWorkbenchBlock(BlockType blockType)
+    {
+        return blockType == BlockType.Workbench || blockType == BlockType.WorkbenchRight;
     }
 
     private bool IsActionItemSelected()

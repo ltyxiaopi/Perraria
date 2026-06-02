@@ -9,7 +9,7 @@ public sealed class WorkbenchProximity : MonoBehaviour
 
     public bool IsNearWorkbench()
     {
-        return IsNearBlock(BlockType.Workbench);
+        return IsNearBlock(BlockType.Workbench) || IsNearBlock(BlockType.WorkbenchRight);
     }
 
     public bool IsNearStation(ItemData stationItem)
@@ -17,6 +17,11 @@ public sealed class WorkbenchProximity : MonoBehaviour
         if (stationItem == null || stationItem.PlaceBlockType == BlockType.Air)
         {
             return false;
+        }
+
+        if (stationItem.PlaceBlockType == BlockType.Workbench)
+        {
+            return IsNearWorkbench();
         }
 
         return IsNearBlock(stationItem.PlaceBlockType);

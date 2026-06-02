@@ -1,19 +1,21 @@
 # Perraria - 任务看板
 ## 待实现 (TODO)
-> **下一个**：027（026 已派 Codex 实现中）。
-> **阶段顺序**：026 → 027 → 028（建造系统）。
+> **下一个**：027。
+> **阶段顺序**：026 → 026b → 027 → 028（建造系统）。
 
 ### 建造系统（远期）
 - [027 - 家具放置系统](tasks/027-furniture-placement.md) ⚠️ 骨架版 — Furniture 基类 + 多格占用 + 拆除机制
 - [028 - 房屋构建判定](tasks/028-house-validation.md) ⚠️ 骨架版 — Flood Fill 围合检测 + UI 反馈
 
 ## 进行中 (In Progress)
-- [026 - 合成系统](tasks/026-crafting-system.md) 🚧 已派 Codex 实现中 — 工作台做成新方块 `BlockType.Workbench`（复用方块放置，不碰027）；合成集成进背包面板；4 个配方全只耗木材（工作台手工合成→木剑/木箭/木镐需工作台）。**素材已落位+切片信息已写死**：木剑 = `swordsprites.png` 左下格(x0,y16,16²)→`weapon_wood_sword.png`（Vollrat CC-BY，斜画45°，靠新增 `ItemData._iconAngleOffset=45` 校正）；工作台 = `roguelikeSheet` 抽屉桌(col23,row5/x391,y85)→`workbench.png`（Kenney CC0）。规格含 §7 角度补偿接口、木剑数值、credits 登记。
+暂无
 
 ## 审查中 (In Review)
 暂无
 
 ## 已完成 (Done)
+- [026b - 工作台改版](tasks/026b-workbench-rework.md) — 通过（feature/026b-workbench-rework）；工作台改为 **2 格宽×1 格高**（`Workbench` + `WorkbenchRight`），背包合成只留工作台配方，木剑/木箭/木镐移入独立 `WorkbenchUI`；右键工作台打开 UI，离开范围自动关闭；MCP Play Mode 验证双格放置、右半阻挡、右键打开、挖右半清两格且只掉 1 个工作台、存档变更包含两格、合成满包回滚，[交付记录](../codex-reports/026b-workbench-rework.md)。
+- [026 - 合成系统](tasks/026-crafting-system.md) — 通过（PR #25, master 8d46ce4）；工作台做成 `BlockType.Workbench` 方块、合成集成进背包面板、4 配方只耗木材；资产值/木剑朝向(`_iconAngleOffset=45`)/合成原子性均 MCP 实测确认，[交付记录](../codex-reports/026-crafting-system.md)。**后续改版见 026b**（2 格宽 + 独立工作台 UI）
 - [029 - 砍树系统](tasks/029-tree-chopping.md) — 通过（PR #24；方块式树 Wood/Leaves + 砍木掉 Item_Wood + 树叶 10% 掉 Item_Sapling + 种子化刷树；复用挖掘/掉落/存档全套，仅给 BlockData 加 DropChance；独立 MCP 验证编译0错误+配置正确+确定性 equal=True；素材 OpenGameArt 16x16 Block Texture Set CC0, oak），[交付记录](../codex-reports/029-tree-chopping.md)
 - [025 - 昼夜循环系统](tasks/025-day-night-cycle.md) — 通过（PR #22；时间循环 + Light2D 渐变 + 代码渐变天空 + 三层视差云 + 夜空星月 + 僵尸夜刷 + 存档；PR #23 追加调试快捷键：按住 T 快进、按 N 跳时段），[交付记录](../codex-reports/025-day-night-cycle.md)
 - [024 - Boss HFSM 重构](tasks/024-boss-hfsm-refactor.md) — 通过（PR #20；EyeOfCorruption 从 enum+switch 重构为 UnityHFSM 层级状态机，行为 1:1 等价；审查确认 DripAcid 期间 `_phaseTimer` 持续累加、`!IsDead` 守卫防止死亡瞬间误发射酸液），[交付记录](../codex-reports/024-boss-hfsm-refactor.md)

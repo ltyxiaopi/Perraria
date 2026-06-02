@@ -10,6 +10,7 @@ public sealed class TileRegistry : ScriptableObject
     [SerializeField] private TileBase _woodTile;
     [SerializeField] private TileBase _leavesTile;
     [SerializeField] private TileBase _workbenchTile;
+    [SerializeField] private TileBase _workbenchRightTile;
 
     public TileBase GetTile(BlockType blockType)
     {
@@ -21,6 +22,7 @@ public sealed class TileRegistry : ScriptableObject
             BlockType.Wood => _woodTile,
             BlockType.Leaves => _leavesTile,
             BlockType.Workbench => _workbenchTile,
+            BlockType.WorkbenchRight => _workbenchRightTile,
             _ => null
         };
     }
