@@ -18,3 +18,4 @@ MonoBehaviour:
   _woodTile: {fileID: 11400000, guid: e14817a182d810542bc50a424f781dff, type: 2}
   _leavesTile: {fileID: 11400000, guid: 1431edb98975a0d45b5c44ba682dc568, type: 2}
   _workbenchTile: {fileID: 11400000, guid: a5f1a8a3a01b5c24f955c14b3986f96c, type: 2}
+  _workbenchRightTile: {fileID: 11400000, guid: 37c02cf7aacdee54293cbb3ae95b4577, type: 2}

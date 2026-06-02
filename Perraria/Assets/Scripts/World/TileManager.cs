@@ -51,6 +51,17 @@ public sealed class TileManager : MonoBehaviour
         return true;
     }
 
+    public bool IsInBounds(Vector3Int tilemapPos)
+    {
+        if (_worldData == null)
+        {
+            return false;
+        }
+
+        Vector2Int worldDataPos = ToWorldDataPosition(tilemapPos);
+        return _worldData.InBounds(worldDataPos.x, worldDataPos.y);
+    }
+
     public IEnumerable<WorldTileChange> EnumerateChanges()
     {
         if (_worldData == null)
