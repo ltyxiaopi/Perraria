@@ -14,7 +14,7 @@
 暂无
 
 ## 已完成 (Done)
-- [026b - 工作台改版](tasks/026b-workbench-rework.md) — 通过（feature/026b-workbench-rework）；工作台改为 **2 格宽×1 格高**（`Workbench` + `WorkbenchRight`），背包合成只留工作台配方，木剑/木箭/木镐移入独立 `WorkbenchUI`；右键工作台打开 UI，离开范围自动关闭；MCP Play Mode 验证双格放置、右半阻挡、右键打开、挖右半清两格且只掉 1 个工作台、存档变更包含两格、合成满包回滚，[交付记录](../codex-reports/026b-workbench-rework.md)。
+- [026b - 工作台改版](tasks/026b-workbench-rework.md) — 通过（feature/026b-workbench-rework）；工作台改为 **2 格宽×1 格高**（`Workbench` + `WorkbenchRight`），背包合成只留工作台配方，木剑/木箭/木镐移入独立 `WorkbenchUI`；右键工作台打开 UI，离开范围自动关闭。审查打回的 `workbench.png` PPU=100 视觉缩小问题已修复为 PPU=16，并用 Play Mode 相机截图确认 TilemapRenderer bounds 为 **2×1**、接地对齐，[交付记录](../codex-reports/026b-workbench-rework.md)。
 - [026 - 合成系统](tasks/026-crafting-system.md) — 通过（PR #25, master 8d46ce4）；工作台做成 `BlockType.Workbench` 方块、合成集成进背包面板、4 配方只耗木材；资产值/木剑朝向(`_iconAngleOffset=45`)/合成原子性均 MCP 实测确认，[交付记录](../codex-reports/026-crafting-system.md)。**后续改版见 026b**（2 格宽 + 独立工作台 UI）
 - [029 - 砍树系统](tasks/029-tree-chopping.md) — 通过（PR #24；方块式树 Wood/Leaves + 砍木掉 Item_Wood + 树叶 10% 掉 Item_Sapling + 种子化刷树；复用挖掘/掉落/存档全套，仅给 BlockData 加 DropChance；独立 MCP 验证编译0错误+配置正确+确定性 equal=True；素材 OpenGameArt 16x16 Block Texture Set CC0, oak），[交付记录](../codex-reports/029-tree-chopping.md)
 - [025 - 昼夜循环系统](tasks/025-day-night-cycle.md) — 通过（PR #22；时间循环 + Light2D 渐变 + 代码渐变天空 + 三层视差云 + 夜空星月 + 僵尸夜刷 + 存档；PR #23 追加调试快捷键：按住 T 快进、按 N 跳时段），[交付记录](../codex-reports/025-day-night-cycle.md)

@@ -12,8 +12,13 @@ Branch: `feature/026b-workbench-rework`
 - Updated `BlockDataRegistry` and CSV with Workbench/WorkbenchRight hardness and drop behavior.
 - Updated `WorkbenchTile.asset` to render at `transform.m00=2`; added transparent `WorkbenchRightTile.asset`.
 - Recut `workbench.png` to the selected Kenney roguelike sheet tile and updated its importer.
+- Review fix: changed `workbench.png` `spritePixelsToUnits` from `100` to `16` and reimported it; `filterMode=Point` and pivot `(0,0)` are unchanged.
 - Updated `SampleScene.unity`: inventory recipe list is now one Workbench recipe; WorkbenchUI has Wood Sword, Arrow, and Wood Pickaxe recipes; `PlayerBlockInteraction._workbenchUI` is bound.
 - Updated `docs/task-board.md` and added `docs/tasks/026b-workbench-rework.md`.
+
+## Screenshots
+
+- Workbench PPU 16 visual check: ![Workbench 2x1 visual](026b-workbench-rework-images/workbench-ppu16-2x1.png)
 
 ## Runtime Verification Log
 
@@ -41,6 +46,12 @@ Branch: `feature/026b-workbench-rework`
 - Play Mode mining harness:
   mining `WorkbenchRight` cleared both cells.
   drop delta was exactly `1` `Item_Workbench`.
+- Review fix visual verification:
+  before reimport, `workbench.png` importer had `spritePixelsPerUnit=100`; after reimport it has `spritePixelsPerUnit=16`, `filter=Point`, `pivot=(0,0)`.
+  imported sprite rect is `16x16`, sprite bounds are `(1.00, 1.00, 0.20)`.
+  with `WorkbenchTile.transform.m00=2` and `m11=1`, expected visual size is `(2,1)`.
+  Play Mode camera screenshot saved to `docs/codex-reports/026b-workbench-rework-images/workbench-ppu16-2x1.png`.
+  TilemapRenderer runtime bounds for `[Workbench, WorkbenchRight]` were `min=(0,0,0)`, `size=(2,1,1)`, confirming 2-cell width, 1-cell height, and grounded bottom alignment.
 
 ## Review Focus
 
