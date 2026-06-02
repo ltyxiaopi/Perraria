@@ -63,3 +63,23 @@ Branch: `feature/026b-workbench-rework`
 
 - Unity MCP dynamic commands fail on `MethodInfo.Invoke` in this editor session, so runtime verification used Play Mode, `InputSystem.QueueStateEvent(MouseState)`, and `SendMessage("Update")` instead of reflection.
 - Console has one Unity AI Toolkit account/API warning after final refresh; no task compile/runtime errors were present.
+
+## Round 2 Fixes (review feedback — alignment + close button)
+
+> Codex ran out of tokens mid-round-2; these two fixes were finished and verified by Claude Code (acting as implementer at the user's request). All changes are in the working tree (uncommitted).
+
+Two issues raised in the second review:
+
+1. **Workbench floated above ground / collider not matching the sprite edges.**
+   - Root cause: terrain tiles use a centered sprite pivot `(0.5,0.5)` while `workbench.png` used a bottom-left pivot `(0,0)`. Combined with the tilemap `tileAnchor=(0.5,0.5)` and `WorkbenchTile.transform.m00=2`, the sprite was pushed half a cell up-right of its 2×1 footprint, so it floated and the Grid colliders (on the two footprint cells) no longer lined up with the visible sprite.
+   - Fix: changed `workbench.png` sprite pivot to **custom `(0.25, 0.5)`** (keeping `PPU=16`, `filter=Point`, `WorkbenchTile.m00=2`). With the centered `tileAnchor` and `m00=2` scaling, pivot `(0.25,0.5)` places the scaled 2×1 sprite exactly over the anchor+right footprint cells.
+   - Verification: placed `[Workbench, WorkbenchRight]` next to stone bookend pillars (cells x=-1 and x=2) on a dirt ground row (y=-1). Scene captures confirm the cabinet now fills exactly cells x[0,2] y[0,1], sits flush on the ground (no float), and its left/right edges meet the two bookend pillars. MCP confirms `WorkbenchTile sprite pivot(norm)=(0.25,0.50) ppu=16 m00=2`. Evidence: `docs/codex-reports/026b-workbench-rework-images/workbench-pivot025-aligned.png`.
+   - Note: the `0.25` is intentional and specific to "2-cell-wide tile + centered tileAnchor + m00=2"; documented here so it is not mistaken for a stray value.
+
+2. **Workbench crafting UI had no close button.**
+   - Added `[SerializeField] private Button _closeButton;` to `WorkbenchUI`; wired via code (`SubscribeCloseButton`/`UnsubscribeCloseButton` in `OnEnable`/`OnDisable` calling `_closeButton.onClick.AddListener/RemoveListener(Close)`), not via inspector persistent calls, to avoid scene reference fragility.
+   - Scene: added `WorkbenchCloseButton` under `Panel`, top-right anchored `(1,1)` at offset `(-8,-8)`, size `28×28`, TMP label `"✕"`, with an `Image` target graphic (`raycastTarget=true`, `ColorTint` transition); the label's `raycastTarget=false` so the whole button area is clickable. Bound to `WorkbenchUI._closeButton`.
+   - Verification (MCP): `_closeButton=WorkbenchCloseButton`, `underPanel=true`, `interactable=true`, `targetGraphic=Image`, `onClick persistentCalls=0` (runtime-subscribed). Closes the panel on click; `Esc` and walking out of proximity still close it as before.
+
+- Compile: 0 errors. Final Console: 0 errors, 1 unrelated Unity AI Toolkit warning.
+- Independent MCP binding re-check (Claude): `InventoryUI recipes=1 (Recipe_Workbench)`, `WorkbenchUI recipes=3 (WoodSword/Arrow/Pickaxe)`, `PlayerBlockInteraction._workbenchUI=WorkbenchRoot` — all still intact.

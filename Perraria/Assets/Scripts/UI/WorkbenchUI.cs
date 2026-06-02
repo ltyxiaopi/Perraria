@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 [DisallowMultipleComponent]
 public sealed class WorkbenchUI : MonoBehaviour
@@ -11,6 +12,7 @@ public sealed class WorkbenchUI : MonoBehaviour
     [SerializeField] private RecipeSlotUI[] _recipeSlots;
     [SerializeField] private WorkbenchProximity _workbenchProximity;
     [SerializeField] private TMP_Text _craftingFeedbackText;
+    [SerializeField] private Button _closeButton;
 
     private readonly CraftingService _craftingService = new();
     private bool _isOpen;
@@ -27,6 +29,7 @@ public sealed class WorkbenchUI : MonoBehaviour
     {
         SubscribeInventoryEvents();
         SubscribeRecipeClicks();
+        SubscribeCloseButton();
         RefreshRecipes();
     }
 
@@ -34,6 +37,7 @@ public sealed class WorkbenchUI : MonoBehaviour
     {
         UnsubscribeInventoryEvents();
         UnsubscribeRecipeClicks();
+        UnsubscribeCloseButton();
         Close();
     }
 
@@ -116,6 +120,22 @@ public sealed class WorkbenchUI : MonoBehaviour
             {
                 _recipeSlots[i].OnClicked -= HandleRecipeClicked;
             }
+        }
+    }
+
+    private void SubscribeCloseButton()
+    {
+        if (_closeButton != null)
+        {
+            _closeButton.onClick.AddListener(Close);
+        }
+    }
+
+    private void UnsubscribeCloseButton()
+    {
+        if (_closeButton != null)
+        {
+            _closeButton.onClick.RemoveListener(Close);
         }
     }
 
